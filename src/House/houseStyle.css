@@ -1,0 +1,44 @@
+.input [type=text] {
+    height: 2em;
+    width: 100%;
+    text-align: right;
+    color: #999999;
+    border-radius: 0.3em;
+    font-family: Shabnam;
+}
+.input [type=button] {
+    height: 2em;
+    width:100%;
+    color: white;
+    border-radius: 0.3em;
+    margin-left: 1em;
+    font-family: Shabnam;
+}
+
+.inputAdd [type=submit] {
+    width: 35%
+}
+.inputAdd #description {
+    width: 100%;
+}
+.inputAdd .other {
+    width: 50%;
+}
+
+.inputAdd select {
+    background-color: white;
+    border: 1px solid #999999;
+    border-radius: 0.3em;
+    height: 2em;
+    width: 50%;
+}
+.addHouse {
+    width : 100%;
+    padding: 4em 4em;
+}
+.radio {
+    padding-right: 20px;
+}
+.placeholder{
+    width: 100%;
+}
