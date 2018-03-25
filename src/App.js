@@ -8,12 +8,15 @@ import instagram from './assets/icons/200px-Instagram_logo_2016.svg.png';
 import './App.css';
 import './shared-styles.css';
 import './reset.css'
+import './Account/account.css'
 
 class App extends Component {
     render(){
         return (
             <div>
                 <NavBar />
+                <Header />
+                <IncreaseBalance />
                 <Footer />
             </div>
         );
@@ -52,9 +55,41 @@ class NavBar extends Component {
     );
   }
 }
+function Header() {
+    return (
+        <div className="container-fluid">
+            <div className="row rtl">
+                <div className="shabnam khane-blue font-weight-bold text-right header_desktop header_mobile">افزایش موجودی</div>
+            </div>
+        </div>
+    );
+}
 
-class Footer extends Component {
+class IncreaseBalance extends Component {
     render() {
+        return (
+            <div className="container">
+                <div className="row rtl shabnam">
+                    <div className="col-12 col-sm-6 text-right balance grey-color font-weight-light ">
+                        <div>اعتبار کنونی
+                            <span className="text-dark font-weight-bold shabnam">۲۰۰۰۰</span>
+                            تومان
+                        </div></div>
+                    <div className="col-12 col-sm-6 input inputInc py-5">
+                        <span className="shabnam grey-color small px-4 text-right">تومان</span><br />
+                        <div className="form-group">
+                            <input type="text" className="form-control grey-color placeholder-grey shabnam" placeholder="مبلغ مورد نظر" /><br />
+                            <button type="button" className="btn btn-click-me text-center text-light khane-blue-background">افزایش اعتبار</button>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+function Footer() {
         return (
             <div className="container-fluid footer position-absolute px-md-5">
                 <footer className="row rtl">
@@ -69,7 +104,6 @@ class Footer extends Component {
                 </footer>
             </div>
         );
-    }
 }
 
 
