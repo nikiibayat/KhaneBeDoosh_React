@@ -27,34 +27,48 @@ class NavBar extends Component {
   render() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <a className="navbar-brand shabnam" href="../HomePage/homepage.html">
-                  <img src={logo} width={30} height={30} className="d-inline-block align-top" alt="logo" />
-                  <span className="khane-blue font-weight-bold">خانه‌به‌دوش</span>
-            </a>
+            <Brand />
             <div className="navbar-nav dropdown">
                 <div className="nav-item nav-link">
                       <div className="shabnam nav-profile-purple"><i className="fa fa-smile-o fa-lg" /> ناحیه‌ی کاربری</div>
-                      <div className="dropdown-content shabnam dropdown-responsive pt-4">
-                          <div className="container-fluid">
-                              <div className="row">
-                                  <div className="text-dark h5">بهنام همایون</div>
-                              </div>
-                              <div className="row py-3 grey-color">
-                                  <div className="col-5 px-0 text-right">اعتبار</div>
-                                  <div className="col-7 px-0 text-left">۲۰۰۰۰ تومان</div>
-                              </div>
-                              <div className="row py-4 justify-content-center">
-                                  <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
-                            khane-blue-background">افزایش اعتبار</button>
-                              </div>
-                          </div>
-                      </div>
+                      <DropDown />
                   </div>
               </div>
         </nav>
     );
   }
 }
+function Brand() {
+    return (
+        <a className="navbar-brand shabnam" href="../HomePage/homepage.html">
+            <img src={logo} width={30} height={30} className="d-inline-block align-top" alt="logo" />
+            <span className="khane-blue font-weight-bold">خانه‌به‌دوش</span>
+        </a>
+    );
+}
+class DropDown extends Component {
+    render() {
+        return (
+            <div className="dropdown-content shabnam dropdown-responsive pt-4">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="text-dark h5">بهنام همایون</div>
+                    </div>
+                    <div className="row py-3 grey-color">
+                        <div className="col-5 px-0 text-right">اعتبار</div>
+                        <div className="col-7 px-0 text-left">۲۰۰۰۰ تومان</div>
+                    </div>
+                    <div className="row py-4 justify-content-center">
+                        <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
+                            khane-blue-background">افزایش اعتبار</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+
 function Header() {
     return (
         <div className="container-fluid">
@@ -71,20 +85,39 @@ class IncreaseBalance extends Component {
             <div className="container">
                 <div className="row rtl shabnam">
                     <div className="col-12 col-sm-6 text-right balance grey-color font-weight-light ">
-                        <div>اعتبار کنونی
-                            <span className="text-dark font-weight-bold shabnam">۲۰۰۰۰</span>
-                            تومان
-                        </div></div>
+                        <CurrentBalance />
+                    </div>
                     <div className="col-12 col-sm-6 input inputInc py-5">
-                        <span className="shabnam grey-color small px-4 text-right">تومان</span><br />
-                        <div className="form-group">
-                            <input type="text" className="form-control grey-color placeholder-grey shabnam" placeholder="مبلغ مورد نظر" /><br />
-                            <button type="button" className="btn btn-click-me text-center text-light khane-blue-background">افزایش اعتبار</button>
-                        </div>
-                        <br />
+                        <Increase />
                     </div>
                 </div>
             </div>
+        );
+    }
+}
+class CurrentBalance extends Component {
+    render() {
+        return (
+            <div>اعتبار کنونی
+                <span className="text-dark font-weight-bold shabnam">۲۰۰۰۰</span>
+                تومان
+            </div>
+        );
+    }
+}
+class Increase extends Component {
+    render() {
+        return (
+            <div>
+                <span className="shabnam grey-color small px-4 text-right">تومان</span>
+                <br />
+                <div className="form-group">
+                <input type="text" className="form-control grey-color placeholder-grey shabnam" placeholder="مبلغ مورد نظر" /><br />
+                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background">افزایش اعتبار</button>
+                </div>
+                <br />
+            </div>
+
         );
     }
 }

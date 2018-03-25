@@ -29,9 +29,19 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="525">
+              <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+                <element signature="n#NavBar#0" expanded="false" />
+                <element signature="n#!!block;n#Brand#0" expanded="false" />
+                <element signature="n#DropDown#0" expanded="false" />
+                <element signature="n#!!block;n#Header#0" expanded="false" />
+                <element signature="n#IncreaseBalance#0" expanded="false" />
+                <element signature="n#CurrentBalance#0" expanded="false" />
+                <element signature="n#Increase#0" expanded="false" />
+                <element signature="n#!!block;n#Footer#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -165,12 +175,12 @@
       <option name="presentableId" value="Default" />
       <updated>1521276158069</updated>
       <workItem from="1521276161432" duration="348000" />
-      <workItem from="1521875897988" duration="7301000" />
+      <workItem from="1521875897988" duration="9433000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7649000" />
+    <option name="totallyTimeSpent" value="9781000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="807" extended-state="6" />
@@ -283,9 +293,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="525">
+          <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="n#NavBar#0" expanded="false" />
+            <element signature="n#!!block;n#Brand#0" expanded="false" />
+            <element signature="n#DropDown#0" expanded="false" />
+            <element signature="n#!!block;n#Header#0" expanded="false" />
+            <element signature="n#IncreaseBalance#0" expanded="false" />
+            <element signature="n#CurrentBalance#0" expanded="false" />
+            <element signature="n#Increase#0" expanded="false" />
+            <element signature="n#!!block;n#Footer#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
