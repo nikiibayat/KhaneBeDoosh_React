@@ -19,6 +19,7 @@
 .idea/**/libraries
 
 .idea/
+.idea/workspace.xml
 
 # IntelliJ
 /out/
