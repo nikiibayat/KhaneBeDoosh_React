@@ -99,7 +99,7 @@ class CurrentBalance extends Component {
     render() {
         return (
             <div>اعتبار کنونی
-                <span className="text-dark font-weight-bold shabnam">۲۰۰۰۰</span>
+                <span className="text-dark font-weight-bold shabnam"> ۲۰۰۰۰ </span>
                 تومان
             </div>
         );
