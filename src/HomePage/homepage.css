@@ -1,0 +1,105 @@
+.navbar-dropdown-radius {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+@keyframes slideshow {
+    0% {
+        background-image: url("../assets/Banner/casey-horner-533586-unsplash.jpg");
+    }
+    25% {
+        background-image: url("../assets/Banner/luke-van-zyl-504032-unsplash.jpg");
+    }
+    50% {
+        background-image: url("../assets/Banner/mahdiar-mahmoodi-452489-unsplash.jpg");
+    }
+    75% {
+        background-image: url("../assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
+    }
+    100% {
+        background-image: url("../assets/Banner/casey-horner-533586-unsplash.jpg");
+    }
+}
+
+.text-dark-grey {
+    color: #4C4C4C;
+}
+
+.text-title {
+    font-size: xx-large;
+}
+
+.upper-body {
+    background-image: url("../assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
+    /* height: fit-content; */
+    width: auto;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: cover;
+    background-size: cover;
+    -webkit-animation: slideshow 50s ease infinite;
+    -moz-animation: slideshow 50s ease infinite;
+    animation: slideshow 50s ease infinite;
+}
+
+.khane-blue-background {
+    background-color: #2ED0CB;
+}
+
+.logo-fig {
+    text-align: center;
+    margin-top: -2vh;
+    font-size: x-large;
+}
+
+@media (min-width: 426px) {
+    .logo {
+        width: 10vw;
+        height: auto;
+    }
+
+    .logo-fig {
+        margin-top: -2vh;
+        font-size: xx-large;
+    }
+}
+
+@media (max-width: 425px) {
+    .logo {
+        width: 25vw;
+        height: auto;
+    }
+
+    .logo-fig {
+        margin-top: -2vh;
+        font-size: x-large;
+    }
+}
+
+
+@media (min-width: 426px) {
+    .cards {
+        margin-top: -3rem !important;
+    }
+}
+
+@media (max-width: 425px) {
+    .cards {
+        margin-top: -3rem !important;
+    }
+}
+
+.card-box {
+    border-radius: 10px;
+    border-color: white;
+    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.1);
+}
+
+.svg-icon {
+    width: 50%;
+}
+
+.icon-title {
+    width: max-content;
+}
