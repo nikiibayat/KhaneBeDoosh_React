@@ -1,0 +1,383 @@
+import React from 'react';
+import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
+import '../../node_modules/font-awesome/css/font-awesome.min.css';
+import logo from '../assets/logo.png';
+import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
+import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
+import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
+import easy from '../assets/icons/726446.svg';
+import reliable from '../assets/icons/726488.svg';
+import comprehensive from '../assets/icons/726499.svg';
+import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
+import './HomePage.css';
+import '../shared-styles.css';
+import '../reset.css'
+
+class HomePage extends React.Component {
+    render() {
+        return (
+            <div>
+                <UpperBody/>
+                <LowerBody/>
+                <Footer/>
+            </div>
+        );
+    }
+}
+
+class UpperBody extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div>
+                <NavBar/>
+                <UpperBodyContent/>
+            </div>
+        );
+    }
+}
+
+class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        return (
+            <nav className="navbar bg-transparent px-md-5">
+                <div className="navbar-nav dropdown rtl">
+                    <div className="nav-item nav-link border border-white navbar-dropdown-radius p-2">
+                        <div className="shabnam text-white"><i className="fa fa-smile-o fa-lg"></i> ناحیه‌ی کاربری</div>
+                        <DropDown/>
+                    </div>
+                </div>
+            </nav>
+        );
+    }
+}
+
+class DropDown extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="dropdown-content shabnam dropdown-responsive pt-4">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="text-dark h5">بهنام همایون</div>
+                    </div>
+                    <div className="row py-3 grey-color">
+                        <div className="col-5 px-0 text-right">اعتبار</div>
+                        <div className="col-7 px-0 text-left">۲۰۰۰۰ تومان</div>
+                    </div>
+                    <div className="row py-4 justify-content-center">
+                        <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
+                                        khane-blue-background">افزایش اعتبار
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class UpperBodyContent extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        return (
+            <div className="container-fluid">
+                <Logo/>
+                <section className="container-fluid py-md-5 py-1">
+                    <div className="row justify-content-center mb-2">
+                        <SearchForm/>
+                    </div>
+                    <div className="row justify-content-center mt-2">
+                        <div className="col-11 col-md-8 search-form shabnam rtl text-white text-center py-2">صاحب خانه
+                            هستید؟ خانه‌ی خود را ثبت کنید
+                        </div>
+                    </div>
+                    <br></br>
+                </section>
+            </div>
+        );
+    }
+}
+
+class Logo extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="row justify-content-center">
+                <figure className="figure logo-fig">
+                    <a href="/homepage.html" className="logo m-auto d-block">
+                        <img className="figure-img" src={logo} alt="khanebedoosh-logo"/>
+                    </a>
+                    <figcaption
+                        className="figure-caption text-center rtl shabnam text-white font-weight-bold">خانه‌به‌دوش
+                    </figcaption>
+                </figure>
+            </div>
+        );
+    }
+}
+
+class SearchForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <form className="col-11 col-md-8 search-form py-md-4 py-2">
+                <div className="form-row rtl my-md-1 shabnam justify-content-center px-md-3">
+                    <BuildingTypeForm/>
+                    <PriceForm/>
+                    <AreaForm/>
+                </div>
+                <div className="form-row rtl shabnam mt-2 mb-md-4 mb-2 justify-content-md-around px-md-3">
+                    <div className="col-md-7 mb-2">
+                        <DealType/>
+                    </div>
+                    <div className="col-md-5">
+                        <button type="button"
+                                className="btn btn-click-me text-center text-light khane-blue-background search-button">جست‌وجو
+                        </button>
+                    </div>
+                </div>
+            </form>
+        );
+    }
+}
+
+class BuildingTypeForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="form-group col-12 col-md-4 pl-md-3">
+                <label className="form-check-label px-2" for="building-type"></label>
+                <select className="form-control form-inline rtl shabnam" id="building-type"
+                        required>
+                    <option value="" disabled selected className="grey-color">نوع ملک</option>
+                    <option value="villa">ویلایی</option>
+                    <option value="apartment">آپارتمان</option>
+                    <option value="both">هر کدام</option>
+                </select>
+            </div>
+        );
+    }
+}
+
+class PriceForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="form-group col-12 col-md-4 px-md-3">
+                <label className="form-check-label px-2 text-white small" for="price">تومان</label>
+                <input type="text" className="form-control form-inline rtl shabnam placeholder-grey"
+                       id="price" placeholder="حداکثر قیمت"/>
+            </div>
+        );
+    }
+}
+
+class AreaForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="form-group col-12 col-md-4 pr-md-3 mb-0">
+                <label className="form-check-label px-2 text-white small" for="area">متر
+                    مربع</label>
+                <input type="text" className="form-control form-inline rtl shabnam placeholder-grey"
+                       id="area" placeholder="حداکثر متراژ"/>
+            </div>
+        );
+    }
+}
+
+class DealType extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="form-check form-check-inline float-right">
+                    <input className="form-check-input" type="radio" name="sellType" id="radio-rent"
+                           value="rent" checked/>
+                    <label className="form-check-label px-2 text-white" for="radio-rent">
+                        رهن و اجاره
+                    </label>
+                </div>
+                <div className="form-check form-check-inline float-right">
+                    <input className="form-check-input" type="radio" name="sellType" id="radio-sell" value="sell"/>
+                    <label className="form-check-label px-2 text-white" for="radio-sell">
+                        خرید
+                    </label>
+                </div>
+            </div>
+        );
+    }
+}
+
+class LowerBody extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="lower-body pb-md-5 pb-4">
+                <div class="rtl card-deck col-md-8 col-10 mx-auto px-0 mb-5 my-2 cards">
+                    <EasyBox/>
+                    <ReliableBox/>
+                    <ComprehensiveBox/>
+                </div>
+
+                <WhyKhanebedoosh/>
+            </div>
+        )
+    }
+}
+
+function EasyBox() {
+    return (
+        <div
+            className="card bg-white card-box col-md-4 col-10 text-center my-3 justify-content-center align-self-center">
+            <div className="px-0 justify-content-around py-md-4 py-2">
+                <div className="card-title icon-title text-title m-auto">
+                    <img src={easy} className="svg-icon" alt="easy"/>
+                    <div className="text-dark-grey shabnam">آسان</div>
+                </div>
+                <div className="card-text shabnam text-dark-grey py-md-3 mx-2">به‌سادگی صاحب خانه<br></br>شوید</div>
+            </div>
+        </div>
+    );
+}
+
+function ReliableBox() {
+    return (
+        <div
+            className="card bg-white card-box col-md-4 col-10 text-center mx-md-4 my-3 justify-content-center align-self-center">
+            <div className="px-0 justify-content-around py-md-4 py-2">
+                <div className="card-title icon-title text-title m-auto">
+                    <img src={reliable} className="svg-icon" alt="easy"/>
+                    <div className="text-dark-grey shabnam">مطمئن</div>
+                </div>
+                <div className="card-text shabnam text-dark-grey py-md-3 mx-2">با خیال راحت به‌دنبال<br></br>خانه بگردید
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ComprehensiveBox() {
+    return (
+        <div
+            className="card bg-white card-box col-md-4 col-10 text-center my-3 justify-content-center align-self-center">
+            <div className="px-0 justify-content-around py-md-4 py-2">
+                <div className="card-title icon-title text-title m-auto">
+                    <img src={comprehensive} className="svg-icon" alt="easy"/>
+                    <div className="text-dark-grey shabnam">گسترده</div>
+                </div>
+                <div className="card-text shabnam text-dark-grey py-md-3 mx-2">در منطقه‌ی مورد علاقه‌ی خود صاحب خانه
+                    شوید
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function WhyKhanebedoosh() {
+    return (
+        <div className="container-fluid">
+            <div className="row rtl py-md-3 text-right justify-content-center">
+                <div className="col-md-8 col-11">
+                    <div className="shabnam text-dark-grey font-weight-bold text-title text-center text-md-right">چرا
+                        خانه‌به‌دوش؟
+                    </div>
+                    <div className="d-md-inline-flex py-3 px-md-2 justify-content-md-around">
+                        <div className="col-10 col-md-7 px-md-1 py-1 rtl mx-auto text-justify">
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>اطلاعات
+                                کامل و صحیح از املاک قابل معامله
+                            </div>
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>بدون
+                                محدودیت، ۲۴ ساعته و در تمام ایام هفته
+                            </div>
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>جست‌وجوی
+                                هوشمند ملک، صرفه‌جویی در زمان
+                            </div>
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>تنوع در
+                                املاک، افزایش قدرت انتخاب مشتریان
+                            </div>
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>بانکی جامع
+                                از اطلاعات هزاران آگهی به‌روز
+                            </div>
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>دست‌یابی
+                                به نتیجه‌ی مطلوب در کمترین زمان ممکن
+                            </div>
+                            <div className="shabnam text-dark py-1"><i
+                                className="fa fa-check-circle pl-2 nav-profile-purple" aria-hidden="true"></i>همکاری با
+                                مشاوران متخصص در حوزه‌ی املاک
+                            </div>
+                        </div>
+                        <div className="col-10 col-md-5 mx-auto py-1">
+                            <img src={whyKhanebedoosh} alt="why-khanebedoosh"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+function Footer() {
+    return (
+        <div className="container-fluid footer">
+            <footer className="row rtl px-md-5">
+                <div className="col-12 col-sm-10 my-auto">
+                    <div className="shabnam text-center text-sm-right pr-md-4">تمامی حقوق مادی و معنوی این وب‌سایت متعلق
+                        به
+                        نیکی و اردوان می‌باشد
+                    </div>
+                </div>
+                <div className="col-12 col-sm-2 social-list">
+                    <img className="social-icon" src={twitter} alt="twitter-icon"/>
+                    <img className="social-icon" src={telegram} alt="telegram-icon"/>
+                    <img className="social-icon" src={instagram} alt="instagram-icon"/>
+                </div>
+            </footer>
+        </div>
+    );
+}
+
+export default HomePage;

@@ -6,19 +6,19 @@
 
 @keyframes slideshow {
     0% {
-        background-image: url("../assets/Banner/casey-horner-533586-unsplash.jpg");
+        background-image: url("../../../src/assets/Banner/casey-horner-533586-unsplash.jpg");
     }
     25% {
-        background-image: url("../assets/Banner/luke-van-zyl-504032-unsplash.jpg");
+        background-image: url("../../../src/assets/Banner/luke-van-zyl-504032-unsplash.jpg");
     }
     50% {
-        background-image: url("../assets/Banner/mahdiar-mahmoodi-452489-unsplash.jpg");
+        background-image: url("../../../src/assets/Banner/mahdiar-mahmoodi-452489-unsplash.jpg");
     }
     75% {
-        background-image: url("../assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
+        background-image: url("../../../src/assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
     }
     100% {
-        background-image: url("../assets/Banner/casey-horner-533586-unsplash.jpg");
+        background-image: url("../../../src/assets/Banner/casey-horner-533586-unsplash.jpg");
     }
 }
 
@@ -31,7 +31,7 @@
 }
 
 .upper-body {
-    background-image: url("../assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
+    background-image: url("../../../src/assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
     /* height: fit-content; */
     width: auto;
     -webkit-background-size: contain;

@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import './bootstrap-4.0.0-dist/css/bootstrap.min.css';
-import '../node_modules/font-awesome/css/font-awesome.min.css';
-import logo from './assets/logo.png';
-import twitter from './assets/icons/Twitter_bird_logo_2012.svg.png';
-import telegram from './assets/icons/200px-Telegram_logo.svg.png';
-import instagram from './assets/icons/200px-Instagram_logo_2016.svg.png';
-import './App.css';
-import './shared-styles.css';
-import './reset.css'
-import './Account/account.css'
+import React from 'react';
+import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
+import '../../node_modules/font-awesome/css/font-awesome.min.css';
+import logo from '../assets/logo.png';
+import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
+import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
+import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
+import './Account.css';
+import '../shared-styles.css';
+import '../reset.css'
 
-class App extends Component {
+class Account extends React.Component {
     render(){
         return (
             <div>
@@ -23,7 +22,7 @@ class App extends Component {
     }
 }
 
-class NavBar extends Component {
+class NavBar extends React.Component {
   render() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
@@ -46,7 +45,7 @@ function Brand() {
         </a>
     );
 }
-class DropDown extends Component {
+class DropDown extends React.Component {
     render() {
         return (
             <div className="dropdown-content shabnam dropdown-responsive pt-4">
@@ -79,7 +78,7 @@ function Header() {
     );
 }
 
-class IncreaseBalance extends Component {
+class IncreaseBalance extends React.Component {
     render() {
         return (
             <div className="container">
@@ -95,7 +94,7 @@ class IncreaseBalance extends Component {
         );
     }
 }
-class CurrentBalance extends Component {
+class CurrentBalance extends React.Component {
     render() {
         return (
             <div>اعتبار کنونی
@@ -105,7 +104,7 @@ class CurrentBalance extends Component {
         );
     }
 }
-class Increase extends Component {
+class Increase extends React.Component {
     render() {
         return (
             <div>
@@ -141,4 +140,4 @@ function Footer() {
 
 
 
-export default App;
+export default Account;
