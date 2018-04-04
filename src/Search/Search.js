@@ -4,10 +4,12 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
-import SearchForm from "../components/SearchForm";
+import SearchBox from '../components/SearchBox';
+import NavBarDropdown from '../components/NavBarDropdown'
 import './Search.css';
 import '../shared-styles.css';
 import '../reset.css'
+import NavBarLogoLink from "../components/NavBarLogoLink";
 
 class Search extends React.Component {
     constructor(props) {
@@ -17,29 +19,14 @@ class Search extends React.Component {
     render() {
         return (
             <div>
-                <SearchBox/>
+                <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                    <NavBarLogoLink/>
+                    <NavBarDropdown/>
+                </nav>
+                <SearchBox numOfColumns={9}/>
                 <br/><br/>
                 <Footer/>
             </div>
-        );
-    }
-}
-
-class SearchBox extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
-    render() {
-        return(
-            <section className="container-fluid ">
-                <div className="row justify-content-center mb-2 searchForm">
-                    <SearchForm numOfColumns={'9'}/>
-                </div>
-                <div className="row justify-content-center mt-2 searchForm">
-                    <div className="col-11 col-md-9 search-form shabnam rtl text-white text-center py-2">صاحب خانه هستید؟ خانه‌ی خود را ثبت کنید</div>
-                </div>
-            </section>
         );
     }
 }
