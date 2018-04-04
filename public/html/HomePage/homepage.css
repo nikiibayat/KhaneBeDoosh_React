@@ -32,6 +32,7 @@
 
 .upper-body {
     background-image: url("../../../src/assets/Banner/michal-kubalczyk-260909-unsplash.jpg");
+
     /* height: fit-content; */
     width: auto;
     -webkit-background-size: contain;
