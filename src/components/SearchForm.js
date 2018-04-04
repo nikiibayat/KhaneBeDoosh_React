@@ -35,11 +35,11 @@ class SearchForm extends React.Component {
     }
 
     handleSubmit(event) {
+        alert('button is clicked');
         this.setState({BuildingType: 'BuildingType'});
         this.setState({Price: ''});
         this.setState({Area: ''});
         this.setState({DealType: 'rent'});
-        event.preventDefault();
     }
 
     render() {
@@ -55,7 +55,7 @@ class SearchForm extends React.Component {
                         <DealType handleDealType={this.handleDealType} DealType={this.state.DealType} />
                     </div>
                     <div className="col-md-5">
-                        <button type="button" onChange={this.handleSubmit}
+                        <button type="submit" onSubmit={this.handleSubmit}
                                 className="btn btn-click-me text-center text-light khane-blue-background search-button">جست‌وجو
                         </button>
                     </div>
