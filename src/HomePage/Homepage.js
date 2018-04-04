@@ -9,7 +9,7 @@ import easy from '../assets/icons/726446.svg';
 import reliable from '../assets/icons/726488.svg';
 import comprehensive from '../assets/icons/726499.svg';
 import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
-import SearchForm from "../Search/SearchForm";
+import SearchForm from "../components/SearchForm";
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
@@ -111,7 +111,7 @@ class UpperBodyContent extends React.Component {
                 <Logo/>
                 <section className="container-fluid py-md-5 py-1">
                     <div className="row justify-content-center mb-2">
-                        <SearchForm/>
+                        <SearchForm numOfColumns={8}/>
                     </div>
                     <div className="row justify-content-center mt-2">
                         <div className="col-11 col-md-8 search-form shabnam rtl text-white text-center py-2">صاحب خانه
@@ -284,4 +284,7 @@ function Footer() {
     );
 }
 
-export default HomePage;
+export {
+    HomePage,
+    UpperBodyContent,
+};
