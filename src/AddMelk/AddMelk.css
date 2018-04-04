@@ -42,3 +42,31 @@
 .placeholder{
     width: 100%;
 }
+
+.searchForm {
+    width: 94%;
+    margin-left: 3%;
+}
+
+@media (min-width: 577px) {
+    .area {
+        padding-left: 49%;
+    }
+
+    .location {
+        padding-left: 42%;
+    }
+}
+@media (max-width: 576px) {
+    .area {
+        padding-left: 25%;
+    }
+
+    .location {
+        padding-left: 22%;
+    }
+    .marginTop {
+        margin-top: 4%;
+    }
+}
+

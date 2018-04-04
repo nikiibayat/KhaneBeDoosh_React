@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="../bootstrap-4.0.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../reset.css">
+    <link rel="stylesheet" type="text/css" href="../shared-styles.css">
+    <link rel="stylesheet" type="text/css" href="AddMelk.css">
+
+</head>
+<body>
+<nav class="navbar fixed-top navbar-light bg-white rtl shadow">
+    <a class="navbar-brand shabnam" href="../HomePage/homepage.html">
+        <img src="../assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <span class="khane-blue font-weight-bold">خانه‌به‌دوش</span>
+    </a>
+    <div class="navbar-nav dropdown">
+        <div class="nav-item nav-link">
+            <div class="shabnam nav-profile-purple"><i class="fa fa-smile-o fa-lg"></i> ناحیه‌ی کاربری</div>
+            <div class="dropdown-content shabnam dropdown-responsive pt-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="text-dark h5">بهنام همایون</div>
+                    </div>
+                    <div class="row py-3 grey-color">
+                        <div class="col-5 px-0 text-right">اعتبار</div>
+                        <div class="col-7 px-0 text-left">۲۰۰۰۰ تومان</div>
+                    </div>
+                    <div class="row py-4 justify-content-center">
+                        <button type="button" class="col-10 btn btn-click-me px-1 text-center text-light
+                                khane-blue-background">افزایش اعتبار</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row rtl">
+        <div class="shabnam khane-blue font-weight-bold text-right header_desktop header_mobile">ثبت ملک جدید در خانه به دوش</div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row justify-content-center searchForm">
+        <form class="col-12 col-md-10 py-5">
+            <div class="form-row rtl shabnam ">
+                <div class="col-md-6 mb-2">
+                    <div class="form-check form-check-inline float-right">
+                        <input class="form-check-input" type="radio" name="sellType" id="radio-rent" value="rent" checked>
+                        <label class="form-check-label px-2 " for="radio-rent">
+                            رهن و اجاره
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline float-right">
+                        <input class="form-check-input" type="radio" name="sellType" id="radio-sell" value="sell">
+                        <label class="form-check-label px-2 " for="radio-sell">
+                            خرید
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="form-row rtl my-md-1 shabnam justify-content-center">
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-check-label" ></label>
+                        <select class="form-control form-inline rtl shabnam" required>
+                            <option value="" disabled selected>نوع ملک</option>
+                            <option value="villa">ویلایی</option>
+                            <option value="apartment">آپارتمان</option>
+                            <option value="both">هر کدام</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-check-label grey-color small">متر مربع</label>
+                        <input type="text" class="form-control form-inline rtl shabnam placeholder-grey" placeholder="حداکثر متراژ">
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-check-label text-white small"></label>
+                        <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"  placeholder="آدرس">
+                    </div>
+                    <div class="form-group col-12 col-md-6 ">
+                        <label class="form-check-label grey-color small">مترمربع</label>
+                        <input type="text" class="form-control form-inline rtl shabnam placeholder-grey" placeholder="قیمت رهن">
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-check-label text-white small" ></label>
+                        <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"  placeholder="شماره تماس">
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-check-label grey-color small">مترمربع</label>
+                        <input type="text" class="form-control form-inline rtl shabnam placeholder-grey" placeholder="قیمت اجاره">
+                    </div>
+
+                    <div class="form-group col-12 col-md-12">
+                        <label class="form-check-label text-white small" ></label>
+                        <input type="text" class="form-control form-inline rtl shabnam placeholder-grey" placeholder="توضیحات">
+                    </div>
+                </div>
+
+                <div class="col-md-8"></div>
+                <div class="col-12 col-md-4 py-3">
+                    <button type="button" class="btn btn-click-me text-center text-light khane-blue-background search-button">ثبت ملک</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+
+
+<div class="container-fluid footer">
+    <footer class="row rtl">
+        <div class="col-12 col-sm-10 my-auto">
+            <div class="shabnam text-center text-sm-right pr-md-4">تمامی حقوق مادی و معنوی این وب‌سایت متعلق به نیکی و اردوان می‌باشد</div>
+        </div>
+        <div class="col-12 col-sm-2 social-list">
+            <img class="social-icon" src="../assets/icons/Twitter_bird_logo_2012.svg.png" align="center">
+            <img class="social-icon" src="../assets/icons/200px-Telegram_logo.svg.png" align="center">
+            <img class="social-icon" src="../assets/icons/200px-Instagram_logo_2016.svg.png" align="center">
+        </div>
+    </footer>
+</div>
+</body>
+</html>
