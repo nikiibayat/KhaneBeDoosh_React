@@ -13,6 +13,7 @@ import SearchForm from "../components/SearchForm";
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
+import SearchBox from "../components/SearchBox";
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class UpperBody extends React.Component {
                 <figure></figure>
                 <div className="">
                     <NavBar/>
-                    <UpperBodyContent/>
+                    <UpperBodyContent numOfColumns={8}/>
                 </div>
             </div>
         );
@@ -109,17 +110,7 @@ class UpperBodyContent extends React.Component {
         return (
             <div className="container-fluid">
                 <Logo/>
-                <section className="container-fluid py-md-5 py-1">
-                    <div className="row justify-content-center mb-2">
-                        <SearchForm numOfColumns={8}/>
-                    </div>
-                    <div className="row justify-content-center mt-2">
-                        <div className="col-11 col-md-8 search-form shabnam rtl text-white text-center py-2">صاحب خانه
-                            هستید؟ خانه‌ی خود را ثبت کنید
-                        </div>
-                    </div>
-                    <br/>
-                </section>
+                <SearchBox numOfColumns={this.props.numOfColumns}/>
             </div>
         );
     }
@@ -284,7 +275,4 @@ function Footer() {
     );
 }
 
-export {
-    HomePage,
-    UpperBodyContent,
-};
+export default HomePage;
