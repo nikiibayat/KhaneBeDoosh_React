@@ -35,7 +35,6 @@ class SearchForm extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('button is clicked');
         this.setState({BuildingType: 'BuildingType'});
         this.setState({Price: ''});
         this.setState({Area: ''});
