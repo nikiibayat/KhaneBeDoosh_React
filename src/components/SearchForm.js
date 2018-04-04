@@ -10,7 +10,7 @@ class SearchForm extends React.Component {
 
     render() {
         return (
-            <form className="col-11 col-md-8 search-form py-md-4 py-2">
+            <form className={"col-11 col-md-" + this.props.numOfColumns +" search-form py-md-4 py-2"}>
                 <div className="form-row rtl my-md-1 shabnam justify-content-center px-md-3">
                     <BuildingTypeForm/>
                     <PriceForm/>

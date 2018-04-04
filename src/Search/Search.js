@@ -1,14 +1,10 @@
 import React from 'react';
 import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import logo from '../assets/logo.png';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
-import easy from '../assets/icons/726446.svg';
-import reliable from '../assets/icons/726488.svg';
-import comprehensive from '../assets/icons/726499.svg';
-import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
+import SearchForm from "../components/SearchForm";
 import './Search.css';
 import '../shared-styles.css';
 import '../reset.css'
@@ -21,8 +17,29 @@ class Search extends React.Component {
     render() {
         return (
             <div>
+                <SearchBox/>
+                <br/><br/>
                 <Footer/>
             </div>
+        );
+    }
+}
+
+class SearchBox extends React.Component{
+    constructor(props){
+        super(props);
+    }
+
+    render() {
+        return(
+            <section className="container-fluid ">
+                <div className="row justify-content-center mb-2 searchForm">
+                    <SearchForm numOfColumns={'9'}/>
+                </div>
+                <div className="row justify-content-center mt-2 searchForm">
+                    <div className="col-11 col-md-9 search-form shabnam rtl text-white text-center py-2">صاحب خانه هستید؟ خانه‌ی خود را ثبت کنید</div>
+                </div>
+            </section>
         );
     }
 }
