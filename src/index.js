@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import App from './HomePage/Homepage';
+import App from './Search/Search';
 
 //import registerServiceWorker from './registerServiceWorker';
 

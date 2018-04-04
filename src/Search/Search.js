@@ -4,10 +4,12 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
-import SearchBox from '../components/SearchBox'
+import SearchBox from '../components/SearchBox';
+import NavBarDropdown from '../components/NavBarDropdown'
 import './Search.css';
 import '../shared-styles.css';
 import '../reset.css'
+import NavBarLogoLink from "../components/NavBarLogoLink";
 
 class Search extends React.Component {
     constructor(props) {
@@ -17,6 +19,10 @@ class Search extends React.Component {
     render() {
         return (
             <div>
+                <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                    <NavBarLogoLink/>
+                    <NavBarDropdown/>
+                </nav>
                 <SearchBox numOfColumns={9}/>
                 <br/><br/>
                 <Footer/>
