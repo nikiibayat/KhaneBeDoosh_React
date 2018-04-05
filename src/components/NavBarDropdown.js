@@ -4,9 +4,6 @@ import '../shared-styles.css';
 import '../reset.css'
 
 class NavBarDropdown extends React.Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         return(
             <div className="navbar-nav dropdown">

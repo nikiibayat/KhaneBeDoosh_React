@@ -4,9 +4,6 @@ import '../shared-styles.css';
 import '../reset.css'
 
 class PageTitleHeader extends React.Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         return(
             <div className="container-fluid">
