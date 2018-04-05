@@ -377,11 +377,12 @@ class Description extends React.Component {
 }
 function Footer() {
     return (
-        <div className="container-fluid footer position-absolute px-md-5">
-            <footer className="row rtl">
+        <div className="container-fluid footer">
+            <footer className="row rtl px-md-5">
                 <div className="col-12 col-sm-10 my-auto">
                     <div className="shabnam text-center text-sm-right pr-md-4">تمامی حقوق مادی و معنوی این وب‌سایت متعلق
-                        به نیکی و اردوان می‌باشد
+                        به
+                        نیکی و اردوان می‌باشد
                     </div>
                 </div>
                 <div className="col-12 col-sm-2 social-list">
