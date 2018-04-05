@@ -10,6 +10,7 @@ import './Search.css';
 import '../shared-styles.css';
 import '../reset.css'
 import NavBarLogoLink from "../components/NavBarLogoLink";
+import PageTitleHeader from "../components/PageTitleHeader";
 
 class Search extends React.Component {
     constructor(props) {
@@ -19,16 +20,57 @@ class Search extends React.Component {
     render() {
         return (
             <div>
-                <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-                    <NavBarLogoLink/>
-                    <NavBarDropdown/>
-                </nav>
+                <NavBar/>
+                <PageTitleHeader text={"نتایج جست‌وجو"}/>
+                <MoreInfoText/>
+                <SearchResults/>
+                <SearchAgainText/>
                 <SearchBox numOfColumns={9}/>
                 <br/><br/>
                 <Footer/>
             </div>
         );
     }
+}
+
+class SearchResults extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(
+            <div></div>
+        );
+    }
+}
+
+function MoreInfoText(){
+    return(
+        <div className="container-fluid grey-color py-4 h5 rtl">
+            <div className="row text-center justify-content-center shabnam mobileMargin">
+                <p>برای مشاهده اطلاعات بیشتر درباره‌ی هر ملک روی آن کلیک کنید</p>
+            </div>
+        </div>
+    );
+}
+
+function SearchAgainText(){
+    return(
+        <div className="container-fluid grey-color py-3 h5 rtl mt-2">
+            <div className="row text-center justify-content-center shabnam">
+                <p>جستجوی مجدد</p>
+            </div>
+        </div>
+    );
+}
+
+function NavBar(){
+    return(
+        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+            <NavBarLogoLink/>
+            <NavBarDropdown/>
+        </nav>
+    );
 }
 
 function Footer() {
