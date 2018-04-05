@@ -5,10 +5,6 @@ import '../reset.css'
 import SearchForm from "./SearchForm";
 
 class SearchBox extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return(
             <section className="container-fluid">

@@ -6,29 +6,131 @@ import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
 import SearchBox from '../components/SearchBox';
 import NavBarDropdown from '../components/NavBarDropdown'
+import NavBarLogoLink from "../components/NavBarLogoLink";
+import PageTitleHeader from "../components/PageTitleHeader";
 import './Search.css';
 import '../shared-styles.css';
 import '../reset.css'
-import NavBarLogoLink from "../components/NavBarLogoLink";
 
 class Search extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
-                <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-                    <NavBarLogoLink/>
-                    <NavBarDropdown/>
-                </nav>
+                <NavBar/>
+                <PageTitleHeader text={"نتایج جست‌وجو"}/>
+                <MoreInfoText/>
+                <SearchResultsList/>
+                <SearchAgainText/>
                 <SearchBox numOfColumns={9}/>
                 <br/><br/>
                 <Footer/>
             </div>
         );
     }
+}
+
+class SearchResultsList extends React.Component {
+    render() {
+        return (
+            <div className="container-fluid">
+                <div className="row shabnam mobileFont">
+                    <ResultBox dealType={"sale"} position={"left"} imageName={"2.jpg"} area={"۴۰۰۰"}
+                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
+                    <ResultBox dealType={"rent"} position={"right"} imageName={"1.jpg"} area={"۵۰۰۰"}
+                               address={"شایر"} price={"۲۰۰۰۰۰۰۰"} rentPrice={"۱۵۰۰۰۰۰۰"}/>
+                    <ResultBox dealType={"sale"} position={"left"} imageName={"3.jpg"} area={"۴۰۰۰"}
+                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
+                    <ResultBox dealType={"sale"} position={"right"} imageName={"2.jpg"} area={"۴۰۰۰"}
+                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
+                    <ResultBox dealType={"sale"} position={"left"} imageName={"5.jpg"} area={"۴۰۰۰"}
+                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
+                </div>
+            </div>
+        );
+    }
+}
+
+class ResultBox extends React.Component {
+    render() {
+        const dealType = this.props.dealType;
+        const position = this.props.position;
+        const houseImage = "/houseImages/" + this.props.imageName;
+        const area = this.props.area;
+        const address = this.props.address;
+        const price = this.props.price;
+        return (
+            <div className="col-12 col-sm-6 rtl">
+                <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
+                    <a href="#">
+                        {(dealType === "sale") ? (
+                            <div className="btn mt-2  purpleButton">فروش</div>
+                        ) : (
+                            <div className="btn  mt-2 redButton">رهن و اجاره</div>
+                        )}
+                        <img src={process.env.PUBLIC_URL + houseImage} alt="house image" className="imageRadius dimension"/>
+                        <p className="text-right px-4">
+                            <span className="location">{area} متر مربع</span>
+                            {(dealType === "sale") ? (
+                                <span className="px-2 purple">
+                                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                                </span>
+                            ) : (
+                                <span className="px-2 red">
+                                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                                </span>
+                            )}
+                            {address}
+                        </p>
+                        <hr className="lineMargin line"/>
+                        {(dealType === "sale") ? (
+                            <div className="text-right px-4">قیمت&nbsp; {price}
+                                <span className="grey-color small"> تومان</span>
+                            </div>
+                        ):(
+                            <p className="row px-4">
+                                <span className="col-6 text-right px-0 px-md-3">رهن
+                                &nbsp; {price}
+                                    <span className="grey-color small"> تومان</span>
+                                </span>
+                                <span className="col-6 px-0 px-md-3">اجاره {this.props.rentPrice}
+                                    <span className="grey-color small"> تومان</span>
+                                </span>
+                            </p>
+                        )}
+                    </a>
+                </div>
+            </div>
+        );
+    }
+}
+
+function MoreInfoText() {
+    return (
+        <div className="container-fluid grey-color py-4 h5 rtl">
+            <div className="row text-center justify-content-center shabnam mobileMargin">
+                <p>برای مشاهده اطلاعات بیشتر درباره‌ی هر ملک روی آن کلیک کنید</p>
+            </div>
+        </div>
+    );
+}
+
+function SearchAgainText() {
+    return (
+        <div className="container-fluid grey-color py-3 h5 rtl mt-2">
+            <div className="row text-center justify-content-center shabnam">
+                <p>جستجوی مجدد</p>
+            </div>
+        </div>
+    );
+}
+
+function NavBar() {
+    return (
+        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+            <NavBarLogoLink/>
+            <NavBarDropdown/>
+        </nav>
+    );
 }
 
 function Footer() {

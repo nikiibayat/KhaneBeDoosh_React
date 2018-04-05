@@ -5,9 +5,6 @@ import logo from '../assets/logo.png';
 import '../reset.css'
 
 class NavBarLogoLink extends React.Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         return(
             <a className="navbar-brand shabnam" href="../HomePage/homepage.html">
