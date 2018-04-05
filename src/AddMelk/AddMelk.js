@@ -75,7 +75,7 @@ function Header() {
     return (
         <div className="container-fluid">
             <div className="row rtl">
-                <div className="shabnam khane-blue font-weight-bold text-right header_desktop header_mobile">
+                <div className="shabnam khane-blue font-weight-bold text-right header_desktop header_mobile ">
                     ثبت ملک جدید در خانه به دوش
                 </div>
             </div>

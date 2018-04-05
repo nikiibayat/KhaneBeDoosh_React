@@ -1,0 +1,73 @@
+.imageRadius {
+    border-radius: 0.7em;
+    box-shadow: 0 20px 40px  0 rgba(0, 0, 0, 0.1);
+}
+
+/*button css*/
+@media (min-width: 577px) {
+    .redButton{
+        color: white;
+        background: #F45B69;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        margin-left: 40%;
+    }
+    .purpleButton {
+        color: white;
+        background:#5B539D ;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        margin-left: 40%;
+    }
+}
+@media (max-width: 576px) {
+    .redButton{
+        color: white;
+        background: #F45B69;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        margin-left: 40%;
+
+    }
+    .purpleButton {
+        color: white;
+        background:#5B539D ;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        margin-left: 40%;
+    }
+}
+
+.HouseText {
+    margin-right: 35%;
+}
+
+.leftTOright {
+    direction: ltr !important;
+}
+
+/*line css*/
+.line {
+    border-width: 0.1em;
+    width: 70%;
+}
+.lineMargin {
+    margin-right: 32%;
+}
+
+.yellowButton {
+    background: #DEDE00;
+    width : 80%;
+    border-radius: 0.4em;
+    line-height: 200%;
+}
+.blueButton {
+    background: #2ED0CB;
+    width : 80%;
+    border-radius: 0.4em;
+    line-height: 200%;
+}
