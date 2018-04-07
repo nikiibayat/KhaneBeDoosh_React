@@ -1,0 +1,103 @@
+.imageRadius {
+    border-radius: 0.7em;
+    box-shadow: 0 20px 40px  0 rgba(0, 0, 0, 0.1);
+}
+
+/*button css*/
+@media (min-width: 577px) {
+    .redButton{
+        color: white;
+        background: #F45B69;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        margin-left: 40%;
+    }
+    .purpleButton {
+        color: white;
+        background:#5B539D ;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        margin-left: 40%;
+    }
+    .yellowButton {
+        background: #DEDE00;
+        width : 80%;
+        border-radius: 0.4em;
+        line-height: 200%;
+        float: right;
+    }
+    .blueButton {
+        background: #2ED0CB;
+        width : 80%;
+        border-radius: 0.4em;
+        line-height: 200%;
+        float: right;
+    }
+}
+@media (max-width: 576px) {
+    .redButton{
+        color: white;
+        background: #F45B69;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        float: right;
+
+    }
+    .purpleButton {
+        color: white;
+        background:#5B539D ;
+        border-radius: 0.4em;
+        width: 25%;
+        line-height: 200%;
+        float: right;
+    }
+    .yellowButton {
+        background: #DEDE00;
+        border-radius: 0.4em;
+        line-height: 200%;
+        font-size: x-small;
+        width: 100%;
+
+    }
+    .blueButton {
+        background: #2ED0CB;
+        border-radius: 0.4em;
+        line-height: 200%;
+        font-size: x-small;
+        width: 100%;
+    }
+}
+
+@media (min-width: 576px) {
+    .HouseText {
+        margin-right: 35%;
+    }
+}
+
+.leftTOright {
+    direction: ltr !important;
+}
+
+/*line css*/
+
+@media (min-width: 576px) {
+    .lineMargin {
+        margin-right: 32%;
+    }
+    .line {
+        border-width: 0.1em;
+        width: 70%;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .Houseimage {
+        float : right;
+        width:80%;
+        height:100%;
+    }
+}
