@@ -7,14 +7,17 @@ import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
 import './Account.css';
 import '../shared-styles.css';
-import '../reset.css'
+import '../reset.css';
+import NavBarDropdown from '../components/NavBarDropdown';
+import NavBarLogoLink from "../components/NavBarLogoLink";
+import PageTitleHeader from "../components/PageTitleHeader";
 
 class Account extends React.Component {
     render(){
         return (
             <div>
                 <NavBar />
-                <Header />
+                <PageTitleHeader text={"افزایش موجودی"}/>
                 <IncreaseBalance />
                 <Footer />
             </div>
@@ -22,97 +25,79 @@ class Account extends React.Component {
     }
 }
 
-class NavBar extends React.Component {
-  render() {
+function NavBar() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <Brand />
-            <div className="navbar-nav dropdown">
-                <div className="nav-item nav-link">
-                      <div className="shabnam nav-profile-purple"><i className="fa fa-smile-o fa-lg" /> ناحیه‌ی کاربری</div>
-                      <DropDown />
-                  </div>
-              </div>
+            <NavBarLogoLink/>
+            <NavBarDropdown/>
         </nav>
-    );
-  }
-}
-function Brand() {
-    return (
-        <a className="navbar-brand shabnam" href="../HomePage/homepage.html">
-            <img src={logo} width={30} height={30} className="d-inline-block align-top" alt="logo" />
-            <span className="khane-blue font-weight-bold">خانه‌به‌دوش</span>
-        </a>
-    );
-}
-class DropDown extends React.Component {
-    render() {
-        return (
-            <div className="dropdown-content shabnam dropdown-responsive pt-4">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="text-dark h5">بهنام همایون</div>
-                    </div>
-                    <div className="row py-3 grey-color">
-                        <div className="col-5 px-0 text-right">اعتبار</div>
-                        <div className="col-7 px-0 text-left">۲۰۰۰۰ تومان</div>
-                    </div>
-                    <div className="row py-4 justify-content-center">
-                        <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
-                            khane-blue-background">افزایش اعتبار</button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
-
-
-function Header() {
-    return (
-        <div className="container-fluid">
-            <div className="row rtl">
-                <div className="shabnam khane-blue font-weight-bold text-right header_desktop header_mobile">افزایش موجودی</div>
-            </div>
-        </div>
     );
 }
 
 class IncreaseBalance extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            balance : '۲۰۰۰'
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(input){
+        this.setState({balance : input});
+        // change here real balance value
+    }
+
     render() {
         return (
             <div className="container">
                 <div className="row rtl shabnam">
                     <div className="col-12 col-sm-6 text-right balance grey-color font-weight-light ">
-                        <CurrentBalance />
+                        <CurrentBalance balance={this.state.balance}/>
                     </div>
                     <div className="col-12 col-sm-6 input inputInc py-5">
-                        <Increase />
+                        <Increase handleClick={this.handleSubmit} />
                     </div>
                 </div>
             </div>
         );
     }
 }
-class CurrentBalance extends React.Component {
-    render() {
-        return (
-            <div>اعتبار کنونی
-                <span className="text-dark font-weight-bold shabnam"> ۲۰۰۰۰ </span>
-                تومان
-            </div>
-        );
-    }
+function CurrentBalance(props) {
+    return (
+        <div>اعتبار کنونی
+            <span className="text-dark font-weight-bold shabnam"> {props.balance} </span>
+            تومان
+        </div>
+    );
 }
 class Increase extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {balance : ''}
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleChange(event){
+        this.setState({balance : event.target.value});
+    }
+    handleClick(){
+        this.props.handleClick(this.state.balance);
+        this.setState({balance : ''});
+    }
+
     render() {
         return (
             <div>
                 <span className="shabnam grey-color small px-4 text-right">تومان</span>
                 <br />
                 <div className="form-group">
-                <input type="text" className="form-control grey-color placeholder-grey shabnam" placeholder="مبلغ مورد نظر" /><br />
-                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background">افزایش اعتبار</button>
+                <input type="text" className="form-control grey-color placeholder-grey shabnam"
+                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange}></input><br />
+                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br />
             </div>
