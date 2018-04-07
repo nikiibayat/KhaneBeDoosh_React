@@ -56,13 +56,29 @@ class HouseContent extends React.Component {
         // the user must save value of isPayed
         this.handleBalance = this.handleBalance.bind(this);
         this.handleNoDecrease = this.handleNoDecrease.bind(this);
+        this.InitializeStates = this.InitializeStates.bind(this);
 
+    }
+
+    // this is in fact the constructor
+    InitializeStates(url,phone,type,price,addr,area,desc,isPayed,balance,clicked){
+        this.setState({balance: balance});
+        this.setState({url: url});
+        this.setState({phone : phone});
+        this.setState({isPayed : isPayed});
+        this.setState({type: type});
+        this.setState({price: price});
+        this.setState({addr: addr});
+        this.setState({area: area});
+        this.setState({clicked: clicked});
+        this.setState({desc: desc});
     }
 
     handleBalance() {
         this.setState({clicked : 'true'});
         if (this.state.balance >= 1000 ){
             var newBalance = this.state.balance - 1000;
+            // here we should also the real user balance
             this.setState({balance: newBalance});
             this.setState({phone : this.state.phone});
             this.setState({isPayed : 'true'});
