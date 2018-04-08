@@ -1,4 +1,5 @@
 import React from 'react';
+import 'whatwg-fetch';
 import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
@@ -37,7 +38,7 @@ class IncreaseBalance extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            balance : '0'
+            balance : '۰'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -74,7 +75,10 @@ function CurrentBalance(props) {
 class Increase extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {balance : ''}
+        this.state = {
+            balance : '',
+            isOK : 'false'
+        }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -82,6 +86,8 @@ class Increase extends React.Component {
 
     handleChange(event){
         this.setState({balance : event.target.value});
+        if (this.state.balance >= 0)
+            this.setState({isOK : 'true'});
     }
     handleClick(){
         this.props.handleClick(this.state.balance);
@@ -95,7 +101,7 @@ class Increase extends React.Component {
                 <br />
                 <div className="form-group">
                 <input type="text" className="form-control grey-color placeholder-grey shabnam"
-                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange}></input><br />
+                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input><br />
                 <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br />

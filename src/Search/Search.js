@@ -1,4 +1,5 @@
 import React from 'react';
+import 'whatwg-fetch';
 import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';

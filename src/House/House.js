@@ -1,4 +1,5 @@
 import React from 'react';
+import 'whatwg-fetch';
 import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
@@ -40,19 +41,19 @@ class HouseContent extends React.Component {
         super(props);
 
         this.state = {
-            url : "/houseImages/" + "1.jpg",
-            phone : '09196332221',
-            type : 'کلنگی',
-            price : '۲۰۰۰۰۰۰۰۰',
-            addr : 'کارگر‌شمالی',
-            area : '۱۵۰۰۰',
-            desc : 'تخلیه عندالمطالبه',
+            url : '',
+            phone : '',
+            type : '',
+            price : '',
+            addr : '',
+            area : '',
+            desc : '',
             isPayed : 'false',
-            balance : '2000',
+            balance : '',
             clicked : 'false',
         }
 
-
+        this.ID = '';
         // the user must save value of isPayed
         this.handleBalance = this.handleBalance.bind(this);
         this.handleNoDecrease = this.handleNoDecrease.bind(this);
@@ -61,7 +62,7 @@ class HouseContent extends React.Component {
     }
 
     // this is in fact the constructor
-    InitializeStates(url,phone,type,price,addr,area,desc,isPayed,balance,clicked){
+    InitializeStates(url,phone,type,price,addr,area,desc,isPayed,balance,clicked,ID){
         this.setState({balance: balance});
         this.setState({url: url});
         this.setState({phone : phone});
@@ -72,6 +73,7 @@ class HouseContent extends React.Component {
         this.setState({area: area});
         this.setState({clicked: clicked});
         this.setState({desc: desc});
+        this.ID = ID;
     }
 
     handleBalance() {
@@ -141,6 +143,9 @@ function PhoneNumber(props) {
                 <hr className="lineMargin line" />
             </div>
         );
+    }
+    else {
+        return(null);
     }
 
 }
@@ -237,14 +242,9 @@ class ShowPhoneNumberButton extends React.Component {
                 );
             }
             else {
-                if(this.props.isPayed === 'false') {
-                    return(
-                        <LowBalance />
-                    );
-                }
-                else if (this.props.isPayed === 'true'){
-                    return(null);
-                }
+                return(
+                    <LowBalance />
+                );
             }
         }
     }
