@@ -30,20 +30,48 @@ class Search extends React.Component {
 }
 
 class SearchResultsList extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            dealType : '',
+            position : '',
+            imageName : '',
+            area : '',
+            address : '',
+            price : '',
+            rentPrice : ''
+        }
+
+        this.resultBoxes = '';
+        this.createResultList = this.createResultList.bind(this);
+
+    }
+
+    createResultList(){
+        // here we should have a list of homes returned after search is done!
+        const houses = [];
+        for(let i=0 ; i < houses.length ; i++){
+            this.setState({dealType : houses[i].dealType});
+            this.setState({position : houses[i].position});
+            this.setState({imageName : houses[i].imageName});
+            this.setState({area : houses[i].area});
+            this.setState({address : houses[i].address});
+            this.setState({price : houses[i].price});
+            this.setState({rentPrice : houses[i].rentPrice});
+
+            this.resultBoxes += <ResultBox dealType={this.state.dealType} position={this.state.position}
+                                           imageName={this.state.imageName} area={this.state.area}
+                                           address={this.state.address} price={this.state.price} rentPrice={this.state.rentPrice}></ResultBox>;
+        }
+
+    }
     render() {
+
         return (
             <div className="container-fluid">
                 <div className="row shabnam mobileFont">
-                    <ResultBox dealType={"sale"} position={"left"} imageName={"2.jpg"} area={"۴۰۰۰"}
-                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
-                    <ResultBox dealType={"rent"} position={"right"} imageName={"1.jpg"} area={"۵۰۰۰"}
-                               address={"شایر"} price={"۲۰۰۰۰۰۰۰"} rentPrice={"۱۵۰۰۰۰۰۰"}/>
-                    <ResultBox dealType={"sale"} position={"left"} imageName={"3.jpg"} area={"۴۰۰۰"}
-                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
-                    <ResultBox dealType={"sale"} position={"right"} imageName={"2.jpg"} area={"۴۰۰۰"}
-                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
-                    <ResultBox dealType={"sale"} position={"left"} imageName={"5.jpg"} area={"۴۰۰۰"}
-                               address={"کارگر شمالی"} price={"۲۰۰۰۰۰۰۰"}/>
+                    {this.resultBoxes}
                 </div>
             </div>
         );

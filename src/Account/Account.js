@@ -1,7 +1,6 @@
 import React from 'react';
 import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import logo from '../assets/logo.png';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
@@ -38,7 +37,7 @@ class IncreaseBalance extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            balance : '۲۰۰۰'
+            balance : '0'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
