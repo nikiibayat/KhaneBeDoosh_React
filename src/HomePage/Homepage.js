@@ -32,16 +32,10 @@ class UpperBody extends React.Component {
 
     render() {
         return (
-            <div class="crossfade">
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
-                <div className="">
-                    <NavBar/>
-                    <UpperBodyContent numOfColumns={8}/>
-                </div>
+            <div class="upper-body">
+                <NavBar/>
+                <UpperBodyContent numOfColumns={8}/>
+
             </div>
         );
     }
@@ -92,6 +86,13 @@ class UpperBodyContent extends React.Component {
     render() {
         return (
             <div className="container-fluid">
+                {/*<div className="crossfade">*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*</div>*/}
                 <Logo/>
                 <SearchBox numOfColumns={this.props.numOfColumns}/>
             </div>
@@ -121,6 +122,7 @@ class LowerBody extends React.Component {
 
     render() {
         return (
+
             <div className="lower-body pb-md-5 pb-4">
                 <div class="rtl card-deck col-md-8 col-10 mx-auto px-0 mb-5 my-2 cards">
                     <EasyBox/>
