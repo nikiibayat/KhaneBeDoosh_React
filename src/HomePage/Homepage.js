@@ -10,16 +10,12 @@ import easy from '../assets/icons/726446.svg';
 import reliable from '../assets/icons/726488.svg';
 import comprehensive from '../assets/icons/726499.svg';
 import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
-import SearchForm from "../components/SearchForm";
+import SearchBox from "../components/SearchBox";
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
-import SearchBox from "../components/SearchBox";
 
 class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -33,32 +29,19 @@ class HomePage extends React.Component {
 }
 
 class UpperBody extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
-            <div class="crossfade">
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
-                <div className="">
-                    <NavBar/>
-                    <UpperBodyContent numOfColumns={8}/>
-                </div>
+            <div class="upper-body">
+                <NavBar/>
+                <UpperBodyContent numOfColumns={8}/>
+
             </div>
         );
     }
 }
 
 class NavBar extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return (
@@ -75,9 +58,6 @@ class NavBar extends React.Component {
 }
 
 class DropDown extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -102,14 +82,17 @@ class DropDown extends React.Component {
 }
 
 class UpperBodyContent extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return (
             <div className="container-fluid">
+                {/*<div className="crossfade">*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*<figure></figure>*/}
+                {/*</div>*/}
                 <Logo/>
                 <SearchBox numOfColumns={this.props.numOfColumns}/>
             </div>
@@ -118,9 +101,6 @@ class UpperBodyContent extends React.Component {
 }
 
 class Logo extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -139,12 +119,10 @@ class Logo extends React.Component {
 }
 
 class LowerBody extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
+
             <div className="lower-body pb-md-5 pb-4">
                 <div class="rtl card-deck col-md-8 col-10 mx-auto px-0 mb-5 my-2 cards">
                     <EasyBox/>
