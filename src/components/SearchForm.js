@@ -35,6 +35,24 @@ class SearchForm extends React.Component {
     }
 
     handleSubmit(event) {
+        let url = "http://localhost:8080/houses?minArea=" + this.state.Area +"&buildingType=" +
+        (this.state.BuildingType === 'BuildingType') ? '' : this.state.BuildingType
+        +'&dealType=' + (this.state.DealType) === 'rent' ? '1' : '0' + '&maxPrice' + this.state.Price ;
+        fetch( url , {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(data => {
+                console.log(data);
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
         this.setState({BuildingType: 'BuildingType'});
         this.setState({Price: ''});
         this.setState({Area: ''});

@@ -30,27 +30,25 @@ class NavBarDropdown extends React.Component{
 
 
     componentDidMount(){
-        // let url = '/users?username=behnamhomayoon';
-        // fetch( url , {
-        //     method: 'GET',
-        // })
-        //
-        //     .then(response => { return response.json();})
-        //     .then(responseData => {console.log(responseData); return responseData;})
-        //     .then(data => {
-        //         this.setState({name: data.individual.name});
-        //         this.setState({balance: data.individual.balance});
-        //     })
-        //     .catch(function(error) {
-        //     console.log('request failed', error)
-        // })
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch( url , {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(data => {
+                this.setState({name: data.individual.name});
+                this.setState({balance: data.individual.balance});
+            })
+            .catch(function(error) {
+            console.log('request failed', error);
+        })
 
 
-        var s = '{"individual":{"balance":0,"name":"بهنام همایون"}}';
-        var data = JSON.parse(s);
-        console.log(data.individual.name);
-        this.setState({name: data.individual.name});
-        this.setState({balance: data.individual.balance});
 
     }
 
@@ -70,7 +68,7 @@ class NavBarDropdown extends React.Component{
                             </div>
                             <div className="row py-4 justify-content-center">
                                 <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
-                                khane-blue-background" onClick={this.IncreaseBalance}>افزایش اعتبار</button>
+                                khane-blue-background">افزایش اعتبار</button>
                             </div>
                         </div>
                     </div>

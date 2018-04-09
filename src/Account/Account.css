@@ -59,4 +59,6 @@ img.social-icon {
   vertical-align: middle;
 }
 
-
+.redError {
+  background-color: #efa2a9;
+}

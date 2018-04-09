@@ -38,15 +38,74 @@ class IncreaseBalance extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            balance : '۰'
+            balance : '۰',
+            success: 'true'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkStatus = this.checkStatus.bind(this);
     }
 
     handleSubmit(input){
-        this.setState({balance : input});
-        // change here real balance value
+        fetch('http://localhost:8080/balance', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            // body: "balance=" + input
+            body : JSON.stringify({balance : input})
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(data => {
+                if (data.msg === "Error in increasing balance! Try Again!"){
+                    this.setState({success: "false"});
+                    alert('there');
+                }
+                else {
+                    var newBalance = Number(this.state.balance) + Number(input);
+                    this.setState({balance : newBalance});
+                    alert('here');
+                }
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
+
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else {
+            var error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+
+    componentDidMount(){
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch( url , {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(responseData => {return responseData;})
+            .then(data => {
+                this.setState({balance: data.individual.balance});
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+
+
+
     }
 
     render() {
@@ -57,7 +116,7 @@ class IncreaseBalance extends React.Component {
                         <CurrentBalance balance={this.state.balance}/>
                     </div>
                     <div className="col-12 col-sm-6 input inputInc py-5">
-                        <Increase handleClick={this.handleSubmit} />
+                        <Increase handleClick={this.handleSubmit} success={this.state.success} />
                     </div>
                 </div>
             </div>
@@ -100,8 +159,14 @@ class Increase extends React.Component {
                 <span className="shabnam grey-color small px-4 text-right">تومان</span>
                 <br />
                 <div className="form-group">
-                <input type="text" className="form-control grey-color placeholder-grey shabnam"
-                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input><br />
+                    {(this.props.success === "false") ? (
+                    <input type="text" className={"form-control grey-color placeholder-grey shabnam redError"}
+                           placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
+                    ) : (
+                <input type="text" className={"form-control grey-color placeholder-grey shabnam"}
+                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
+                    )}
+                    <br />
                 <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br />
