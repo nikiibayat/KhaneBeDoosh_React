@@ -10,16 +10,12 @@ import easy from '../assets/icons/726446.svg';
 import reliable from '../assets/icons/726488.svg';
 import comprehensive from '../assets/icons/726499.svg';
 import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
-import SearchForm from "../components/SearchForm";
+import SearchBox from "../components/SearchBox";
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
-import SearchBox from "../components/SearchBox";
 
 class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -33,9 +29,6 @@ class HomePage extends React.Component {
 }
 
 class UpperBody extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -55,10 +48,6 @@ class UpperBody extends React.Component {
 }
 
 class NavBar extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return (
@@ -75,9 +64,6 @@ class NavBar extends React.Component {
 }
 
 class DropDown extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -102,10 +88,6 @@ class DropDown extends React.Component {
 }
 
 class UpperBodyContent extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return (
@@ -118,9 +100,6 @@ class UpperBodyContent extends React.Component {
 }
 
 class Logo extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -139,9 +118,6 @@ class Logo extends React.Component {
 }
 
 class LowerBody extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
