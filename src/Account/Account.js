@@ -11,6 +11,8 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
+import {BrowserRouter, Link, Route} from 'react-router-dom'
+
 
 
 class Account extends React.Component {
