@@ -11,8 +11,7 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
-import {BrowserRouter, Link, Route} from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 
 
 class Account extends React.Component {
@@ -31,9 +30,9 @@ class Account extends React.Component {
 function NavBar() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            {/*<Link to={'/'}>*/}
+            <Link to={'/'}>
                 <NavBarLogoLink/>
-            {/*</Link>*/}
+            </Link>
             <NavBarDropdown/>
         </nav>
     );
