@@ -12,6 +12,7 @@ import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
 
+
 class Account extends React.Component {
     render(){
         return (
@@ -28,7 +29,9 @@ class Account extends React.Component {
 function NavBar() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <NavBarLogoLink/>
+            {/*<Link to={'/'}>*/}
+                <NavBarLogoLink/>
+            {/*</Link>*/}
             <NavBarDropdown/>
         </nav>
     );
