@@ -14,7 +14,7 @@ ReactDOM.render(
         <div>
             <Route exact={true} path='/' component={HomePage}/>
             <Route path='/Account' component={Account}/>
-            <Route path='/AddHouse' component={AddMelk}/>
+            {/*<Route path='/AddHouse' component={AddMelk}/>*/}
         </div>
     </BrowserRouter>,
     document.getElementById('root'));
