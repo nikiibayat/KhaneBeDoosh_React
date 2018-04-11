@@ -10,7 +10,7 @@ class SearchForm extends React.Component {
             BuildingType: '',
             Price: '',
             Area: '',
-            DealType: 'rent',
+            DealType: '1',
 
         };
 
@@ -35,28 +35,31 @@ class SearchForm extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('here');
 
-        // console.log(url);
-        // fetch( url , {
-        //     method: 'GET',
-        //     headers:{
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json',
-        //     }
-        // })
-        //     .then(this.checkStatus)
-        //     .then(response => {return response.json();})
-        //     .then(data => {
-        //         console.log(data);
-        //     })
-        //     .catch(function(error) {
-        //         console.log('request failed', error);
-        //     })
-        this.setState({BuildingType: 'BuildingType'});
-        this.setState({Price: ''});
-        this.setState({Area: ''});
-        this.setState({DealType: 'rent'});
+        let url = 'http://localhost:8080/houses?' +
+            'minArea=' + this.state.Area +
+            '&buildingType=' + this.state.BuildingType +
+            '&dealType=' + this.state.DealType +
+            '&maxPrice=' + this.state.Price ;
+
+        console.log(url);
+
+        fetch(url)
+            .then(this.checkStatus)
+            .then((response) => response.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+
+        this.setState({BuildingType : ''});
+        this.setState({Price : ''});
+        this.setState({Area : ''});
+        this.setState({DealType : '1'});
+
+
     }
 
     render() {
@@ -72,7 +75,7 @@ class SearchForm extends React.Component {
                         <DealType handleDealType={this.handleDealType} DealType={this.state.DealType} />
                     </div>
                     <div className="col-md-5">
-                        <button type="submit" onSubmit={this.handleSubmit}
+                        <button type="button" onClick={this.handleSubmit}
                                 className="btn btn-click-me text-center text-light khane-blue-background search-button">جست‌وجو
                         </button>
                     </div>
@@ -149,7 +152,7 @@ class AreaForm extends React.Component {
                 <label className="form-check-label px-2 text-white small" >متر
                     مربع</label>
                 <input type="text" className="form-control form-inline rtl shabnam placeholder-grey"
-                       id="area" name="minArea" placeholder="حداکثر متراژ" value={this.props.Area} onChange={this.handleChange} />
+                       id="area" name="minArea" placeholder="حداقل متراژ" value={this.props.Area} onChange={this.handleChange} />
             </div>
         );
     }
@@ -170,15 +173,15 @@ class DealType extends React.Component {
         return (
             <div>
                 <div className="form-check form-check-inline float-right">
-                    <input className="form-check-input" type="radio" name="dealType" id="radio-rent"
-                           value="1" checked={this.props.DealType === 'rent'} onChange={this.handleChange}/>
+                    <input className="form-check-input" type="radio" name="dealType"
+                           value="1" checked={this.props.DealType === '1'} onChange={this.handleChange}/>
                     <label className="form-check-label px-2 text-white" >
                         رهن و اجاره
                     </label>
                 </div>
                 <div className="form-check form-check-inline float-right">
-                    <input className="form-check-input" type="radio" name="dealType" id="radio-sell" value="0"
-                           onChange={this.handleChange} checked={this.props.DealType === 'sell'}/>
+                    <input className="form-check-input" type="radio" name="dealType" value="0"
+                           onChange={this.handleChange} checked={this.props.DealType === '0'}/>
                     <label className="form-check-label px-2 text-white" >
                         خرید
                     </label>
