@@ -1,7 +1,9 @@
 import React from "react";
 import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../shared-styles.css';
-import '../reset.css'
+import '../reset.css';
+import {withRouter} from "react-router-dom";
+
 
 class SearchForm extends React.Component {
     constructor(props) {
@@ -48,6 +50,7 @@ class SearchForm extends React.Component {
             .then(data => {
                 this.props.handleHouses(data);
                 console.log('form', data);
+                this.props.history.push("/search");
             })
             .catch(function(error) {
                 console.log('request failed', error);
@@ -85,7 +88,7 @@ class SearchForm extends React.Component {
     }
 }
 
-export default SearchForm;
+export default withRouter(SearchForm);
 
 class BuildingTypeForm extends React.Component {
     constructor(props) {
