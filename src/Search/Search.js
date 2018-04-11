@@ -85,11 +85,7 @@ class ResultBox extends React.Component {
         return (
             <div className="col-12 col-sm-6 rtl">
                 <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
-<<<<<<< HEAD
-                    <a href="/House" onClick={this.handleBoxClick}>
-=======
-                    <Link to="/House" onClick={this.handleBoxClick()}>
->>>>>>> 47b58dec654e45602d04c8c851995d484e69c072
+                    <Link to="/House" onClick={this.handleBoxClick}>
                         {(dealType === "sale") ? (
                             <div className="btn mt-2  purpleBu">فروش</div>
                         ) : (
