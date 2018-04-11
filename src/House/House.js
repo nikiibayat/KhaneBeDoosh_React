@@ -302,7 +302,7 @@ function Image(props) {
     // process.env.PUBLIC_URL
     return(
         <div>
-        {(props.url !== null) ?
+        {(props.url != null) ?
             (<img src={props.url} alt="house_picture" className="imageRadius Houseimage"/>) :
             (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius Houseimage"/>)}
         </div>

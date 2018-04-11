@@ -90,7 +90,7 @@ class ResultBox extends React.Component {
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
-                        {(houseImage !== null) ?
+                        {(houseImage != null) ?
                             (<img src={houseImage} alt="house_picture" className="imageRadius dimension"/>) :
                             (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius dimension"/>)}
                         <p className="text-right px-4">
