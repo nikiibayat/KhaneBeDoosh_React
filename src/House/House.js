@@ -183,7 +183,7 @@ class HouseContent extends React.Component {
                     </div>
                     <div className="col-12 col-md-1"/>
                     <div className="col-12 col-md-7">
-                        <Image  url={process.env.PUBLIC_URL + this.state.url} />
+                        <Image  url={this.state.url} />
                     </div>
                     <div className="col12 col-md-4"/>
                     <div className="col12 col-md-1"/>
