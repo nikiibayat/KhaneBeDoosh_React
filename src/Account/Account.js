@@ -85,7 +85,7 @@ class IncreaseBalance extends React.Component {
         } else {
             this.setState({success: "false"});
             let error = new Error(response.statusText)
-            error.response = response
+            error.response = response;
             throw error
         }
     }
