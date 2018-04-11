@@ -41,6 +41,7 @@ class SearchResultsList extends React.Component {
 
     render() {
         const handler = this.props.handleID;
+        console.log(this.data.imageURL);
         return (
             <div className="container-fluid">
                 <div className="row shabnam mobileFont">
@@ -91,9 +92,9 @@ class ResultBox extends React.Component {
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
-                        {(houseImage !== null) ?
+                        {(houseImage ==='undefined') ?
                             (<img src={houseImage} alt="house_picture" className="imageRadius dimension"/>) :
-                            (<img src={nopic} alt="house_picture" className="imageRadius dimension"/>)}
+                            (<img src={nopic} alt="no-pic" className="imageRadius dimension"/>)}
                         <p className="text-right px-4">
                             <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
