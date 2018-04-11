@@ -21,7 +21,7 @@ class Search extends React.Component {
                 <NavBar/>
                 <PageTitleHeader text={"نتایج جست‌وجو"}/>
                 <MoreInfoText/>
-                <SearchResultsList houses={this.props.houses}/>
+                <SearchResultsList houses={this.props.houses} passID={this.props.handleID}/>
                 <SearchAgainText/>
                 <SearchBox numOfColumns={9} handleHouses={this.props.handleHouses}/>
                 <br/><br/>
@@ -40,6 +40,7 @@ class SearchResultsList extends React.Component {
     }
 
     render() {
+        const id = this.props.passID;
         return (
             <div className="container-fluid">
                 <div className="row shabnam mobileFont">
@@ -49,7 +50,7 @@ class SearchResultsList extends React.Component {
                             return <ResultBox key={i} dealType={data.dealType} position={(i%2===0)?'left':'right'}
                                               imageURL={data.imageURL} area={data.area}
                                               address={data.address} basePrice={data.basePrice} sellPrice={data.sellPrice}
-                                              rentPrice={data.rentPrice} ID={data.id}></ResultBox>;
+                                              rentPrice={data.rentPrice} ID={data.id} handleID={id}></ResultBox>;
 
                         }) ) : (null)
                     }
@@ -68,7 +69,7 @@ class ResultBox extends React.Component {
     }
 
     handleBoxClick(){
-        // this.props.handleID(this.props.ID);
+        this.props.handleID(this.props.ID);
     }
 
     render() {
@@ -83,7 +84,7 @@ class ResultBox extends React.Component {
         return (
             <div className="col-12 col-sm-6 rtl">
                 <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
-                    <a href="/House" onClick={this.handleBoxClick()}>
+                    <a href="/House" onClick={this.handleBoxClick}>
                         {(dealType === "sale") ? (
                             <div className="btn mt-2  purpleBu">فروش</div>
                         ) : (
