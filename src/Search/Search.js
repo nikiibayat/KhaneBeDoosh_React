@@ -37,7 +37,6 @@ class SearchResultsList extends React.Component {
         super(props);
         // this.data = {"houses":[{"area":244,"address":"باغ شاطر","description":"ز خیل خانه برانند بی\u200cنوایی را، و گر تو جور کنی رای ما دگر نشود","sellPrice":0,"dealType":1,"dealTypeString":"رهن و اجاره","expireTime":"2018-02-11","phone":"174-78-7021","imageURL":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Cambo_169.jpg/320px-Cambo_169.jpg","persianBuildingType":"ویلایی","id":"0693c146-dd33-487d-81eb-7424b48addc5","rentPrice":113849,"basePrice":0,"buildingType":"villa"},{"area":267,"address":"پامنار","description":"هر که در خانه چنو سرو روانی دارد، کافران از بت بی\u200cجان چه تمتع دارند","sellPrice":0,"dealType":1,"dealTypeString":"رهن و اجاره","expireTime":"2018-02-11","phone":"256-85-5592","imageURL":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Ranch_style_home_in_Salinas%2C_California.JPG/320px-Ranch_style_home_in_Salinas%2C_California.JPG","persianBuildingType":"ویلایی","id":"8179000e-166b-44dc-a24c-f57fb7c030bc","rentPrice":116771,"basePrice":0,"buildingType":"villa"},{"area":288,"address":"امامزاده یحیی","description":"گر محتسب به خانه خمار بگذرد، سعدی به خویشتن نتوان رفت سوی دوست","sellPrice":0,"dealType":1,"dealTypeString":"رهن و اجاره","expireTime":"2018-02-11","phone":"743-18-1476","imageURL":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/La_caba%C3%B1a_de_Alpina.jpg/320px-La_caba%C3%B1a_de_Alpina.jpg","persianBuildingType":"ویلایی","id":"ca453f36-fa9d-445b-86d9-06209af532a1","rentPrice":13079,"basePrice":0,"buildingType":"villa"}]}
         this.data = this.props.houses;
-        console.log("houses: "+ this.props.houses.toString());
     }
 
     render() {
@@ -47,7 +46,7 @@ class SearchResultsList extends React.Component {
                 <div className="row shabnam mobileFont">
                     {
                         (this.data.length !== 0) ? (
-                        this.data.houses.map(function(data, handleID, i){
+                        this.data.houses.map(function(data, i){
                             return <ResultBox key={i} dealType={data.dealType} position={(i%2===0)?'left':'right'}
                                               imageURL={data.imageURL} area={data.area}
                                               address={data.address} basePrice={data.basePrice} sellPrice={data.sellPrice}
@@ -83,7 +82,7 @@ class ResultBox extends React.Component {
         const rentPrice = this.props.rentPrice;
         return (
             <div className="col-12 col-sm-6 rtl">
-                <div className={"resultbox " + ((position === "right") ? "boxMargin" : "")}>
+                <div className={"resultbox " + ((position === "right") ? " boxMargin" : "")}>
                     <Link to="/House" onClick={this.handleBoxClick}>
                         {(dealType === "sale") ? (
                             <div className="btn mt-2  purpleBu">فروش</div>

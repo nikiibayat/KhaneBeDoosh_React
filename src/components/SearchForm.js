@@ -49,7 +49,6 @@ class SearchForm extends React.Component {
             .then((response) => response.json())
             .then(data => {
                 this.props.handleHouses(data);
-                console.log('form', data);
                 this.props.history.push("/search");
             })
             .catch(function(error) {
