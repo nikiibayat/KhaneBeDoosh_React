@@ -12,7 +12,7 @@ class SearchForm extends React.Component {
             BuildingType: '',
             Price: '',
             Area: '',
-            DealType: '1',
+            DealType: '',
 
         };
 
@@ -49,7 +49,6 @@ class SearchForm extends React.Component {
             .then((response) => response.json())
             .then(data => {
                 this.props.handleHouses(data);
-                console.log('form', data);
                 this.props.history.push("/search");
             })
             .catch(function(error) {
@@ -59,7 +58,7 @@ class SearchForm extends React.Component {
         this.setState({BuildingType : ''});
         this.setState({Price : ''});
         this.setState({Area : ''});
-        this.setState({DealType : '1'});
+        this.setState({DealType : ''});
 
 
 
@@ -176,8 +175,8 @@ class DealType extends React.Component {
         return (
             <div>
                 <div className="form-check form-check-inline float-right">
-                    <input className="form-check-input" type="radio" name="dealType"
-                           value="1" checked={this.props.DealType === '1'} onChange={this.handleChange}/>
+                    <input className="form-check-input" type="radio" name="dealType" value="1"
+                           checked={this.props.DealType === '1'} onChange={this.handleChange}/>
                     <label className="form-check-label px-2 text-white" >
                         رهن و اجاره
                     </label>
