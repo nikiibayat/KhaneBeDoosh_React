@@ -14,7 +14,7 @@ import PageTitleHeader from "../components/PageTitleHeader";
 
 import {Link} from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
-// import URLSearchParams from 'url-search-params';
+import URLSearchParams from 'url-search-params';
 
 
 class Account extends React.Component {
@@ -47,35 +47,35 @@ class IncreaseBalance extends React.Component {
         this.state = {
             balance : '۰',
             success: 'true'
-        }
+        };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkStatus = this.checkStatus.bind(this);
     }
 
 
-    // handleSubmit(input){
-    //
-    //     const searchParams = new URLSearchParams();
-    //     searchParams.set('balance', Number(input));
-    //
-    //     fetch('http://localhost:8080/balance', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json'
-    //         },
-    //         body : searchParams
-    //     })
-    //         .then(this.checkStatus)
-    //         .then(response => {return response.json();})
-    //         .then(data => {
-    //             var newBalance = Number(this.state.balance) + Number(input);
-    //             this.setState({balance : newBalance});
-    //         })
-    //         .catch(function(error) {
-    //             console.log('request failed', error);
-    //         })
-    // }
+    handleSubmit(input){
+
+        const searchParams = new URLSearchParams();
+        searchParams.set('balance', Number(input));
+
+        fetch('http://localhost:8080/balance', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body : searchParams
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(data => {
+                let newBalance = Number(this.state.balance) + Number(input);
+                this.setState({balance : newBalance});
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
 
 
     checkStatus(response) {
@@ -84,7 +84,7 @@ class IncreaseBalance extends React.Component {
             return response;
         } else {
             this.setState({success: "false"});
-            var error = new Error(response.statusText)
+            let error = new Error(response.statusText)
             error.response = response
             throw error
         }

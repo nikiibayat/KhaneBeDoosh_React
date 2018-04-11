@@ -15,7 +15,7 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(
     <BrowserRouter>
         <div>
-            <Route exact={true} path='/' component={HomePage} />
+            <Route exact={true} path='/' component={HomePage}/>
             <Route path='/balance' component={Account} />
             <Route path='/houses' component={AddMelk} />
             <Route path='/Search' component={Search} />
