@@ -99,11 +99,11 @@ class ResultBox extends React.Component {
                             <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
                                 <span className="px-2 purple">
-                                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                                <i className="fa fa-map-marker" aria-hidden="true"/>
                                 </span>
                             ) : (
                                 <span className="px-2 red">
-                                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                                <i className="fa fa-map-marker" aria-hidden="true"/>
                                 </span>
                             )}
                             {address}

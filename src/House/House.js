@@ -58,11 +58,8 @@ class HouseContent extends React.Component {
             dealType : ''
         }
 
-        // this.ID = '0693c146-dd33-487d-81eb-7424b48addc5';
         this.ID = this.props.id;
-
         this.handleBalance = this.handleBalance.bind(this);
-        this.handleNoDecrease = this.handleNoDecrease.bind(this);
         this.InitializeHouse = this.InitializeHouse.bind(this);
         this.isPayed = this.isPayed.bind(this);
         this.checkStatus = this.checkStatus.bind(this);
@@ -90,7 +87,9 @@ class HouseContent extends React.Component {
             })
             .then(data => {
 
-                this.setState({url: data.house.imageURL});
+                // const houseImage = (data.house.imageURL !== null) ? data.house.imageURL : {nopic} ;
+
+                this.setState({url: data.house.imageURL });
                 this.setState({phone : data.house.phone});
                 this.setState({type: data.house.persianBuildingType });
                 this.setState({price: data.house.sellPrice });
@@ -110,6 +109,7 @@ class HouseContent extends React.Component {
 
     isPayed(){
         let url = 'http://localhost:8080/users?username=behnamhomayoon&houseID=' + this.ID;
+        console.log(url);
         fetch(url, {
             method: 'GET',
             headers: {
@@ -132,7 +132,7 @@ class HouseContent extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
-            return response
+            return response;
         } else {
             let error = new Error(response.statusText)
             error.response = response
@@ -142,7 +142,7 @@ class HouseContent extends React.Component {
 
     handleBalance() {
         this.setState({clicked : 'true'});
-        let url = 'http://localhost:8080/users?username=behnamhomayoon&houseID=' + this.ID + '/phone';
+        let url = 'http://localhost:8080/houses/' + this.ID + '/phone';
         fetch(url, {
             method: 'GET',
             headers: {
@@ -151,17 +151,22 @@ class HouseContent extends React.Component {
             }
         })
             .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(data => {
+                if(data.purchaseSuccessStatus === "true"){
+                    this.setState({hasPayed : true});
+                }
+                else if(data.purchaseSuccessStatus === "false"){
+                    alert('not in somewhere good');
+                    this.setState({hasPayed : false});
+                }
+            })
             .catch(function(error) {
                 console.log('request failed', error);
             });
 
-        this.isPayed();
     }
 
-    handleNoDecrease(){
-        this.setState({clicked : 'true'});
-        this.setState({phone : this.state.phone});
-    }
 
     render() {
         return(
@@ -294,9 +299,15 @@ function Description(props) {
 }
 
 function Image(props) {
+    // process.env.PUBLIC_URL
     return(
-        <img src={props.url} alt="house_picture" className="imageRadius Houseimage" />
-    );
+        <div>
+        {(props.url !== null) ?
+            (<img src={props.url} alt="house_picture" className="imageRadius Houseimage"/>) :
+            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius Houseimage"/>)}
+        </div>
+        );
+
 }
 
 class ShowPhoneNumberButton extends React.Component {
@@ -304,15 +315,11 @@ class ShowPhoneNumberButton extends React.Component {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleNoDecrease = this.handleNoDecrease.bind(this);
 
     }
 
     handleChange (){
         this.props.handleBalance();
-    }
-    handleNoDecrease(){
-        this.props.handleNoDecrease();
     }
 
     render(){
@@ -320,7 +327,7 @@ class ShowPhoneNumberButton extends React.Component {
         if(this.props.hasPayed === true) {
             if (this.props.clicked === 'false') {
                 return (
-                    <ShowPhone handleBalance={this.handleNoDecrease}/>
+                    <ShowPhone handleBalance={this.handleChange}/>
                 );
             }
             else {

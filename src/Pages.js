@@ -24,6 +24,7 @@ class Pages extends React.Component {
         this.setState({id: houseID})
     }
 
+
     render() {
         return (
             <BrowserRouter>
