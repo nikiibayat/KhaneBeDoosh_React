@@ -12,7 +12,6 @@ import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
 
-import {Link} from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import URLSearchParams from 'url-search-params';
 

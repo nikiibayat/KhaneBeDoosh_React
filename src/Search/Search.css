@@ -18,7 +18,7 @@ a:active {
 
 /*button css*/
 @media (min-width: 577px) {
-    .redButton{
+    .redB {
         color: white;
         background: #F45B69;
         position: absolute;
@@ -27,7 +27,7 @@ a:active {
         line-height: 95%;
         margin-right: 47%;
     }
-    .purpleButton {
+    .purpleB {
         color: white;
         background:#5B539D ;
         position: absolute;
@@ -38,7 +38,7 @@ a:active {
     }
 }
 @media (max-width: 576px) {
-    .redButton{
+    .redB{
         color: white;
         background: #F45B69;
         position: absolute;
@@ -46,7 +46,7 @@ a:active {
         line-height: 90%;
         margin-right: 54%;
     }
-    .purpleButton {
+    .purpleB {
         color: white;
         background:#5B539D ;
         position: absolute;
@@ -86,11 +86,11 @@ a:active {
 }
 
 /*line css*/
-.line {
+.LineWidth {
     border-width: 0.1em;
     width: 90%;
 }
-.lineMargin {
+.MarginLine {
     margin-right: 5%;
 }
 

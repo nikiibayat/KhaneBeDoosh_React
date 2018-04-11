@@ -47,12 +47,12 @@ class NavBarDropdown extends React.Component {
                 this.setState({name: data.individual.name});
                 this.setState({balance: data.individual.balance});
             })
-            .catch(function (error) {
-                console.log('request failed', error);
-            })
-
+            .catch(function(error) {
+            console.log('request failed', error);
+        })
 
     }
+
 
     handleClick = () => {
         this.props.history.push("/balance");
