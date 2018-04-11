@@ -90,13 +90,13 @@ class ResultBox extends React.Component {
         return (
             <div className="col-12 col-sm-6 rtl">
                 <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
-                    <a href="#">
+                    <a href="/House">
                         {(dealType === "sale") ? (
                             <div className="btn mt-2  purpleButton">فروش</div>
                         ) : (
                             <div className="btn  mt-2 redButton">رهن و اجاره</div>
                         )}
-                        <img src={process.env.PUBLIC_URL + houseImage} alt="house image" className="imageRadius dimension"/>
+                        <img src={process.env.PUBLIC_URL + houseImage} alt="house" className="imageRadius dimension"/>
                         <p className="text-right px-4">
                             <span className="location">{area} متر مربع</span>
                             {(dealType === "sale") ? (

@@ -11,8 +11,10 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
+
 import {Link} from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
+import URLSearchParams from 'url-search-params';
 
 
 class Account extends React.Component {
@@ -33,9 +35,7 @@ class Account extends React.Component {
 function NavBar() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <Link to={'/'}>
-                <NavBarLogoLink/>
-            </Link>
+            <NavBarLogoLink/>
             <NavBarDropdown/>
         </nav>
     );
@@ -45,26 +45,82 @@ class IncreaseBalance extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            balance: '۰'
+            balance : '۰',
+            success: 'true'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    handleSubmit(input) {
-        this.setState({balance: input});
-        // change here real balance value
+
+    handleSubmit(input){
+
+        const searchParams = new URLSearchParams();
+        searchParams.set('balance', Number(input));
+
+        fetch('http://localhost:8080/balance', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body : searchParams
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(data => {
+                var newBalance = Number(this.state.balance) + Number(input);
+                this.setState({balance : newBalance});
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
+
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({success: "true"});
+            return response;
+        } else {
+            this.setState({success: "false"});
+            var error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+
+    componentDidMount(){
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch( url , {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {return response.json();})
+            .then(responseData => {return responseData;})
+            .then(data => {
+                this.setState({balance: data.individual.balance});
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+
+
     }
 
     render() {
         return (
             <div className="container">
                 <div className="row rtl shabnam">
-                    <div className="col-12 col-sm-6 text-right balance grey-color font-weight-light ">
+                    <div className="col-12 col-md-6 text-right balance grey-color font-weight-light ">
                         <CurrentBalance balance={this.state.balance}/>
                     </div>
-                    <div className="col-12 col-sm-6 input inputInc py-5">
-                        <Increase handleClick={this.handleSubmit}/>
+                    <div className="col-12 col-md-6 input inputInc py-5">
+                        <Increase handleClick={this.handleSubmit} success={this.state.success} />
                     </div>
                 </div>
             </div>
@@ -85,37 +141,41 @@ class Increase extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            balance: '',
-            isOK: 'false'
+            balance: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({balance: event.target.value});
-        if (this.state.balance >= 0)
-            this.setState({isOK: 'true'});
-    }
 
-    handleClick() {
-        this.props.handleClick(this.state.balance);
-        this.setState({balance: ''});
+    handleChange(event){
+        if (Number(event.target.value) >= 0){
+            this.setState({balance : event.target.value});
+        }
+    }
+    handleClick(){
+        if(this.state.balance !== '') {
+            this.props.handleClick(this.state.balance);
+            this.setState({balance: ''});
+        }
     }
 
     render() {
         return (
             <div>
                 <span className="shabnam grey-color small px-4 text-right">تومان</span>
-                <br/>
-                <div className="form-group">
-                    <input type="text" className="form-control grey-color placeholder-grey shabnam"
-                           placeholder="مبلغ مورد نظر" value={this.state.balance}
-                           onChange={this.handleChange}></input><br/>
-                    <button type="button" className="btn btn-click-me text-center text-light khane-blue-background"
-                            onClick={this.handleClick}>افزایش اعتبار
-                    </button>
+                <br />
+                <div className="form-group balanceInput">
+                    {(this.props.success === "false") ? (
+                    <input type="text" className={"form-control grey-color placeholder-grey shabnam redError"}
+                           placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
+                    ) : (
+                <input type="text" className={"form-control grey-color placeholder-grey shabnam"}
+                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
+                    )}
+                    <br />
+                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background buttonMargin" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br/>
             </div>
