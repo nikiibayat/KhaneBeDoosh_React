@@ -11,7 +11,7 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
-import { Link } from 'react-router-dom'
+import URLSearchParams from 'url-search-params';
 
 
 class Account extends React.Component {
@@ -49,27 +49,22 @@ class IncreaseBalance extends React.Component {
     }
 
     handleSubmit(input){
+
+        const searchParams = new URLSearchParams();
+        searchParams.set('balance', Number(input));
+
         fetch('http://localhost:8080/balance', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Accept': 'application/json'
             },
-            // body: "balance=" + input
-            body : JSON.stringify({balance : input})
+            body : searchParams
         })
             .then(this.checkStatus)
             .then(response => {return response.json();})
             .then(data => {
-                if (data.msg === "Error in increasing balance! Try Again!"){
-                    this.setState({success: "false"});
-                    alert('there');
-                }
-                else {
-                    var newBalance = Number(this.state.balance) + Number(input);
-                    this.setState({balance : newBalance});
-                    alert('here');
-                }
+                var newBalance = Number(this.state.balance) + Number(input);
+                this.setState({balance : newBalance});
             })
             .catch(function(error) {
                 console.log('request failed', error);
@@ -79,8 +74,10 @@ class IncreaseBalance extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
-            return response
+            this.setState({success: "true"});
+            return response;
         } else {
+            this.setState({success: "false"});
             var error = new Error(response.statusText)
             error.response = response
             throw error
@@ -114,10 +111,10 @@ class IncreaseBalance extends React.Component {
         return (
             <div className="container">
                 <div className="row rtl shabnam">
-                    <div className="col-12 col-sm-6 text-right balance grey-color font-weight-light ">
+                    <div className="col-12 col-md-6 text-right balance grey-color font-weight-light ">
                         <CurrentBalance balance={this.state.balance}/>
                     </div>
-                    <div className="col-12 col-sm-6 input inputInc py-5">
+                    <div className="col-12 col-md-6 input inputInc py-5">
                         <Increase handleClick={this.handleSubmit} success={this.state.success} />
                     </div>
                 </div>
@@ -133,12 +130,12 @@ function CurrentBalance(props) {
         </div>
     );
 }
+
 class Increase extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             balance : '',
-            isOK : 'false'
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -146,13 +143,15 @@ class Increase extends React.Component {
     }
 
     handleChange(event){
-        this.setState({balance : event.target.value});
-        if (this.state.balance >= 0)
-            this.setState({isOK : 'true'});
+        if (Number(event.target.value) >= 0){
+            this.setState({balance : event.target.value});
+        }
     }
     handleClick(){
-        this.props.handleClick(this.state.balance);
-        this.setState({balance : ''});
+        if(this.state.balance !== '') {
+            this.props.handleClick(this.state.balance);
+            this.setState({balance: ''});
+        }
     }
 
     render() {
@@ -160,7 +159,7 @@ class Increase extends React.Component {
             <div>
                 <span className="shabnam grey-color small px-4 text-right">تومان</span>
                 <br />
-                <div className="form-group">
+                <div className="form-group balanceInput">
                     {(this.props.success === "false") ? (
                     <input type="text" className={"form-control grey-color placeholder-grey shabnam redError"}
                            placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
@@ -169,7 +168,7 @@ class Increase extends React.Component {
                        placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
                     )}
                     <br />
-                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>افزایش اعتبار</button>
+                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background buttonMargin" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br />
             </div>

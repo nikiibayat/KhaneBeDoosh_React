@@ -62,3 +62,13 @@ img.social-icon {
 .redError {
   background-color: #efa2a9;
 }
+
+.balanceInput {
+  width: 80%;
+  line-height: 1em;
+  height: 20%;
+}
+
+.buttonMargin {
+  margin-right: 21%;
+}

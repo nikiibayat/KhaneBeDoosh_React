@@ -15,6 +15,7 @@
     "react-router-dom": "^4.3.0-rc.2",
     "react-scripts": "1.1.1",
     "resolve-pathname": "^2.2.0",
+    "url-search-params": "^0.10.0",
     "value-equal": "^0.4.0",
     "whatwg-fetch": "^2.0.4"
   },
