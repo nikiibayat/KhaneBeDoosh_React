@@ -20,7 +20,7 @@ class House extends React.Component {
             <div>
                 <NavBar />
                 <PageTitleHeader text={"مشخصات کامل ملک"}/>
-                <HouseContent />
+                <HouseContent id={this.props.id}/>
                 <Footer />
             </div>
         );
@@ -56,7 +56,8 @@ class HouseContent extends React.Component {
             dealType : ''
         }
 
-        this.ID = '0693c146-dd33-487d-81eb-7424b48addc5';
+        // this.ID = '0693c146-dd33-487d-81eb-7424b48addc5';
+        this.ID = this.props.id;
 
         this.handleBalance = this.handleBalance.bind(this);
         this.handleNoDecrease = this.handleNoDecrease.bind(this);
