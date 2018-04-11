@@ -3,7 +3,7 @@ import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../shared-styles.css';
 import '../reset.css';
 import 'whatwg-fetch';
-import {Link} from 'react-router-dom';
+import {withRouter} from "react-router-dom";
 
 class NavBarDropdown extends React.Component {
     constructor(props) {
@@ -12,10 +12,11 @@ class NavBarDropdown extends React.Component {
         this.state = {
             name: '',
             balance: ''
-        }
+        };
 
 
         this.checkStatus = this.checkStatus.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
     }
 
@@ -23,23 +24,25 @@ class NavBarDropdown extends React.Component {
         if (response.status >= 200 && response.status < 300) {
             return response
         } else {
-            var error = new Error(response.statusText)
+            let error = new Error(response.statusText)
             error.response = response
             throw error
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let url = 'http://localhost:8080/users?username=behnamhomayoon';
-        fetch( url , {
+        fetch(url, {
             method: 'GET',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             }
         })
             .then(this.checkStatus)
-            .then(response => {return response.json();})
+            .then(response => {
+                return response.json();
+            })
             .then(data => {
                 this.setState({name: data.individual.name});
                 this.setState({balance: data.individual.balance});
@@ -50,6 +53,10 @@ class NavBarDropdown extends React.Component {
 
     }
 
+
+    handleClick = () => {
+        this.props.history.push("/balance");
+    };
 
     render() {
         return (
@@ -66,13 +73,12 @@ class NavBarDropdown extends React.Component {
                                 <div className="col-5 px-0 text-right">اعتبار</div>
                                 <div className="col-7 px-0 text-left">{this.state.balance} تومان</div>
                             </div>
-                            <Link to='/balance'>
-                                <div className="row py-4 justify-content-center">
-                                    <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
-                                khane-blue-background" onClick={this.IncreaseBalance}>افزایش اعتبار
-                                    </button>
-                                </div>
-                            </Link>
+                            <div className="row py-4 justify-content-center">
+                                <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
+                                khane-blue-background" onClick={this.handleClick}>
+                                    افزایش اعتبار
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,4 +87,4 @@ class NavBarDropdown extends React.Component {
     }
 }
 
-export default NavBarDropdown;
+export default withRouter(NavBarDropdown);

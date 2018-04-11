@@ -35,7 +35,7 @@ function NavBar() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
             <NavBarLogoLink/>
-            <NavBarDropdown/>
+            <NavBarDropdown color={"purple"}/>
         </nav>
     );
 }
@@ -46,7 +46,7 @@ class IncreaseBalance extends React.Component {
         this.state = {
             balance : '۰',
             success: 'true'
-        }
+        };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkStatus = this.checkStatus.bind(this);
@@ -68,7 +68,7 @@ class IncreaseBalance extends React.Component {
             .then(this.checkStatus)
             .then(response => {return response.json();})
             .then(data => {
-                var newBalance = Number(this.state.balance) + Number(input);
+                let newBalance = Number(this.state.balance) + Number(input);
                 this.setState({balance : newBalance});
             })
             .catch(function(error) {
@@ -83,7 +83,7 @@ class IncreaseBalance extends React.Component {
             return response;
         } else {
             this.setState({success: "false"});
-            var error = new Error(response.statusText)
+            let error = new Error(response.statusText)
             error.response = response
             throw error
         }
