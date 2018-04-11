@@ -45,49 +45,114 @@ class HouseContent extends React.Component {
             phone : '',
             type : '',
             price : '',
+            basePrice : '',
+            rentPrice : '',
             addr : '',
             area : '',
             desc : '',
-            isPayed : 'false',
+            hasPayed : 'false',
             balance : '',
             clicked : 'false',
+            dealType : ''
         }
 
-        this.ID = '';
-        // the user must save value of isPayed
+        this.ID = '0693c146-dd33-487d-81eb-7424b48addc5';
+
         this.handleBalance = this.handleBalance.bind(this);
         this.handleNoDecrease = this.handleNoDecrease.bind(this);
-        this.InitializeStates = this.InitializeStates.bind(this);
+        this.InitializeHouse = this.InitializeHouse.bind(this);
+        this.isPayed = this.isPayed.bind(this);
+        this.checkStatus = this.checkStatus.bind(this);
 
     }
 
-    // this is in fact the constructor
-    InitializeStates(url,phone,type,price,addr,area,desc,isPayed,balance,clicked,ID){
-        this.setState({balance: balance});
-        this.setState({url: url});
-        this.setState({phone : phone});
-        this.setState({isPayed : isPayed});
-        this.setState({type: type});
-        this.setState({price: price});
-        this.setState({addr: addr});
-        this.setState({area: area});
-        this.setState({clicked: clicked});
-        this.setState({desc: desc});
-        this.ID = ID;
+    componentDidMount(){
+        this.isPayed();
+        this.InitializeHouse();
+    }
+
+    InitializeHouse(){
+
+        let url = 'http://localhost:8080/houses/' + this.ID;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+
+                this.setState({url: data.house.imageURL});
+                this.setState({phone : data.house.phone});
+                this.setState({type: data.house.persianBuildingType });
+                this.setState({price: data.house.sellPrice });
+                this.setState({rentPrice: data.house.rentPrice });
+                this.setState({basePrice: data.house.basePrice });
+                this.setState({addr: data.house.address });
+                this.setState({area: data.house.area });
+                this.setState({dealType: data.house.dealType });
+                this.setState({desc: data.house.description});
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+
+
+    }
+
+    isPayed(){
+        let url = 'http://localhost:8080/users?username=behnamhomayoon&houseID=' + this.ID;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                this.setState({hasPayed: data.hasPayed});
+                this.setState({balance: data.individual.balance});
+            })
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else {
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
     }
 
     handleBalance() {
         this.setState({clicked : 'true'});
-        if (this.state.balance >= 1000 ){
-            var newBalance = this.state.balance - 1000;
-            // here we should also the real user balance
-            this.setState({balance: newBalance});
-            this.setState({phone : this.state.phone});
-            this.setState({isPayed : 'true'});
-        }
-        else {
-            this.setState({isPayed : 'false'});
-        }
+        let url = 'http://localhost:8080/users?username=behnamhomayoon&houseID=' + this.ID + '/phone';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+
+        this.isPayed();
     }
 
     handleNoDecrease(){
@@ -101,9 +166,10 @@ class HouseContent extends React.Component {
                 <div className="row rtl shabnam mt-5">
                     <div className="col-12 col-md-4">
                         <div className="btn purpleButton">فروش</div>
-                        <PhoneNumber phone={this.state.phone} isPayed={this.state.isPayed} clicked={this.state.clicked} />
+                        <br />
+                        <PhoneNumber phone={this.state.phone} hasPayed={this.state.hasPayed} clicked={this.state.clicked} />
                         <BuildingType type={this.state.type} />
-                        <Price price={this.state.price} />
+                        <Price price={this.state.price} rentPrice={this.state.rentPrice} basePrice={this.state.basePrice} dealType={this.state.dealType} />
                         <Address addr={this.state.addr} />
                         <Area area={this.state.area} />
                         <Description desc={this.state.desc} />
@@ -112,10 +178,10 @@ class HouseContent extends React.Component {
                     <div className="col-12 col-md-7">
                         <Image  url={process.env.PUBLIC_URL + this.state.url} />
                     </div>
-                    <div class="col12 col-md-4"></div>
-                    <div class="col12 col-md-1"></div>
-                    <div class="col12 col-md-7 mb-3">
-                        <ShowPhoneNumberButton isPayed={this.state.isPayed} handleShowPhoneNumButton={this.handleShowPhoneNumButton}
+                    <div className="col12 col-md-4"></div>
+                    <div className="col12 col-md-1"></div>
+                    <div className="col12 col-md-7 mb-3">
+                        <ShowPhoneNumberButton hasPayed={this.state.hasPayed} handleShowPhoneNumButton={this.handleShowPhoneNumButton}
                                                handleBalance={this.handleBalance} clicked={this.state.clicked}
                                                handleNoDecrease={this.handleNoDecrease}></ShowPhoneNumberButton>
                     </div>
@@ -126,7 +192,7 @@ class HouseContent extends React.Component {
 }
 
 function PhoneNumber(props) {
-    if (props.isPayed === 'false' ||  props.clicked ==='false'){
+    if (props.hasPayed === false ||  props.clicked ==='false'){
         return(
             <div className="mt-5">
                 <p className="grey-color float-right HouseText">شماره مالک/مشاور</p>
@@ -135,7 +201,7 @@ function PhoneNumber(props) {
             </div>
         );
     }
-    else if(props.isPayed === 'true' && props.clicked ==='true'){
+    else if(props.hasPayed === true && props.clicked ==='true'){
         return(
             <div className="mt-5">
                 <p className="grey-color float-right HouseText">شماره مالک/مشاور</p>
@@ -145,7 +211,13 @@ function PhoneNumber(props) {
         );
     }
     else {
-        return(null);
+        return(
+            <div className="mt-5">
+                <p className="grey-color float-right HouseText">شماره مالک/مشاور</p>
+                <p className="leftTOright">***********</p>
+                <hr className="lineMargin line" />
+            </div>
+        );
     }
 
 }
@@ -153,9 +225,9 @@ function PhoneNumber(props) {
 function BuildingType(props) {
     return(
         <div>
-            <p class="grey-color float-right HouseText">نوع ساختمان</p>
+            <p className="grey-color float-right HouseText">نوع ساختمان</p>
             <p>{props.type}</p>
-            <hr class="lineMargin line" />
+            <hr className="lineMargin line" />
         </div>
     );
 }
@@ -163,9 +235,23 @@ function BuildingType(props) {
 function Price(props) {
     return(
         <div>
-            <p class="grey-color float-right HouseText">قیمت</p>
-            <p>{props.price} تومان</p>
-            <hr class="lineMargin line" />
+            {(props.dealType === '0') ? (
+                <div>
+                    <p class="grey-color float-right HouseText">قیمت</p>
+                    <p> {props.price} تومان</p>
+                    <hr class="lineMargin line" />
+                </div>
+                ): (
+                    <div>
+                        <p className="grey-color float-right HouseText">قیمت رهن</p>
+                        <p> {props.basePrice} تومان</p>
+                        <hr className="lineMargin line" />
+                        <p className="grey-color float-right HouseText">قیمت اجاره</p>
+                        <p> {props.rentPrice} تومان</p>
+                        <hr className="lineMargin line" />
+                    </div>
+                )
+            }
         </div>
     );
 }
@@ -173,9 +259,9 @@ function Price(props) {
 function Address(props) {
     return(
         <div>
-            <p class="grey-color float-right HouseText">آدرس</p>
+            <p className="grey-color float-right HouseText">آدرس</p>
             <p>{props.addr}</p>
-            <hr class="lineMargin line" />
+            <hr className="lineMargin line" />
         </div>
     );
 }
@@ -183,9 +269,9 @@ function Address(props) {
 function Area(props) {
     return(
         <div>
-            <p class="grey-color float-right HouseText">متراژ</p>
+            <p className="grey-color float-right HouseText">متراژ</p>
             <p>{props.area} مترمربع </p>
-            <hr class="lineMargin line" />
+            <hr className="lineMargin line" />
         </div>
     );
 }
@@ -193,9 +279,9 @@ function Area(props) {
 function Description(props) {
     return(
         <div>
-            <p class="grey-color float-right HouseText">توضیحات</p>
+            <p className="grey-color float-right HouseText">توضیحات:</p>
             <p>{props.desc}</p>
-            <hr class="lineMargin line" />
+            <hr className="lineMargin line" />
         </div>
     );
 }
@@ -224,7 +310,7 @@ class ShowPhoneNumberButton extends React.Component {
 
     render(){
 
-        if(this.props.isPayed === 'true') {
+        if(this.props.hasPayed === true) {
             if (this.props.clicked === 'false') {
                 return (
                     <ShowPhone handleBalance={this.handleNoDecrease}/>
@@ -234,7 +320,7 @@ class ShowPhoneNumberButton extends React.Component {
                 return (null);
             }
         }
-        else {
+        else{
             if(this.props.clicked === 'false')
             {
                 return(
@@ -253,13 +339,13 @@ class ShowPhoneNumberButton extends React.Component {
 
 function LowBalance (){
     return(
-        <div class="btn btn-click-me yellowButton mt-4 ">اعتبار شما برای مشاهده شماره مالک/مشاور این ملک کافی نیست</div>
+        <div className="btn btn-click-me yellowButton mt-4 ">اعتبار شما برای مشاهده شماره مالک/مشاور این ملک کافی نیست</div>
     );
 }
 
 function ShowPhone(props) {
     return(
-        <div class="btn btn-click-me blueButton mt-4 " onClick={props.handleBalance}>مشاهده شماره مالک/مشاور</div>
+        <div className="btn btn-click-me blueButton mt-4 " onClick={props.handleBalance}>مشاهده شماره مالک/مشاور</div>
     );
 }
 
