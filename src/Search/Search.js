@@ -5,11 +5,12 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
-import nopic from '../assets/no-pic.jpg';
 import SearchBox from '../components/SearchBox';
 import NavBarDropdown from '../components/NavBarDropdown'
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
+import PersianNumber from "../components/PersianNumber";
+import nopic from '../assets/no-pic.jpg'
 import {Link} from 'react-router-dom';
 import './Search.css';
 import '../shared-styles.css';
@@ -33,9 +34,8 @@ class Search extends React.Component {
 }
 
 class SearchResultsList extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-
         this.data = this.props.houses;
     }
 
@@ -46,12 +46,14 @@ class SearchResultsList extends React.Component {
                 <div className="row shabnam mobileFont">
                     {
                         (this.data.length !== 0) ? (
-                        this.data.houses.map(function(data, handleID, i){
-                            return <ResultBox dealType={data.dealType} position={(Number(i)%2===0)?'left':'right'}
-                                              imageURL={data.imageURL} area={data.area}
-                                              address={data.address} basePrice={data.basePrice} sellPrice={data.sellPrice}
-                                              rentPrice={data.rentPrice} ID={data.id} handleID={handler}/>;
-                        }) ) : (null)
+                            this.data.houses.map(function (data, i) {
+                                return <ResultBox key={i} dealType={data.dealType}
+                                                  position={(i % 2 === 0) ? 'left' : 'right'}
+                                                  imageURL={data.imageURL} area={data.area}
+                                                  address={data.address} basePrice={data.basePrice}
+                                                  sellPrice={data.sellPrice}
+                                                  rentPrice={data.rentPrice} ID={data.id} handleID={handler}/>;
+                            })) : (null)
                     }
 
                 </div>
@@ -61,13 +63,13 @@ class SearchResultsList extends React.Component {
 }
 
 class ResultBox extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleBoxClick = this.handleBoxClick.bind(this);
     }
 
-    handleBoxClick(){
+    handleBoxClick() {
         this.props.handleID(this.props.ID);
     }
 
@@ -82,16 +84,18 @@ class ResultBox extends React.Component {
         const rentPrice = this.props.rentPrice;
         return (
             <div className="col-12 col-sm-6 rtl">
-                <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
+                <div className={"resultbox " + ((position === "right") ? " boxMargin" : "")}>
                     <Link to="/House" onClick={this.handleBoxClick}>
-                        {(dealType === "sale") ? (
+                        {(dealType === 0) ? (
                             <div className="btn mt-2  purpleBu">فروش</div>
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
-                        <img src={houseImage} alt="house" className="imageRadius dimension"/>
+                        {(houseImage !== null) ?
+                            (<img src={houseImage} alt="house_picture" className="imageRadius dimension"/>) :
+                            (<img src={nopic} alt="house_picture" className="imageRadius dimension"/>)}
                         <p className="text-right px-4">
-                            <span className="location">{area} متر مربع</span>
+                            <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
                                 <span className="px-2 purple">
                                 <i className="fa fa-map-marker" aria-hidden="true"></i>
@@ -104,17 +108,17 @@ class ResultBox extends React.Component {
                             {address}
                         </p>
                         <hr className="LineWidth MarginLine"/>
-                        {(dealType === "sale") ? (
-                            <div className="text-right px-4">قیمت&nbsp; {sellPrice}
+                        {(dealType === 0) ? (
+                            <div className="text-right px-4">قیمت&nbsp; <PersianNumber number={sellPrice}/>
                                 <span className="grey-color small"> تومان</span>
                             </div>
-                        ):(
+                        ) : (
                             <p className="row px-4">
                                 <span className="col-6 text-right px-0 px-md-3">رهن
-                                &nbsp; {basePrice}
+                                    &nbsp; <PersianNumber number={basePrice}/>
                                     <span className="grey-color small"> تومان</span>
                                 </span>
-                                <span className="col-6 px-0 px-md-3">اجاره {rentPrice}
+                                <span className="col-6 px-0 px-md-3">اجاره <PersianNumber number={rentPrice}/>
                                     <span className="grey-color small"> تومان</span>
                                 </span>
                             </p>

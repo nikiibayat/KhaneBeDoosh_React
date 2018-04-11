@@ -19,7 +19,6 @@ class Pages extends React.Component {
 
     handleHouses(input) {
         this.setState({houses: input});
-        // console.log("here:" + input.houses[1].phone)
     }
     handleID(houseID){
         this.setState({id: houseID})
