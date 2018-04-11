@@ -11,6 +11,8 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
+import PersianNumber from "../components/PersianNumber";
+
 
 
 
@@ -175,16 +177,16 @@ class HouseContent extends React.Component {
                         <Area area={this.state.area} />
                         <Description desc={this.state.desc} />
                     </div>
-                    <div className="col-12 col-md-1"></div>
+                    <div className="col-12 col-md-1"/>
                     <div className="col-12 col-md-7">
                         <Image  url={process.env.PUBLIC_URL + this.state.url} />
                     </div>
-                    <div className="col12 col-md-4"></div>
-                    <div className="col12 col-md-1"></div>
+                    <div className="col12 col-md-4"/>
+                    <div className="col12 col-md-1"/>
                     <div className="col12 col-md-7 mb-3">
                         <ShowPhoneNumberButton hasPayed={this.state.hasPayed} handleShowPhoneNumButton={this.handleShowPhoneNumButton}
                                                handleBalance={this.handleBalance} clicked={this.state.clicked}
-                                               handleNoDecrease={this.handleNoDecrease}></ShowPhoneNumberButton>
+                                               handleNoDecrease={this.handleNoDecrease}/>
                     </div>
                 </div>
             </div>
@@ -206,7 +208,7 @@ function PhoneNumber(props) {
         return(
             <div className="mt-5">
                 <p className="grey-color float-right HouseText">شماره مالک/مشاور</p>
-                <p className="leftTOright">{props.phone}</p>
+                <p className="leftTOright"><PersianNumber number={props.phone}/></p>
                 <hr className="lineMargin line" />
             </div>
         );
@@ -239,16 +241,16 @@ function Price(props) {
             {(props.dealType === '0') ? (
                 <div>
                     <p class="grey-color float-right HouseText">قیمت</p>
-                    <p> {props.price} تومان</p>
+                    <p> <PersianNumber number={props.price}/> تومان</p>
                     <hr class="lineMargin line" />
                 </div>
                 ): (
                     <div>
                         <p className="grey-color float-right HouseText">قیمت رهن</p>
-                        <p> {props.basePrice} تومان</p>
+                        <p> <PersianNumber number={props.basePrice}/> تومان</p>
                         <hr className="lineMargin line" />
                         <p className="grey-color float-right HouseText">قیمت اجاره</p>
-                        <p> {props.rentPrice} تومان</p>
+                        <p> <PersianNumber number={props.rentPrice}/> تومان</p>
                         <hr className="lineMargin line" />
                     </div>
                 )
@@ -271,7 +273,7 @@ function Area(props) {
     return(
         <div>
             <p className="grey-color float-right HouseText">متراژ</p>
-            <p>{props.area} مترمربع </p>
+            <p><PersianNumber number={props.area}/> مترمربع </p>
             <hr className="lineMargin line" />
         </div>
     );

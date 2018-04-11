@@ -9,6 +9,7 @@ import SearchBox from '../components/SearchBox';
 import NavBarDropdown from '../components/NavBarDropdown'
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
+import PersianNumber from "../components/PersianNumber";
 import {Link} from 'react-router-dom';
 import './Search.css';
 import '../shared-styles.css';
@@ -51,7 +52,6 @@ class SearchResultsList extends React.Component {
                                               imageURL={data.imageURL} area={data.area}
                                               address={data.address} basePrice={data.basePrice} sellPrice={data.sellPrice}
                                               rentPrice={data.rentPrice} ID={data.id} handleID={handler}/>;
-
                         }) ) : (null)
                     }
 
@@ -83,7 +83,7 @@ class ResultBox extends React.Component {
         const rentPrice = this.props.rentPrice;
         return (
             <div className="col-12 col-sm-6 rtl">
-                <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
+                <div className={"resultbox " + ((position === "right") ? "boxMargin" : "")}>
                     <Link to="/House" onClick={this.handleBoxClick}>
                         {(dealType === "sale") ? (
                             <div className="btn mt-2  purpleBu">فروش</div>
@@ -92,7 +92,7 @@ class ResultBox extends React.Component {
                         )}
                         <img src={houseImage} alt="house" className="imageRadius dimension"/>
                         <p className="text-right px-4">
-                            <span className="location">{area} متر مربع</span>
+                            <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
                                 <span className="px-2 purple">
                                 <i className="fa fa-map-marker" aria-hidden="true"></i>
@@ -106,16 +106,16 @@ class ResultBox extends React.Component {
                         </p>
                         <hr className="LineWidth MarginLine"/>
                         {(dealType === "sale") ? (
-                            <div className="text-right px-4">قیمت&nbsp; {sellPrice}
+                            <div className="text-right px-4">قیمت&nbsp; <PersianNumber number={sellPrice}/>
                                 <span className="grey-color small"> تومان</span>
                             </div>
                         ):(
                             <p className="row px-4">
                                 <span className="col-6 text-right px-0 px-md-3">رهن
-                                &nbsp; {basePrice}
+                                &nbsp; <PersianNumber number={basePrice}/>
                                     <span className="grey-color small"> تومان</span>
                                 </span>
-                                <span className="col-6 px-0 px-md-3">اجاره {rentPrice}
+                                <span className="col-6 px-0 px-md-3">اجاره <PersianNumber number={rentPrice}/>
                                     <span className="grey-color small"> تومان</span>
                                 </span>
                             </p>
