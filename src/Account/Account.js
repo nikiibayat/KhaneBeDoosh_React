@@ -14,6 +14,7 @@ import PageTitleHeader from "../components/PageTitleHeader";
 
 import DocumentTitle from 'react-document-title'
 import URLSearchParams from 'url-search-params';
+import PersianNumber from "../components/PersianNumber";
 
 
 class Account extends React.Component {
@@ -130,7 +131,7 @@ class IncreaseBalance extends React.Component {
 function CurrentBalance(props) {
     return (
         <div>اعتبار کنونی
-            <span className="text-dark font-weight-bold shabnam"> {props.balance} </span>
+            <span className="text-dark font-weight-bold shabnam"> <PersianNumber number={props.balance}/> </span>
             تومان
         </div>
     );

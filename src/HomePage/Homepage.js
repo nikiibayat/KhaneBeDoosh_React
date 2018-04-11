@@ -17,6 +17,7 @@ import {withRouter} from "react-router-dom";
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
+import PersianNumber from "../components/PersianNumber";
 
 class HomePage extends React.Component {
     render() {
@@ -124,7 +125,7 @@ class DropDown extends React.Component {
                     </div>
                     <div className="row py-3 grey-color">
                         <div className="col-5 px-0 text-right">اعتبار</div>
-                        <div className="col-7 px-0 text-left">{this.state.balance} تومان</div>
+                        <div className="col-7 px-0 text-left"><PersianNumber number={this.state.balance}/> تومان</div>
                     </div>
                     <div className="row py-4 justify-content-center">
                         <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
