@@ -14,7 +14,7 @@ import PageTitleHeader from "../components/PageTitleHeader";
 
 import {Link} from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
-import URLSearchParams from 'url-search-params';
+// import URLSearchParams from 'url-search-params';
 
 
 class Account extends React.Component {
@@ -54,28 +54,28 @@ class IncreaseBalance extends React.Component {
     }
 
 
-    handleSubmit(input){
-
-        const searchParams = new URLSearchParams();
-        searchParams.set('balance', Number(input));
-
-        fetch('http://localhost:8080/balance', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body : searchParams
-        })
-            .then(this.checkStatus)
-            .then(response => {return response.json();})
-            .then(data => {
-                var newBalance = Number(this.state.balance) + Number(input);
-                this.setState({balance : newBalance});
-            })
-            .catch(function(error) {
-                console.log('request failed', error);
-            })
-    }
+    // handleSubmit(input){
+    //
+    //     const searchParams = new URLSearchParams();
+    //     searchParams.set('balance', Number(input));
+    //
+    //     fetch('http://localhost:8080/balance', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json'
+    //         },
+    //         body : searchParams
+    //     })
+    //         .then(this.checkStatus)
+    //         .then(response => {return response.json();})
+    //         .then(data => {
+    //             var newBalance = Number(this.state.balance) + Number(input);
+    //             this.setState({balance : newBalance});
+    //         })
+    //         .catch(function(error) {
+    //             console.log('request failed', error);
+    //         })
+    // }
 
 
     checkStatus(response) {
