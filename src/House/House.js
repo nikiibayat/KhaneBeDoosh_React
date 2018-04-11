@@ -153,7 +153,7 @@ class HouseContent extends React.Component {
             .then(this.checkStatus)
             .catch(function(error) {
                 console.log('request failed', error);
-            })
+            });
 
         this.isPayed();
     }
@@ -168,7 +168,11 @@ class HouseContent extends React.Component {
             <div className="container-fluid">
                 <div className="row rtl shabnam mt-5">
                     <div className="col-12 col-md-4">
-                        <div className="btn purpleButton">فروش</div>
+                        {(Number(this.state.dealType) === 0)?
+                            <div className="btn purpleButton">فروش</div>
+                            :
+                            <div className="btn redButton">رهن و اجاره</div>
+                        }
                         <br />
                         <PhoneNumber phone={this.state.phone} hasPayed={this.state.hasPayed} clicked={this.state.clicked} />
                         <BuildingType type={this.state.type} />

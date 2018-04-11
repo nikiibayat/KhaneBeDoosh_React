@@ -169,10 +169,10 @@ class Increase extends React.Component {
                 <div className="form-group balanceInput">
                     {(this.props.success === "false") ? (
                     <input type="text" className={"form-control grey-color placeholder-grey shabnam redError"}
-                           placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
+                           placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} />
                     ) : (
                 <input type="text" className={"form-control grey-color placeholder-grey shabnam"}
-                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input>
+                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} />
                     )}
                     <br />
                 <button type="button" className="btn btn-click-me text-center text-light khane-blue-background buttonMargin" onClick={this.handleClick}>افزایش اعتبار</button>

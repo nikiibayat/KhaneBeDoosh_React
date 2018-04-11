@@ -84,7 +84,7 @@ class ResultBox extends React.Component {
             <div className="col-12 col-sm-6 rtl">
                 <div className={"resultbox " + ((position === "right") ? " boxMargin" : "")}>
                     <Link to="/House" onClick={this.handleBoxClick}>
-                        {(dealType === "sale") ? (
+                        {(dealType === 0) ? (
                             <div className="btn mt-2  purpleBu">فروش</div>
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
@@ -104,7 +104,7 @@ class ResultBox extends React.Component {
                             {address}
                         </p>
                         <hr className="LineWidth MarginLine"/>
-                        {(dealType === "sale") ? (
+                        {(dealType === 0) ? (
                             <div className="text-right px-4">قیمت&nbsp; <PersianNumber number={sellPrice}/>
                                 <span className="grey-color small"> تومان</span>
                             </div>
