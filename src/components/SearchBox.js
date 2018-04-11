@@ -11,7 +11,7 @@ class SearchBox extends React.Component {
         return (
             <section className="container-fluid">
                 <div className="row justify-content-center mb-2">
-                    <SearchForm numOfColumns={this.props.numOfColumns}/>
+                    <SearchForm numOfColumns={this.props.numOfColumns} handleHouses={this.props.handleHouses}/>
                 </div>
                 <Link to='/houses'>
                     <div className="row justify-content-center mt-2">

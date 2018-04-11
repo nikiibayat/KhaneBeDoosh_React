@@ -42,17 +42,15 @@ class SearchForm extends React.Component {
             '&dealType=' + this.state.DealType +
             '&maxPrice=' + this.state.Price ;
 
-        console.log(url);
-
         fetch(url)
             .then(this.checkStatus)
             .then((response) => response.json())
             .then(data => {
-                console.log(data)
+                this.props.handleHouses(data);
             })
             .catch(function(error) {
                 console.log('request failed', error);
-            })
+            });
 
         this.setState({BuildingType : ''});
         this.setState({Price : ''});

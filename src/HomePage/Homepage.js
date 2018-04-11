@@ -11,19 +11,20 @@ import reliable from '../assets/icons/726488.svg';
 import comprehensive from '../assets/icons/726499.svg';
 import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
 import SearchBox from "../components/SearchBox";
-import {Link} from 'react-router-dom'
-import DocumentTitle from 'react-document-title'
+import {Link} from 'react-router-dom';
+import DocumentTitle from 'react-document-title';
+import {withRouter} from "react-router-dom";
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
+import PersianNumber from "../components/PersianNumber";
 
 class HomePage extends React.Component {
-
     render() {
         return (
             <DocumentTitle title='خانه‌به‌دوش'>
                 <div>
-                    <UpperBody/>
+                    <UpperBody handleHouses={this.props.handleHouses}/>
                     <LowerBody/>
                     <Footer/>
                 </div>
@@ -38,7 +39,7 @@ class UpperBody extends React.Component {
         return (
             <div className="upper-body">
                 <NavBar/>
-                <UpperBodyContent numOfColumns={8}/>
+                <UpperBodyContent numOfColumns={8} handleHouses={this.props.handleHouses}/>
 
             </div>
         );
@@ -53,7 +54,7 @@ class NavBar extends React.Component {
                 <div className="navbar-nav dropdown rtl">
                     <div className="nav-item nav-link border border-white navbar-dropdown-radius p-2">
                         <div className="shabnam text-white"><i className="fa fa-smile-o fa-lg"></i> ناحیه‌ی کاربری</div>
-                        <DropDown/>
+                        <DropDownWithRouter/>
                     </div>
                 </div>
             </nav>
@@ -61,22 +62,75 @@ class NavBar extends React.Component {
     }
 }
 
+
 class DropDown extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            name: '',
+            balance: ''
+        };
+
+
+        this.checkStatus = this.checkStatus.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else {
+            let error = new Error(response.statusText);
+            error.response = response;
+            throw error
+        }
+    }
+
+    componentDidMount() {
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(this.checkStatus)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                this.setState({name: data.individual.name});
+                this.setState({balance: data.individual.balance});
+            })
+            .catch(function (error) {
+                console.log('request failed', error);
+            })
+
+
+    }
+
+    handleClick = () => {
+        this.props.history.push("/balance");
+    };
 
     render() {
         return (
             <div className="dropdown-content shabnam dropdown-responsive pt-4">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="text-dark h5">بهنام همایون</div>
+                        <div className="text-dark h5">{this.state.name}</div>
                     </div>
                     <div className="row py-3 grey-color">
                         <div className="col-5 px-0 text-right">اعتبار</div>
-                        <div className="col-7 px-0 text-left">۲۰۰۰۰ تومان</div>
+                        <div className="col-7 px-0 text-left"><PersianNumber number={this.state.balance}/> تومان</div>
                     </div>
                     <div className="row py-4 justify-content-center">
                         <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
-                                        khane-blue-background">افزایش اعتبار
+                                khane-blue-background" onClick={this.handleClick}>
+                            افزایش اعتبار
                         </button>
                     </div>
                 </div>
@@ -85,8 +139,9 @@ class DropDown extends React.Component {
     }
 }
 
-class UpperBodyContent extends React.Component {
+const DropDownWithRouter = withRouter(DropDown);
 
+class UpperBodyContent extends React.Component {
     render() {
         return (
             <div className="container-fluid">
@@ -98,7 +153,7 @@ class UpperBodyContent extends React.Component {
                 {/*<figure></figure>*/}
                 {/*</div>*/}
                 <Logo/>
-                <SearchBox numOfColumns={this.props.numOfColumns}/>
+                <SearchBox numOfColumns={this.props.numOfColumns} handleHouses={this.props.handleHouses}/>
             </div>
         );
     }

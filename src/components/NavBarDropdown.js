@@ -4,6 +4,7 @@ import '../shared-styles.css';
 import '../reset.css';
 import 'whatwg-fetch';
 import {withRouter} from "react-router-dom";
+import PersianNumber from '../components/PersianNumber'
 
 class NavBarDropdown extends React.Component {
     constructor(props) {
@@ -71,7 +72,7 @@ class NavBarDropdown extends React.Component {
                             </div>
                             <div className="row py-3 grey-color">
                                 <div className="col-5 px-0 text-right">اعتبار</div>
-                                <div className="col-7 px-0 text-left">{this.state.balance} تومان</div>
+                                <div className="col-7 px-0 text-left"><PersianNumber number={this.state.balance}/> تومان</div>
                             </div>
                             <div className="row py-4 justify-content-center">
                                 <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
