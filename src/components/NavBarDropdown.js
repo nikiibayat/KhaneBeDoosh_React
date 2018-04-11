@@ -48,9 +48,8 @@ class NavBarDropdown extends React.Component {
             console.log('request failed', error);
         })
 
-
-
     }
+
 
     render() {
         return (
