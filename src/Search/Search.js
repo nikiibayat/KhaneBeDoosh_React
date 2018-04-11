@@ -10,6 +10,7 @@ import NavBarDropdown from '../components/NavBarDropdown'
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
 import PersianNumber from "../components/PersianNumber";
+import nopic from '../assets/no-pic.jpg'
 import {Link} from 'react-router-dom';
 import './Search.css';
 import '../shared-styles.css';
@@ -24,7 +25,7 @@ class Search extends React.Component {
                 <MoreInfoText/>
                 <SearchResultsList houses={this.props.houses} handleID={this.props.handleID}/>
                 <SearchAgainText/>
-                <SearchBox numOfColumns={8} handleHouses={this.props.handleHouses}/>
+                <SearchBox numOfColumns={9} handleHouses={this.props.handleHouses}/>
                 <br/><br/>
                 <Footer/>
             </div>
@@ -75,7 +76,7 @@ class ResultBox extends React.Component {
     render() {
         const dealType = this.props.dealType;
         const position = this.props.position;
-        const houseImage = this.props.imageURL ;
+        const houseImage = this.props.imageURL;
         const area = this.props.area;
         const address = this.props.address;
         const basePrice = this.props.basePrice;
@@ -90,9 +91,9 @@ class ResultBox extends React.Component {
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
-                        {(houseImage !== null) ?
+                        {(houseImage != null) ?
                             (<img src={houseImage} alt="house_picture" className="imageRadius dimension"/>) :
-                            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius dimension"/>)}
+                            (<img src={nopic} alt="house_picture" className="imageRadius dimension"/>)}
                         <p className="text-right px-4">
                             <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
