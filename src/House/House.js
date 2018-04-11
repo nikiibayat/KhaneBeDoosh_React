@@ -5,7 +5,6 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
-import nopic from '../assets/no-pic.jpg'
 import './House.css';
 import '../shared-styles.css';
 import '../reset.css';
@@ -302,7 +301,11 @@ function Description(props) {
 function Image(props) {
     // process.env.PUBLIC_URL
     return(
-        <img src={props.url} alt="house_picture" className="imageRadius Houseimage" />
+        <div>
+        {(props.url !== null) ?
+            (<img src={props.url} alt="house_picture" className="imageRadius Houseimage"/>) :
+            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius Houseimage"/>)}
+        </div>
         );
 
 }
