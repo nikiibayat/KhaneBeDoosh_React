@@ -44,13 +44,14 @@ class SearchResultsList extends React.Component {
             <div className="container-fluid">
                 <div className="row shabnam mobileFont">
                     {
+                        (this.data.length !== 0) ? (
                         this.data.houses.map(function(data, i){
                             return <ResultBox key={i} dealType={data.dealType} position={(i%2===0)?'left':'right'}
                                               imageURL={data.imageURL} area={data.area}
                                               address={data.address} basePrice={data.basePrice} sellPrice={data.sellPrice}
                                               rentPrice={data.rentPrice} ID={data.id} handleID={this.props.handleID}/>;
 
-                        })
+                        }) ) : (null)
                     }
 
                 </div>
@@ -84,9 +85,9 @@ class ResultBox extends React.Component {
                 <div className={"resultbox " + ((position === "right") ? "boxMargin" : " ")}>
                     <Link to="/House" onClick={this.handleBoxClick()}>
                         {(dealType === "sale") ? (
-                            <div className="btn mt-2  purpleB">فروش</div>
+                            <div className="btn mt-2  purpleBu">فروش</div>
                         ) : (
-                            <div className="btn  mt-2 redB">رهن و اجاره</div>
+                            <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
                         <img src={houseImage} alt="house" className="imageRadius dimension"/>
                         <p className="text-right px-4">
