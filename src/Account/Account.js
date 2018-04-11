@@ -11,18 +11,21 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import DocumentTitle from 'react-document-title'
 
 
 class Account extends React.Component {
-    render(){
+    render() {
         return (
-            <div>
-                <NavBar />
-                <PageTitleHeader text={"افزایش موجودی"}/>
-                <IncreaseBalance />
-                <Footer />
-            </div>
+            <DocumentTitle title='افزایش موجودی'>
+                <div>
+                    <NavBar/>
+                    <PageTitleHeader text={"افزایش موجودی"}/>
+                    <IncreaseBalance/>
+                    <Footer/>
+                </div>
+            </DocumentTitle>
         );
     }
 }
@@ -39,17 +42,17 @@ function NavBar() {
 }
 
 class IncreaseBalance extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            balance : '۰'
+            balance: '۰'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(input){
-        this.setState({balance : input});
+    handleSubmit(input) {
+        this.setState({balance: input});
         // change here real balance value
     }
 
@@ -61,13 +64,14 @@ class IncreaseBalance extends React.Component {
                         <CurrentBalance balance={this.state.balance}/>
                     </div>
                     <div className="col-12 col-sm-6 input inputInc py-5">
-                        <Increase handleClick={this.handleSubmit} />
+                        <Increase handleClick={this.handleSubmit}/>
                     </div>
                 </div>
             </div>
         );
     }
 }
+
 function CurrentBalance(props) {
     return (
         <div>اعتبار کنونی
@@ -76,39 +80,44 @@ function CurrentBalance(props) {
         </div>
     );
 }
+
 class Increase extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            balance : '',
-            isOK : 'false'
+            balance: '',
+            isOK: 'false'
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleChange(event){
-        this.setState({balance : event.target.value});
+    handleChange(event) {
+        this.setState({balance: event.target.value});
         if (this.state.balance >= 0)
-            this.setState({isOK : 'true'});
+            this.setState({isOK: 'true'});
     }
-    handleClick(){
+
+    handleClick() {
         this.props.handleClick(this.state.balance);
-        this.setState({balance : ''});
+        this.setState({balance: ''});
     }
 
     render() {
         return (
             <div>
                 <span className="shabnam grey-color small px-4 text-right">تومان</span>
-                <br />
+                <br/>
                 <div className="form-group">
-                <input type="text" className="form-control grey-color placeholder-grey shabnam"
-                       placeholder="مبلغ مورد نظر" value={this.state.balance} onChange={this.handleChange} ></input><br />
-                <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>افزایش اعتبار</button>
+                    <input type="text" className="form-control grey-color placeholder-grey shabnam"
+                           placeholder="مبلغ مورد نظر" value={this.state.balance}
+                           onChange={this.handleChange}></input><br/>
+                    <button type="button" className="btn btn-click-me text-center text-light khane-blue-background"
+                            onClick={this.handleClick}>افزایش اعتبار
+                    </button>
                 </div>
-                <br />
+                <br/>
             </div>
 
         );
@@ -116,22 +125,23 @@ class Increase extends React.Component {
 }
 
 function Footer() {
-        return (
-            <div className="container-fluid footer position-absolute px-md-5">
-                <footer className="row rtl">
-                    <div className="col-12 col-sm-10 my-auto">
-                        <div className="shabnam text-center text-sm-right pr-md-4">تمامی حقوق مادی و معنوی این وب‌سایت متعلق به نیکی و اردوان می‌باشد</div>
+    return (
+        <div className="container-fluid footer position-absolute px-md-5">
+            <footer className="row rtl">
+                <div className="col-12 col-sm-10 my-auto">
+                    <div className="shabnam text-center text-sm-right pr-md-4">تمامی حقوق مادی و معنوی این وب‌سایت متعلق
+                        به نیکی و اردوان می‌باشد
                     </div>
-                    <div className="col-12 col-sm-2 social-list">
-                        <img className="social-icon" src= {twitter} alt="twitter-icon" />
-                        <img className="social-icon" src={telegram} alt="telegram-icon" />
-                        <img className="social-icon" src={instagram} alt="instagram-icon" />
-                    </div>
-                </footer>
-            </div>
-        );
+                </div>
+                <div className="col-12 col-sm-2 social-list">
+                    <img className="social-icon" src={twitter} alt="twitter-icon"/>
+                    <img className="social-icon" src={telegram} alt="telegram-icon"/>
+                    <img className="social-icon" src={instagram} alt="instagram-icon"/>
+                </div>
+            </footer>
+        </div>
+    );
 }
-
 
 
 export default Account;

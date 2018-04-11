@@ -11,16 +11,19 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
+import DocumentTitle from 'react-document-title';
 
 class AddMelk extends React.Component {
     render() {
         return (
-            <div>
-                <NavBar />
-                <PageTitleHeader text={"ثبت ملک جدید در خانه‌به‌دوش"}/>
-                <AddMelkForm />
-                <Footer/>
-            </div>
+            <DocumentTitle title='ثبت ملک'>
+                <div>
+                    <NavBar/>
+                    <PageTitleHeader text={"ثبت ملک جدید در خانه‌به‌دوش"}/>
+                    <AddMelkForm/>
+                    <Footer/>
+                </div>
+            </DocumentTitle>
         );
     }
 }
@@ -59,27 +62,35 @@ class AddMelkForm extends React.Component {
         this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
     }
+
     handleBuildingType(input) {
         this.setState({BuildingType: input});
     }
+
     handleRentPrice(input) {
         this.setState({RentPrice: input});
     }
+
     handleBasePrice(input) {
         this.setState({BasePrice: input});
     }
+
     handleAddress(input) {
         this.setState({Address: input});
     }
+
     handleDealType(input) {
         this.setState({DealType: input});
     }
+
     handleMaxMeter(input) {
         this.setState({MaxMeter: input});
     }
+
     handleDescription(input) {
         this.setState({Description: input});
     }
+
     handlePhoneNumber(input) {
         this.setState({PhoneNumber: input});
     }
@@ -95,7 +106,7 @@ class AddMelkForm extends React.Component {
         this.setState({DealType: 'rent'});
     }
 
-    render(){
+    render() {
         return (
             <div class="container-fluid">
                 <div class="row justify-content-center searchForm">
@@ -107,34 +118,39 @@ class AddMelkForm extends React.Component {
                             <div class="col-md-6"></div>
                             <div class="form-row rtl my-md-1 shabnam justify-content-center">
                                 <div class="form-group col-12 col-md-6">
-                                    <BuildingType handleBuildingType={this.handleBuildingType} BuildingType={this.state.BuildingType}/>
+                                    <BuildingType handleBuildingType={this.handleBuildingType}
+                                                  BuildingType={this.state.BuildingType}/>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <MaxMeter handleMaxMeter={this.handleMaxMeter} MaxMeter={this.state.MaxMeter}/>
                                 </div>
 
                                 <div class="form-group col-12 col-md-6">
-                                    <Address handleAddress={this.handleAddress} Address={this.state.Address} />
+                                    <Address handleAddress={this.handleAddress} Address={this.state.Address}/>
                                 </div>
                                 <div class="form-group col-12 col-md-6 ">
-                                    <BasePrice handleBasePrice={this.handleBasePrice} BasePrice={this.state.BasePrice} />
+                                    <BasePrice handleBasePrice={this.handleBasePrice} BasePrice={this.state.BasePrice}/>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
-                                    <PhoneNumber handlePhoneNumber={this.handlePhoneNumber} PhoneNumber={this.state.PhoneNumber}/>
+                                    <PhoneNumber handlePhoneNumber={this.handlePhoneNumber}
+                                                 PhoneNumber={this.state.PhoneNumber}/>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
-                                    <RentPrice handleRentPrice={this.handleRentPrice} RentPrice={this.state.RentPrice} />
+                                    <RentPrice handleRentPrice={this.handleRentPrice} RentPrice={this.state.RentPrice}/>
                                 </div>
 
                                 <div class="form-group col-12 col-md-12">
-                                    <Description handleDescription={this.handleDescription} Description={this.state.Description}/>
+                                    <Description handleDescription={this.handleDescription}
+                                                 Description={this.state.Description}/>
                                 </div>
                             </div>
 
                             <div class="col-md-8"></div>
                             <div class="col-12 col-md-4 py-3">
-                                <button type="submit" class="btn btn-click-me text-center text-light khane-blue-background search-button"
-                                        onSubmit={this.handleSubmit}>ثبت ملک</button>
+                                <button type="submit"
+                                        class="btn btn-click-me text-center text-light khane-blue-background search-button"
+                                        onSubmit={this.handleSubmit}>ثبت ملک
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -147,7 +163,7 @@ class AddMelkForm extends React.Component {
 }
 
 class DealType extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -157,27 +173,30 @@ class DealType extends React.Component {
         this.props.handleDealType(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <div className="form-check form-check-inline float-right">
-                    <input class="form-check-input" type="radio" name="sellType" id="radio-rent" value="rent" onChange={this.handleChange} checked={this.props.DealType === 'rent'} />
+                    <input class="form-check-input" type="radio" name="sellType" id="radio-rent" value="rent"
+                           onChange={this.handleChange} checked={this.props.DealType === 'rent'}/>
                     <label class="form-check-label px-2 " for="radio-rent">
                         رهن و اجاره
                     </label>
                 </div>
                 <div className="form-check form-check-inline float-right">
-                <input className="form-check-input" type="radio" name="sellType" id="radio-sell" value="sell" onChange={this.handleChange} checked={this.props.DealType === 'sell'}/>
-                <label className="form-check-label px-2 " for="radio-sell">
-                خرید
-                </label>
+                    <input className="form-check-input" type="radio" name="sellType" id="radio-sell" value="sell"
+                           onChange={this.handleChange} checked={this.props.DealType === 'sell'}/>
+                    <label className="form-check-label px-2 " for="radio-sell">
+                        خرید
+                    </label>
                 </div>
             </div>
         );
     }
 }
+
 class BuildingType extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -187,22 +206,24 @@ class BuildingType extends React.Component {
         this.props.handleBuildingType(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                <label class="form-check-label" ></label>
-                <select class="form-control form-inline rtl shabnam" required value={this.props.BuildingType} onChange={this.handleChange}>
-                <option value="BuildingType" disabled >نوع ملک</option>
-                <option value="villa">ویلایی</option>
-                <option value="apartment">آپارتمان</option>
-                <option value="both">هر کدام</option>
+                <label class="form-check-label"></label>
+                <select class="form-control form-inline rtl shabnam" required value={this.props.BuildingType}
+                        onChange={this.handleChange}>
+                    <option value="BuildingType" disabled>نوع ملک</option>
+                    <option value="villa">ویلایی</option>
+                    <option value="apartment">آپارتمان</option>
+                    <option value="both">هر کدام</option>
                 </select>
             </div>
         );
     }
 }
+
 class MaxMeter extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -212,8 +233,8 @@ class MaxMeter extends React.Component {
         this.props.handleMaxMeter(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <label class="form-check-label grey-color small">متر مربع</label>
                 <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"
@@ -222,8 +243,9 @@ class MaxMeter extends React.Component {
         );
     }
 }
+
 class Address extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -233,8 +255,8 @@ class Address extends React.Component {
         this.props.handleAddress(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <label class="form-check-label text-white small"></label>
                 <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"
@@ -243,8 +265,9 @@ class Address extends React.Component {
         );
     }
 }
+
 class RentPrice extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -254,8 +277,8 @@ class RentPrice extends React.Component {
         this.props.handleRentPrice(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <label class="form-check-label grey-color small">مترمربع</label>
                 <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"
@@ -264,8 +287,9 @@ class RentPrice extends React.Component {
         );
     }
 }
+
 class BasePrice extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -275,8 +299,8 @@ class BasePrice extends React.Component {
         this.props.handleBasePrice(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <label class="form-check-label grey-color small">مترمربع</label>
                 <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"
@@ -285,8 +309,9 @@ class BasePrice extends React.Component {
         );
     }
 }
+
 class PhoneNumber extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -296,18 +321,19 @@ class PhoneNumber extends React.Component {
         this.props.handlePhoneNumber(event.target.value);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                <label class="form-check-label text-white small" ></label>
+                <label class="form-check-label text-white small"></label>
                 <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"
                        placeholder="شماره تماس" value={this.props.PhoneNumber} onChange={this.handleChange}/>
             </div>
         );
     }
 }
+
 class Description extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
@@ -316,16 +342,18 @@ class Description extends React.Component {
     handleChange(event) {
         this.props.handleDescription(event.target.value);
     }
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
-                <label class="form-check-label text-white small" ></label>
+                <label class="form-check-label text-white small"></label>
                 <input type="text" class="form-control form-inline rtl shabnam placeholder-grey"
-                       placeholder="توضیحات" value={this.props.Description} onChange={this.handleChange} />
+                       placeholder="توضیحات" value={this.props.Description} onChange={this.handleChange}/>
             </div>
         );
     }
 }
+
 function Footer() {
     return (
         <div className="container-fluid footer">

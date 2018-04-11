@@ -12,8 +12,11 @@ class SearchBox extends React.Component{
                 <div className="row justify-content-center mb-2">
                     <SearchForm numOfColumns={this.props.numOfColumns}/>
                 </div>
+
                 <div className="row justify-content-center mt-2">
+                    {/*<Link to='/houses'>*/}
                         <div className={"col-11 col-md-"+ this.props.numOfColumns +" search-form shabnam rtl text-white text-center py-2"}>صاحب خانه هستید؟ خانه‌ی خود را ثبت کنید</div>
+                    {/*</Link>*/}
                 </div>
                 <br />
                 <br />

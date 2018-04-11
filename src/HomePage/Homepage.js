@@ -11,7 +11,8 @@ import reliable from '../assets/icons/726488.svg';
 import comprehensive from '../assets/icons/726499.svg';
 import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
 import SearchBox from "../components/SearchBox";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import DocumentTitle from 'react-document-title'
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
@@ -20,11 +21,13 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div>
-                <UpperBody/>
-                <LowerBody/>
-                <Footer/>
-            </div>
+            <DocumentTitle title='خانه‌به‌دوش'>
+                <div>
+                    <UpperBody/>
+                    <LowerBody/>
+                    <Footer/>
+                </div>
+            </DocumentTitle>
         );
     }
 }
