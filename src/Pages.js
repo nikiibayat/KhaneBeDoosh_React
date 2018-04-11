@@ -25,13 +25,6 @@ class Pages extends React.Component {
         this.setState({id: houseID})
     }
 
-    handleID(input){
-        this.setState({ID: input});
-    }
-
-    componentWillUpdate(){
-
-    }
 
     render() {
         return (
@@ -42,12 +35,7 @@ class Pages extends React.Component {
                     <Route path='/addHouse' component={AddMelk}/>
                     <Route path='/search'
                            render={() => <Search houses={this.state.houses} handleHouses={this.handleHouses} handleID={this.handleID}/>}/>
-<<<<<<< HEAD
-                    <Route path='/house'
-                           render={() => <House ID={this.state.ID}/>}/>
-=======
                     <Route path='/house' render={() => <House id={this.state.id}/>}/>
->>>>>>> 47b58dec654e45602d04c8c851995d484e69c072
                 </div>
             </BrowserRouter>
         );

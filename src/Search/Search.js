@@ -5,6 +5,7 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import twitter from '../assets/icons/Twitter_bird_logo_2012.svg.png';
 import telegram from '../assets/icons/200px-Telegram_logo.svg.png';
 import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
+import nopic from '../assets/no-pic.jpg';
 import SearchBox from '../components/SearchBox';
 import NavBarDropdown from '../components/NavBarDropdown'
 import NavBarLogoLink from "../components/NavBarLogoLink";
@@ -23,7 +24,7 @@ class Search extends React.Component {
                 <MoreInfoText/>
                 <SearchResultsList houses={this.props.houses} handleID={this.props.handleID}/>
                 <SearchAgainText/>
-                <SearchBox numOfColumns={9} handleHouses={this.props.handleHouses}/>
+                <SearchBox numOfColumns={8} handleHouses={this.props.handleHouses}/>
                 <br/><br/>
                 <Footer/>
             </div>
@@ -34,10 +35,8 @@ class Search extends React.Component {
 class SearchResultsList extends React.Component {
     constructor(props){
         super(props);
-        // this.data = {"houses":[{"area":244,"address":"باغ شاطر","description":"ز خیل خانه برانند بی\u200cنوایی را، و گر تو جور کنی رای ما دگر نشود","sellPrice":0,"dealType":1,"dealTypeString":"رهن و اجاره","expireTime":"2018-02-11","phone":"174-78-7021","imageURL":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Cambo_169.jpg/320px-Cambo_169.jpg","persianBuildingType":"ویلایی","id":"0693c146-dd33-487d-81eb-7424b48addc5","rentPrice":113849,"basePrice":0,"buildingType":"villa"},{"area":267,"address":"پامنار","description":"هر که در خانه چنو سرو روانی دارد، کافران از بت بی\u200cجان چه تمتع دارند","sellPrice":0,"dealType":1,"dealTypeString":"رهن و اجاره","expireTime":"2018-02-11","phone":"256-85-5592","imageURL":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Ranch_style_home_in_Salinas%2C_California.JPG/320px-Ranch_style_home_in_Salinas%2C_California.JPG","persianBuildingType":"ویلایی","id":"8179000e-166b-44dc-a24c-f57fb7c030bc","rentPrice":116771,"basePrice":0,"buildingType":"villa"},{"area":288,"address":"امامزاده یحیی","description":"گر محتسب به خانه خمار بگذرد، سعدی به خویشتن نتوان رفت سوی دوست","sellPrice":0,"dealType":1,"dealTypeString":"رهن و اجاره","expireTime":"2018-02-11","phone":"743-18-1476","imageURL":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/La_caba%C3%B1a_de_Alpina.jpg/320px-La_caba%C3%B1a_de_Alpina.jpg","persianBuildingType":"ویلایی","id":"ca453f36-fa9d-445b-86d9-06209af532a1","rentPrice":13079,"basePrice":0,"buildingType":"villa"}]}
+
         this.data = this.props.houses;
-        // this.handleID = this.props.handleID;
-        console.log("houses: "+ this.props.houses.toString());
     }
 
     render() {
@@ -48,11 +47,10 @@ class SearchResultsList extends React.Component {
                     {
                         (this.data.length !== 0) ? (
                         this.data.houses.map(function(data, handleID, i){
-                            return <ResultBox key={i} dealType={data.dealType} position={(i%2===0)?'left':'right'}
+                            return <ResultBox dealType={data.dealType} position={(Number(i)%2===0)?'left':'right'}
                                               imageURL={data.imageURL} area={data.area}
                                               address={data.address} basePrice={data.basePrice} sellPrice={data.sellPrice}
                                               rentPrice={data.rentPrice} ID={data.id} handleID={handler}/>;
-
                         }) ) : (null)
                     }
 
@@ -76,7 +74,7 @@ class ResultBox extends React.Component {
     render() {
         const dealType = this.props.dealType;
         const position = this.props.position;
-        const houseImage = this.props.imageURL;
+        const houseImage = (this.props.imageURL !== null) ? this.props.imageURL : nopic ;
         const area = this.props.area;
         const address = this.props.address;
         const basePrice = this.props.basePrice;
