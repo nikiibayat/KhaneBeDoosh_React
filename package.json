@@ -12,6 +12,7 @@
     "react": "^16.2.0",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.2.0",
+    "react-persian": "^1.1.1",
     "react-request": "^2.0.3",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.3.0-rc.2",

@@ -10,26 +10,29 @@ class Pages extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: ''
+            houses: ''
         };
-        this.handleData = this.handleData.bind(this);
+        this.handleHouses = this.handleHouses.bind(this);
     }
 
-    handleData(input) {
-        this.setState({data: input});
+    handleHouses(input) {
+        this.setState({houses: input});
     }
+
     render() {
         return (
             <BrowserRouter>
                 <div>
-                    <Route exact={true} path='/' render={() => <HomePage data={this.state.data} handleData={this.handleData}/>}/>
+                    <Route exact={true} path='/' render={() => <HomePage handleHouses={this.handleHouses}/>}/>
                     <Route path='/balance' component={Account}/>
                     <Route path='/houses' component={AddMelk}/>
-                    <Route path='/Search' component={Search}/>
-                    <Route path='/House' component={House}/>
+                    <Route path='/search'
+                           render={() => <Search houses={this.state.houses} handleHouses={this.handleHouses}/>}/>
+                    <Route path='/house' component={House}/>
                 </div>
             </BrowserRouter>
         );
     }
 }
+
 export default Pages;

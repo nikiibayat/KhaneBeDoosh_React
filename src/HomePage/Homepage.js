@@ -19,12 +19,11 @@ import '../shared-styles.css';
 import '../reset.css'
 
 class HomePage extends React.Component {
-
     render() {
         return (
             <DocumentTitle title='خانه‌به‌دوش'>
                 <div>
-                    <UpperBody/>
+                    <UpperBody handleHouses={this.props.handleHouses}/>
                     <LowerBody/>
                     <Footer/>
                 </div>
@@ -39,7 +38,7 @@ class UpperBody extends React.Component {
         return (
             <div className="upper-body">
                 <NavBar/>
-                <UpperBodyContent numOfColumns={8}/>
+                <UpperBodyContent numOfColumns={8} handleHouses={this.props.handleHouses}/>
 
             </div>
         );
@@ -141,9 +140,7 @@ class DropDown extends React.Component {
 
 const DropDownWithRouter = withRouter(DropDown);
 
-
 class UpperBodyContent extends React.Component {
-
     render() {
         return (
             <div className="container-fluid">
@@ -155,7 +152,7 @@ class UpperBodyContent extends React.Component {
                 {/*<figure></figure>*/}
                 {/*</div>*/}
                 <Logo/>
-                <SearchBox numOfColumns={this.props.numOfColumns}/>
+                <SearchBox numOfColumns={this.props.numOfColumns} handleHouses={this.props.handleHouses}/>
             </div>
         );
     }
