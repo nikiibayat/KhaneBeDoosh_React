@@ -10,8 +10,8 @@ class Pages extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            houses: '',
-            ID : ''
+            id: '',
+            houses: ''
         };
         this.handleHouses = this.handleHouses.bind(this);
         this.handleID = this.handleID.bind(this);
@@ -19,7 +19,10 @@ class Pages extends React.Component {
 
     handleHouses(input) {
         this.setState({houses: input});
-        console.log("here:" + input.houses[1].phone)
+        // console.log("here:" + input.houses[1].phone)
+    }
+    handleID(houseID){
+        this.setState({id: houseID})
     }
 
     handleID(input){
@@ -39,8 +42,12 @@ class Pages extends React.Component {
                     <Route path='/addHouse' component={AddMelk}/>
                     <Route path='/search'
                            render={() => <Search houses={this.state.houses} handleHouses={this.handleHouses} handleID={this.handleID}/>}/>
+<<<<<<< HEAD
                     <Route path='/house'
                            render={() => <House ID={this.state.ID}/>}/>
+=======
+                    <Route path='/house' render={() => <House id={this.state.id}/>}/>
+>>>>>>> 47b58dec654e45602d04c8c851995d484e69c072
                 </div>
             </BrowserRouter>
         );
