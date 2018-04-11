@@ -6,6 +6,7 @@ import '../reset.css'
 import SearchForm from "./SearchForm";
 import {Link} from 'react-router-dom';
 
+
 class SearchBox extends React.Component {
     render() {
         return (
@@ -13,7 +14,7 @@ class SearchBox extends React.Component {
                 <div className="row justify-content-center mb-2">
                     <SearchForm numOfColumns={this.props.numOfColumns} handleHouses={this.props.handleHouses}/>
                 </div>
-                <Link to='/houses'>
+                <Link to='/addHouse'>
                     <div className="row justify-content-center mt-2">
                         <div
                             className={"col-11 col-md-" + this.props.numOfColumns + " search-form shabnam rtl text-white text-center py-2"}>صاحب

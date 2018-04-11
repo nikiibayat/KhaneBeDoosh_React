@@ -25,7 +25,7 @@ class Pages extends React.Component {
                 <div>
                     <Route exact={true} path='/' render={() => <HomePage handleHouses={this.handleHouses}/>}/>
                     <Route path='/balance' component={Account}/>
-                    <Route path='/houses' component={AddMelk}/>
+                    <Route path='/addHouse' component={AddMelk}/>
                     <Route path='/search'
                            render={() => <Search houses={this.state.houses} handleHouses={this.handleHouses}/>}/>
                     <Route path='/house' component={House}/>
