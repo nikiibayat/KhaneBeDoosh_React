@@ -47,6 +47,7 @@ class SearchForm extends React.Component {
             .then((response) => response.json())
             .then(data => {
                 this.props.handleHouses(data);
+                console.log('form', data);
             })
             .catch(function(error) {
                 console.log('request failed', error);
@@ -56,6 +57,7 @@ class SearchForm extends React.Component {
         this.setState({Price : ''});
         this.setState({Area : ''});
         this.setState({DealType : '1'});
+
 
 
     }

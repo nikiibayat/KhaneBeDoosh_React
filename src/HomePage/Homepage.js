@@ -34,7 +34,6 @@ class HomePage extends React.Component {
 }
 
 class UpperBody extends React.Component {
-
     render() {
         return (
             <div className="upper-body">
