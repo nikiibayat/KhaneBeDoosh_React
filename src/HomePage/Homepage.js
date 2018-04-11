@@ -11,6 +11,7 @@ import reliable from '../assets/icons/726488.svg';
 import comprehensive from '../assets/icons/726499.svg';
 import whyKhanebedoosh from '../assets/why-khanebedoosh.jpg';
 import SearchBox from "../components/SearchBox";
+import { Link } from 'react-router-dom'
 import './HomePage.css';
 import '../shared-styles.css';
 import '../reset.css'
@@ -106,9 +107,9 @@ class Logo extends React.Component {
         return (
             <div className="row justify-content-center">
                 <figure className="figure logo-fig">
-                    <a href="/homepage.html" className="logo m-auto d-block">
+                    <Link to="/" className="logo m-auto d-block">
                         <img className="figure-img" src={logo} alt="khanebedoosh-logo"/>
-                    </a>
+                    </Link>
                     <figcaption
                         className="figure-caption text-center rtl shabnam text-white font-weight-bold">خانه‌به‌دوش
                     </figcaption>
