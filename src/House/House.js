@@ -12,6 +12,7 @@ import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
 import PersianNumber from "../components/PersianNumber";
+import nopic from "../assets/no-pic.jpg"
 
 
 
@@ -86,9 +87,6 @@ class HouseContent extends React.Component {
                 return response.json();
             })
             .then(data => {
-
-                // const houseImage = (data.house.imageURL !== null) ? data.house.imageURL : {nopic} ;
-
                 this.setState({url: data.house.imageURL });
                 this.setState({phone : data.house.phone});
                 this.setState({type: data.house.persianBuildingType });
@@ -299,12 +297,11 @@ function Description(props) {
 }
 
 function Image(props) {
-    // process.env.PUBLIC_URL
     return(
         <div>
         {(props.url != null) ?
             (<img src={props.url} alt="house_picture" className="imageRadius Houseimage"/>) :
-            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius Houseimage"/>)}
+            (<img src={nopic} alt="house_picture" className="imageRadius Houseimage"/>)}
         </div>
         );
 
