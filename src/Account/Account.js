@@ -36,7 +36,7 @@ function NavBar() {
     return (
         <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
             <NavBarLogoLink/>
-            <NavBarDropdown/>
+            <NavBarDropdown color={"purple"}/>
         </nav>
     );
 }
