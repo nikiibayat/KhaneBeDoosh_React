@@ -7,7 +7,7 @@ class SearchForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            BuildingType: 'BuildingType',
+            BuildingType: '',
             Price: '',
             Area: '',
             DealType: 'rent',
@@ -35,24 +35,24 @@ class SearchForm extends React.Component {
     }
 
     handleSubmit(event) {
-        let url = "http://localhost:8080/houses?minArea=" + this.state.Area +"&buildingType=" +
-        (this.state.BuildingType === 'BuildingType') ? '' : this.state.BuildingType
-        +'&dealType=' + (this.state.DealType) === 'rent' ? '1' : '0' + '&maxPrice' + this.state.Price ;
-        fetch( url , {
-            method: 'GET',
-            headers:{
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            }
-        })
-            .then(this.checkStatus)
-            .then(response => {return response.json();})
-            .then(data => {
-                console.log(data);
-            })
-            .catch(function(error) {
-                console.log('request failed', error);
-            })
+        alert('here');
+
+        // console.log(url);
+        // fetch( url , {
+        //     method: 'GET',
+        //     headers:{
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json',
+        //     }
+        // })
+        //     .then(this.checkStatus)
+        //     .then(response => {return response.json();})
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+        //     .catch(function(error) {
+        //         console.log('request failed', error);
+        //     })
         this.setState({BuildingType: 'BuildingType'});
         this.setState({Price: ''});
         this.setState({Area: ''});
@@ -98,13 +98,12 @@ class BuildingTypeForm extends React.Component {
     render() {
         return (
             <div className="form-group col-12 col-md-4 pl-md-3">
-                <label className="form-check-label px-2" for="building-type"></label>
-                <select className="form-control form-inline rtl shabnam" id="building-type"
-                        required value={this.props.BuildingType} onChange={this.handleChange}>
-                    <option value="BuildingType" disabled className="grey-color">نوع ملک</option>
+                <label className="form-check-label px-2" ></label>
+                <select className="form-control form-inline rtl shabnam" name="BuildingType" id="building-type"
+                         value={this.props.BuildingType} onChange={this.handleChange}>
+                    <option value="" disabled className="grey-color">نوع ملک</option>
                     <option value="villa">ویلایی</option>
                     <option value="apartment">آپارتمان</option>
-                    <option value="both">هر کدام</option>
                 </select>
             </div>
         );
@@ -125,9 +124,9 @@ class PriceForm extends React.Component {
     render() {
         return (
             <div className="form-group col-12 col-md-4 px-md-3">
-                <label className="form-check-label px-2 text-white small" for="price">تومان</label>
+                <label className="form-check-label px-2 text-white small" >تومان</label>
                 <input type="text" className="form-control form-inline rtl shabnam placeholder-grey"
-                       id="price" placeholder="حداکثر قیمت" value={this.props.Price} onChange={this.handleChange}/>
+                       id="price" name="maxPrice" placeholder="حداکثر قیمت" value={this.props.Price} onChange={this.handleChange}/>
             </div>
         );
     }
@@ -147,10 +146,10 @@ class AreaForm extends React.Component {
     render() {
         return (
             <div className="form-group col-12 col-md-4 pr-md-3 mb-0">
-                <label className="form-check-label px-2 text-white small" for="area">متر
+                <label className="form-check-label px-2 text-white small" >متر
                     مربع</label>
                 <input type="text" className="form-control form-inline rtl shabnam placeholder-grey"
-                       id="area" placeholder="حداکثر متراژ" value={this.props.Area} onChange={this.handleChange} />
+                       id="area" name="minArea" placeholder="حداکثر متراژ" value={this.props.Area} onChange={this.handleChange} />
             </div>
         );
     }
@@ -171,16 +170,16 @@ class DealType extends React.Component {
         return (
             <div>
                 <div className="form-check form-check-inline float-right">
-                    <input className="form-check-input" type="radio" name="sellType" id="radio-rent"
-                           value="rent" checked={this.props.DealType === 'rent'} onChange={this.handleChange}/>
-                    <label className="form-check-label px-2 text-white" for="radio-rent">
+                    <input className="form-check-input" type="radio" name="dealType" id="radio-rent"
+                           value="1" checked={this.props.DealType === 'rent'} onChange={this.handleChange}/>
+                    <label className="form-check-label px-2 text-white" >
                         رهن و اجاره
                     </label>
                 </div>
                 <div className="form-check form-check-inline float-right">
-                    <input className="form-check-input" type="radio" name="sellType" id="radio-sell" value="sell"
+                    <input className="form-check-input" type="radio" name="dealType" id="radio-sell" value="0"
                            onChange={this.handleChange} checked={this.props.DealType === 'sell'}/>
-                    <label className="form-check-label px-2 text-white" for="radio-sell">
+                    <label className="form-check-label px-2 text-white" >
                         خرید
                     </label>
                 </div>
