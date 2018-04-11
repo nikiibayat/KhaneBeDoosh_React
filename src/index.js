@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Link, Route} from "react-router-dom"
+import {BrowserRouter, Route} from "react-router-dom"
 import './index.css';
 
 import Account from './Account/Account';
@@ -13,7 +13,7 @@ ReactDOM.render(
     <BrowserRouter>
         <div>
             <Route exact={true} path='/' component={HomePage}/>
-            <Route path='/Account' component={Account}/>
+            <Route path='/balance' component={Account}/>
             <Route path='/houses' component={AddMelk}/>
         </div>
     </BrowserRouter>,

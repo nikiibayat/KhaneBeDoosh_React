@@ -3,14 +3,15 @@ import '../bootstrap-4.0.0-dist/css/bootstrap.min.css';
 import '../shared-styles.css';
 import '../reset.css';
 import 'whatwg-fetch';
+import {Link} from 'react-router-dom';
 
-class NavBarDropdown extends React.Component{
-    constructor(props){
+class NavBarDropdown extends React.Component {
+    constructor(props) {
         super(props);
 
         this.state = {
-            name : '',
-            balance : ''
+            name: '',
+            balance: ''
         }
 
 
@@ -29,7 +30,7 @@ class NavBarDropdown extends React.Component{
     }
 
 
-    componentDidMount(){
+    componentDidMount() {
         // let url = '/users?username=behnamhomayoon';
         // fetch( url , {
         //     method: 'GET',
@@ -54,11 +55,12 @@ class NavBarDropdown extends React.Component{
 
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="navbar-nav dropdown">
                 <div className="nav-item nav-link">
-                    <div className="shabnam nav-profile-purple"><i className="fa fa-smile-o fa-lg"></i> ناحیه‌ی کاربری</div>
+                    <div className="shabnam nav-profile-purple"><i className="fa fa-smile-o fa-lg"></i> ناحیه‌ی کاربری
+                    </div>
                     <div className="dropdown-content shabnam dropdown-responsive pt-4">
                         <div className="container-fluid">
                             <div className="row">
@@ -68,10 +70,13 @@ class NavBarDropdown extends React.Component{
                                 <div className="col-5 px-0 text-right">اعتبار</div>
                                 <div className="col-7 px-0 text-left">{this.state.balance} تومان</div>
                             </div>
-                            <div className="row py-4 justify-content-center">
-                                <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
-                                khane-blue-background" onClick={this.IncreaseBalance}>افزایش اعتبار</button>
-                            </div>
+                            <Link to='/balance'>
+                                <div className="row py-4 justify-content-center">
+                                    <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
+                                khane-blue-background" onClick={this.IncreaseBalance}>افزایش اعتبار
+                                    </button>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -79,4 +84,5 @@ class NavBarDropdown extends React.Component{
         );
     }
 }
+
 export default NavBarDropdown;
