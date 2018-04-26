@@ -155,7 +155,6 @@ class HouseContent extends React.Component {
                     this.setState({hasPayed : true});
                 }
                 else if(data.purchaseSuccessStatus === "false"){
-                    alert('not in somewhere good');
                     this.setState({hasPayed : false});
                 }
             })
