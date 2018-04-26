@@ -92,9 +92,9 @@ class ResultBox extends React.Component {
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
-                        {(houseImage ==='undefined') ?
+                        {(houseImage != null) ?
                             (<img src={houseImage} alt="house_picture" className="imageRadius dimension"/>) :
-                            (<img src={nopic} alt="no-pic" className="imageRadius dimension"/>)}
+                            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius dimension"/>)}
                         <p className="text-right px-4">
                             <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
