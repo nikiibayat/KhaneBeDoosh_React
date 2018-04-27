@@ -41,7 +41,7 @@ class SearchResultsList extends React.Component {
 
     render() {
         const handler = this.props.handleID;
-        console.log(this.data.imageURL);
+        // console.log(this.data.imageURL);
         return (
             <div className="container-fluid">
                 <div className="row shabnam mobileFont">
@@ -83,6 +83,7 @@ class ResultBox extends React.Component {
         const basePrice = this.props.basePrice;
         const sellPrice = this.props.sellPrice;
         const rentPrice = this.props.rentPrice;
+        console.log("it is: " + typeof (houseImage));
         return (
             <div className="col-12 col-sm-6 rtl">
                 <div className={"resultbox " + ((position === "right") ? " boxMargin" : "")}>
@@ -92,9 +93,10 @@ class ResultBox extends React.Component {
                         ) : (
                             <div className="btn  mt-2 redBu">رهن و اجاره</div>
                         )}
-                        {(houseImage != null) ?
+                        {(houseImage !== "null") ?
                             (<img src={houseImage} alt="house_picture" className="imageRadius dimension"/>) :
-                            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="house_picture" className="imageRadius dimension"/>)}
+                            (<img src={process.env.PUBLIC_URL+'no-pic.jpg'} alt="no_pic" className="imageRadius dimension"/>)}
+
                         <p className="text-right px-4">
                             <span className="location"><PersianNumber number={area}/> متر مربع</span>
                             {(dealType === "sale") ? (
