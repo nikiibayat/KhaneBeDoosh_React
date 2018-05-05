@@ -4,6 +4,7 @@ import Account from "./Account/Account";
 import AddMelk from "./AddMelk/AddMelk";
 import Search from "./Search/Search";
 import House from "./House/House";
+import Login from "./Login/Login"
 import {BrowserRouter, Route} from "react-router-dom";
 
 class Pages extends React.Component {
@@ -35,6 +36,7 @@ class Pages extends React.Component {
                     <Route path='/search'
                            render={() => <Search houses={this.state.houses} handleHouses={this.handleHouses} handleID={this.handleID}/>}/>
                     <Route path='/house' render={() => <House id={this.state.id}/>}/>
+                    <Route path='/login' component={Login}/>
                 </div>
             </BrowserRouter>
         );

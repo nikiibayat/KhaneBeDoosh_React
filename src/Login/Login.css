@@ -1,0 +1,51 @@
+
+.input [type=text] {
+    height: 2.3em;
+    text-align: right;
+    color: #999999;
+    border-radius: 0.4em;
+}
+
+@media (min-width: 577px) {
+    .input [type=text] {
+        margin-right: 12%;
+    }
+    .input [type=button]{
+        margin-right: 12%;
+    }
+}
+@media (max-width: 576px) {
+    .input [type=button] {
+        margin-right: 12%;
+    }
+    .input [type=text] {
+        margin-right: 12%;
+    }
+}
+
+.input [type=button] {
+    height: 2.3em;
+    color: white;
+    border-radius: 0.4em;
+}
+
+.placeholder-grey::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #9A9A9A;
+    opacity: 1;
+}
+.placeholder-grey::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #9A9A9A;
+}
+
+
+.loginForm {
+    margin-top: 10%;
+    border-style : solid;
+    border-color: #999999;
+    border-width: 1px;
+    border-radius: 0.4em;
+    padding-top: 4%;
+    background-image:  url("../assets/pattern/geometry2.png");
+}
