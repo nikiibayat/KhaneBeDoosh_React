@@ -41,7 +41,8 @@
 
 
 .loginForm {
-    margin-top: 10%;
+    margin-top: 7%;
+    /*margin-bottom: 10%;*/
     border-style : solid;
     border-color: #999999;
     border-width: 1px;

@@ -14,7 +14,6 @@ import PageTitleHeader from "../components/PageTitleHeader";
 
 import DocumentTitle from 'react-document-title'
 import URLSearchParams from 'url-search-params';
-import PersianNumber from "../components/PersianNumber";
 
 
 class Login extends React.Component {
@@ -44,50 +43,6 @@ function NavBar() {
 class LoginWebsite extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            username : '',
-            password: ''
-        };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.checkStatus = this.checkStatus.bind(this);
-    }
-
-
-    handleSubmit(input){
-
-        const searchParams = new URLSearchParams();
-        searchParams.set('balance', Number(input));
-
-        fetch('http://localhost:8080/balance', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body : searchParams
-        })
-            .then(this.checkStatus)
-            .then(response => {return response.json();})
-            .then(data => {
-                let newBalance = Number(this.state.balance) + Number(input);
-                this.setState({balance : newBalance});
-            })
-            .catch(function(error) {
-                console.log('request failed', error);
-            })
-    }
-
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            this.setState({success: "true"});
-            return response;
-        } else {
-            this.setState({success: "false"});
-            let error = new Error(response.statusText)
-            error.response = response;
-            throw error
-        }
     }
 
     render() {
@@ -117,6 +72,19 @@ class LoginFrom extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.checkStatus = this.checkStatus.bind(this);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({success: "true"});
+            return response;
+        } else {
+            this.setState({success: "false"});
+            let error = new Error(response.statusText)
+            error.response = response;
+            throw error
+        }
     }
 
     handleClick(){
