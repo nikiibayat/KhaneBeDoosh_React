@@ -42,7 +42,7 @@
 
 .loginForm {
     margin-top: 7%;
-    /*margin-bottom: 10%;*/
+    box-shadow: 0 2px 20px 0 rgba(0,0,0,0.1);
     border-style : solid;
     border-color: #999999;
     border-width: 1px;
