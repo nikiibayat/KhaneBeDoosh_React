@@ -10,6 +10,9 @@
     .input [type=text] {
         margin-right: 12%;
     }
+    .input [type=password] {
+        margin-right: 12%;
+    }
     .input [type=button]{
         margin-right: 12%;
     }

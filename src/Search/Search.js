@@ -10,7 +10,6 @@ import NavBarDropdown from '../components/NavBarDropdown'
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
 import PersianNumber from "../components/PersianNumber";
-import nopic from '../assets/no-pic.jpg'
 import {Link} from 'react-router-dom';
 import './Search.css';
 import '../shared-styles.css';

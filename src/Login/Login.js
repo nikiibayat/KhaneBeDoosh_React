@@ -41,9 +41,6 @@ function NavBar() {
 }
 
 class LoginWebsite extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -66,13 +63,15 @@ class LoginFrom extends React.Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            inputType: 'password'
         }
 
         this.handleClick = this.handleClick.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.checkStatus = this.checkStatus.bind(this);
+        this.showPassword = this.showPassword.bind(this);
     }
 
     checkStatus(response) {
@@ -88,7 +87,26 @@ class LoginFrom extends React.Component {
     }
 
     handleClick(){
-        // post data to API
+        const searchParams = new URLSearchParams();
+        searchParams.set('Username', this.state.username);
+        searchParams.set('Password', this.state.password);
+        fetch('http://localhost:8080/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: searchParams
+        })
+            .then(this.checkStatus)
+            .then(function (response) {
+                console.log(response.status);
+                console.log(response.statusText);
+            })
+            .catch(function (error) {
+                console.log('request failed', error);
+            });
+        this.setState({username : ''});
+        this.setState({password : ''});
     }
 
     handleUsernameChange(event){
@@ -99,6 +117,14 @@ class LoginFrom extends React.Component {
         this.setState({password: event.target.value});
     }
 
+    showPassword(event){
+        if (this.state.inputType === "password") {
+            this.setState({inputType: "text"});
+        } else {
+            this.setState({inputType: "password"});
+        }
+    }
+
     render() {
         return (
             <div>
@@ -106,8 +132,10 @@ class LoginFrom extends React.Component {
                     <input type="text" className={"form-control grey-color placeholder-grey shabnam"}
                            placeholder="نام کاربری" value={this.state.username} onChange={this.handleUsernameChange} />
                     <br /><br />
-                    <input type="text" className={"form-control grey-color placeholder-grey shabnam"}
-                           placeholder="رمز عبور" value={this.state.password} onChange={this.handleChange} />
+                    <input type={this.state.inputType} className={"form-control grey-color placeholder-grey shabnam"}
+                           placeholder="رمز عبور" value={this.state.password} onChange={this.handlePasswordChange} />
+                    <br />
+                    <input type="checkbox" onClick={this.showPassword} className="leftMargin"/> <span className="grey-color small rightMargin">نمایش رمز عبور</span>
                     <br /><br />
                     <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>ورود</button>
                 </div>
