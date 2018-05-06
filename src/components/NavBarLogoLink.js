@@ -9,10 +9,12 @@ import {Link} from 'react-router-dom';
 class NavBarLogoLink extends React.Component{
     render(){
         return(
-            <Link className="navbar-brand shabnam" to="/">
-                <img src={logo} width="30" height="30" className="d-inline-block align-top" alt=""/>
-                <span className="khane-blue font-weight-bold">خانه‌به‌دوش</span>
-            </Link>
+            <div>
+                <Link className="navbar-brand shabnam" to="/">
+                    <img src={logo} width="30" height="30" className="d-inline-block align-top" alt=""/>
+                    <span className="khane-blue font-weight-bold">خانه‌به‌دوش</span>
+                </Link>
+            </div>
         );
     }
 }

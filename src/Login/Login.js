@@ -11,7 +11,7 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
-
+import {Link} from 'react-router-dom';
 import DocumentTitle from 'react-document-title'
 import URLSearchParams from 'url-search-params';
 
@@ -31,13 +31,31 @@ class Login extends React.Component {
     }
 }
 
-function NavBar() {
-    return (
-        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <NavBarLogoLink/>
-            <NavBarDropdown color={"purple"}/>
-        </nav>
-    );
+class NavBar extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn : 'false'
+        }
+    }
+    componentDidMount(){
+
+    }
+    render () {
+        return (
+            <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                <NavBarLogoLink/>
+                {(this.state.isLoggedIn === "false") ? (
+                    <Link to="/login">
+                        <button type="button"
+                                className="btn btn-sm text-center text-light khane-blue-background shabnam ">ورود
+                        </button>
+                    </Link> ) : (
+                    <NavBarDropdown color={"purple"}/>
+                )}
+            </nav>
+        );
+    }
 }
 
 class LoginWebsite extends React.Component {
@@ -64,7 +82,8 @@ class LoginFrom extends React.Component {
         this.state = {
             username: '',
             password: '',
-            inputType: 'password'
+            inputType: 'password',
+            errMessage: ''
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -76,10 +95,11 @@ class LoginFrom extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
-            this.setState({success: "true"});
             return response;
         } else {
-            this.setState({success: "false"});
+            if(response.status === 403){
+                this.setState({errMessage : 'نام کاربری یا رمز‌عبور اشتباه است'})
+            }
             let error = new Error(response.statusText)
             error.response = response;
             throw error
@@ -90,7 +110,7 @@ class LoginFrom extends React.Component {
         const searchParams = new URLSearchParams();
         searchParams.set('Username', this.state.username);
         searchParams.set('Password', this.state.password);
-        fetch('http://localhost:8080/', {
+        fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json'
@@ -101,6 +121,7 @@ class LoginFrom extends React.Component {
             .then(function (response) {
                 console.log(response.status);
                 console.log(response.statusText);
+                window.sessionStorage.accessToken = response.body.access_token;
             })
             .catch(function (error) {
                 console.log('request failed', error);
@@ -139,6 +160,7 @@ class LoginFrom extends React.Component {
                     <br /><br />
                     <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>ورود</button>
                 </div>
+                <p className="small red ml-5">{this.state.errMessage}</p>
                 <br/>
             </div>
 
