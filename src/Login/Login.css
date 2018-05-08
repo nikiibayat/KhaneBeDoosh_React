@@ -53,3 +53,10 @@
     padding-top: 4%;
     background-image:  url("../assets/pattern/geometry2.png");
 }
+
+.btn-border {
+    border-style : solid;
+    border-color: #999999;
+    border-width: 1px;
+    border-radius: 0.4em;
+}

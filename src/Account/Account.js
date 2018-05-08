@@ -8,6 +8,7 @@ import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
 import './Account.css';
 import '../shared-styles.css';
 import '../reset.css';
+import {Link} from 'react-router-dom';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
@@ -32,13 +33,57 @@ class Account extends React.Component {
     }
 }
 
-function NavBar() {
-    return (
-        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <NavBarLogoLink/>
-            <NavBarDropdown color={"purple"}/>
-        </nav>
-    );
+class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: 'false'
+        }
+        this.checkStatus = this.checkStatus.bind(this);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn : 'true'});
+        } else {
+            if(response.status === 403){
+                this.setState({isLoggedIn : 'false'});
+            }
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+    componentDidMount(){
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authentication' : 'Bearer ' + window.sessionStorage.accessToken
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
+    render () {
+        return (
+            <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                <NavBarLogoLink/>
+                {(this.state.isLoggedIn === "false") ? (
+                    <Link to="/login">
+                        <button type="button"
+                                className="btn btn-sm text-center text-light khane-blue-background shabnam ">ورود
+                        </button>
+                    </Link> ) : (
+                    <NavBarDropdown color={"purple"}/>
+                )}
+            </nav>
+        );
+    }
 }
 
 class IncreaseBalance extends React.Component {
@@ -46,7 +91,8 @@ class IncreaseBalance extends React.Component {
         super(props);
         this.state = {
             balance : '۰',
-            success: 'true'
+            success: 'true',
+            isLoggedIn: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,7 +108,8 @@ class IncreaseBalance extends React.Component {
         fetch('http://localhost:8080/balance', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             },
             body : searchParams
         })
@@ -81,8 +128,14 @@ class IncreaseBalance extends React.Component {
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
             this.setState({success: "true"});
+            this.setState({isLoggedIn: "true"});
             return response;
         } else {
+            if (response.status === 403){
+                this.setState({success: "false"});
+                this.setState({isLoggedIn: "false"});
+                console.log("Error 403");
+            }
             this.setState({success: "false"});
             let error = new Error(response.statusText)
             error.response = response;
@@ -91,12 +144,13 @@ class IncreaseBalance extends React.Component {
     }
 
     componentDidMount(){
-        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        let url = 'http://localhost:8080/users';
         fetch( url , {
             method: 'GET',
             headers:{
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization' : 'Bearer ' +  localStorage.getItem("access_token")
             }
         })
             .then(this.checkStatus)
@@ -120,7 +174,7 @@ class IncreaseBalance extends React.Component {
                         <CurrentBalance balance={this.state.balance}/>
                     </div>
                     <div className="col-12 col-md-6 input inputInc py-5">
-                        <Increase handleClick={this.handleSubmit} success={this.state.success} />
+                        <Increase handleClick={this.handleSubmit} success={this.state.success} isLoggedIn={this.state.isLoggedIn}/>
                     </div>
                 </div>
             </div>
@@ -164,7 +218,7 @@ class Increase extends React.Component {
     render() {
         return (
             <div>
-                <span className="shabnam grey-color small px-4 text-right">تومان</span>
+                <span className="shabnam grey-color small px-5 text-right">تومان</span>
                 <br />
                 <div className="form-group balanceInput">
                     {(this.props.success === "false") ? (
@@ -178,6 +232,7 @@ class Increase extends React.Component {
                 <button type="button" className="btn btn-click-me text-center text-light khane-blue-background buttonMargin" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br/>
+                {(this.props.isLoggedIn === 'false') ? (<p className="red small">برای افزایش اعتبار باید وارد شده باشید</p>) : (<p></p>)}
             </div>
 
         );

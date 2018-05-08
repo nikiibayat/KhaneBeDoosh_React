@@ -32,14 +32,41 @@ class Login extends React.Component {
 }
 
 class NavBar extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn : 'false'
+            isLoggedIn: 'false'
+        }
+        this.checkStatus = this.checkStatus.bind(this);
+        console.log("get local storage : " + localStorage.getItem("access_token"));
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn : 'true'});
+        } else {
+            if(response.status === 403){
+                this.setState({isLoggedIn : 'false'});
+            }
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
         }
     }
     componentDidMount(){
-
+        let url = 'http://localhost:8080/users';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
     }
     render () {
         return (
@@ -91,6 +118,7 @@ class LoginFrom extends React.Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.checkStatus = this.checkStatus.bind(this);
         this.showPassword = this.showPassword.bind(this);
+        this.handleExit = this.handleExit.bind(this);
     }
 
     checkStatus(response) {
@@ -98,7 +126,7 @@ class LoginFrom extends React.Component {
             return response;
         } else {
             if(response.status === 403){
-                this.setState({errMessage : 'نام کاربری یا رمز‌عبور اشتباه است'})
+                this.setState({errMessage : 'نام کاربری یا رمز‌عبور اشتباه است'});
             }
             let error = new Error(response.statusText)
             error.response = response;
@@ -107,9 +135,10 @@ class LoginFrom extends React.Component {
     }
 
     handleClick(){
+        this.setState({errMessage : ''});
         const searchParams = new URLSearchParams();
-        searchParams.set('Username', this.state.username);
-        searchParams.set('Password', this.state.password);
+        searchParams.set('username', this.state.username);
+        searchParams.set('password', this.state.password);
         fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
@@ -118,10 +147,16 @@ class LoginFrom extends React.Component {
             body: searchParams
         })
             .then(this.checkStatus)
-            .then(function (response) {
+            .then(response => {
                 console.log(response.status);
                 console.log(response.statusText);
-                window.sessionStorage.accessToken = response.body.access_token;
+                return response.json();
+            })
+            .then(responseData => {return responseData;})
+            .then(data => {
+                console.log("server respone :  " + data.access_token);
+                localStorage.setItem('access_token', data.access_token);
+                // this.props.history.goBack;
             })
             .catch(function (error) {
                 console.log('request failed', error);
@@ -146,6 +181,10 @@ class LoginFrom extends React.Component {
         }
     }
 
+    handleExit() {
+        localStorage.setItem('access_token',null);
+    }
+
     render() {
         return (
             <div>
@@ -159,6 +198,8 @@ class LoginFrom extends React.Component {
                     <input type="checkbox" onClick={this.showPassword} className="leftMargin"/> <span className="grey-color small rightMargin">نمایش رمز عبور</span>
                     <br /><br />
                     <button type="button" className="btn btn-click-me text-center text-light khane-blue-background" onClick={this.handleClick}>ورود</button>
+                    <br /><br />
+                    <button type="button" className="btn btn-click-me btn-sm text-center text-dark btn-border" onClick={this.handleExit}>خروج</button>
                 </div>
                 <p className="small red ml-5">{this.state.errMessage}</p>
                 <br/>

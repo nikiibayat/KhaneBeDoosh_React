@@ -46,9 +46,47 @@ class UpperBody extends React.Component {
 }
 
 class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: 'false'
+        }
+        this.checkStatus = this.checkStatus.bind(this);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn : 'true'});
+        } else {
+            if(response.status === 403){
+                this.setState({isLoggedIn : 'false'});
+            }
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+
+    componentDidMount(){
+        let url = 'http://localhost:8080/users';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
 
     render() {
         return (
+            <div>
+            {(this.state.isLoggedIn === "true") ? (
             <nav className="navbar bg-transparent px-md-5">
                 <div className="navbar-nav dropdown rtl">
                     <div className="nav-item nav-link border border-white navbar-dropdown-radius p-2">
@@ -56,7 +94,13 @@ class NavBar extends React.Component {
                         <DropDownWithRouter/>
                     </div>
                 </div>
-            </nav>
+            </nav> ) : (
+                <Link to="/login">
+                    <button type="button"
+                            className="btn btn-sm text-center text-light khane-blue-background shabnam my-1 mx-1 ">ورود
+                    </button>
+                </Link>
+            )}</div>
         );
     }
 }
@@ -69,9 +113,7 @@ class DropDown extends React.Component {
         this.state = {
             name: '',
             balance: ''
-        };
-
-
+        }
         this.checkStatus = this.checkStatus.bind(this);
         this.handleClick = this.handleClick.bind(this);
 
@@ -81,6 +123,9 @@ class DropDown extends React.Component {
         if (response.status >= 200 && response.status < 300) {
             return response
         } else {
+            if(response.status === 403){
+                console.log("Error 403");
+            }
             let error = new Error(response.statusText);
             error.response = response;
             throw error
@@ -88,12 +133,13 @@ class DropDown extends React.Component {
     }
 
     componentDidMount() {
-        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        let url = 'http://localhost:8080/users';
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             }
         })
             .then(this.checkStatus)

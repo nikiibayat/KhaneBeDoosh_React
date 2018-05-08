@@ -8,6 +8,7 @@ import instagram from '../assets/icons/200px-Instagram_logo_2016.svg.png';
 import './AddMelk.css';
 import '../shared-styles.css';
 import '../reset.css';
+import {Link} from 'react-router-dom';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import PageTitleHeader from "../components/PageTitleHeader";
@@ -29,13 +30,57 @@ class AddMelk extends React.Component {
     }
 }
 
-function NavBar() {
-    return (
-        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <NavBarLogoLink/>
-            <NavBarDropdown/>
-        </nav>
-    );
+class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: 'false'
+        }
+        this.checkStatus = this.checkStatus.bind(this);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn : 'true'});
+        } else {
+            if(response.status === 403){
+                this.setState({isLoggedIn : 'false'});
+            }
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+    componentDidMount(){
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authentication' : window.sessionStorage.accessToken
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
+    render () {
+        return (
+            <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                <NavBarLogoLink/>
+                {(this.state.isLoggedIn === "false") ? (
+                    <Link to="/login">
+                        <button type="button"
+                                className="btn btn-sm text-center text-light khane-blue-background shabnam ">ورود
+                        </button>
+                    </Link> ) : (
+                    <NavBarDropdown color={"purple"}/>
+                )}
+            </nav>
+        );
+    }
 }
 
 class AddMelkForm extends React.Component {
@@ -49,7 +94,8 @@ class AddMelkForm extends React.Component {
             MaxMeter: '',
             Address: '',
             PhoneNumber: '',
-            Description: ''
+            Description: '',
+            isLoggedIn: ''
 
         };
 
@@ -62,6 +108,7 @@ class AddMelkForm extends React.Component {
         this.handleMaxMeter = this.handleMaxMeter.bind(this);
         this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
+        this.checkStatus = this.checkStatus.bind(this);
     }
 
     handleBuildingType(input) {
@@ -98,8 +145,13 @@ class AddMelkForm extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn: 'true'});
             return response;
         } else {
+            if(response.status === 403){
+                console.log("Error 403");
+                this.setState({isLoggedIn: 'false'});
+            }
             let error = new Error(response.statusText)
             error.response = response;
             throw error
@@ -119,7 +171,8 @@ class AddMelkForm extends React.Component {
         fetch('http://localhost:8080/houses', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             },
             body: searchParams
         })
@@ -188,6 +241,7 @@ class AddMelkForm extends React.Component {
                                         onClick={this.handleSubmit}>ثبت ملک
                                 </button>
                             </div>
+                            {(this.state.isLoggedIn === 'false') ? (<p className="red small">برای اضافه کردن ملک باید وارد شده باشید</p>) : (<p></p>)}
                         </div>
                     </form>
                 </div>

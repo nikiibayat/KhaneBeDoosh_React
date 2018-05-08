@@ -10,33 +10,91 @@ import '../shared-styles.css';
 import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
+import {Link} from 'react-router-dom';
+import { Redirect } from 'react-router';
 import PageTitleHeader from "../components/PageTitleHeader";
 import PersianNumber from "../components/PersianNumber";
 import nopic from "../assets/no-pic.jpg"
 
 
 
-
 class House extends React.Component {
+    constructor(props) {
+        super(props);
+
+        if(this.props.id !== null){
+            console.log("props.id");
+            this.ID = this.props.id;
+        }
+        else {
+            console.log("window");
+            this.ID = window.sessionStorage.reloadID;
+        }
+    }
+
     render(){
         return (
             <div>
                 <NavBar />
                 <PageTitleHeader text={"مشخصات کامل ملک"}/>
-                <HouseContent id={this.props.id}/>
+                <HouseContent id={this.ID}/>
                 <Footer />
             </div>
         );
     }
 }
 
-function NavBar() {
-    return (
-        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <NavBarLogoLink/>
-            <NavBarDropdown color={"purple"}/>
-        </nav>
-    );
+class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: 'false'
+        }
+        this.checkStatus = this.checkStatus.bind(this);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn : 'true'});
+        } else {
+            if(response.status === 403){
+                this.setState({isLoggedIn : 'false'});
+            }
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+    componentDidMount(){
+        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authentication' : 'Bearer ' + window.sessionStorage.accessToken
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request failed', error);
+            })
+    }
+    render () {
+        return (
+            <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                <NavBarLogoLink/>
+                {(this.state.isLoggedIn === "false") ? (
+                    <Link to="/login">
+                        <button type="button"
+                                className="btn btn-sm text-center text-light khane-blue-background shabnam ">ورود
+                        </button>
+                    </Link> ) : (
+                    <NavBarDropdown color={"purple"}/>
+                )}
+            </nav>
+        );
+    }
 }
 
 class HouseContent extends React.Component {
@@ -56,7 +114,8 @@ class HouseContent extends React.Component {
             hasPayed : 'false',
             balance : '',
             clicked : 'false',
-            dealType : ''
+            dealType : '',
+            isLoggedIn: '',
         }
 
         this.ID = this.props.id;
@@ -80,6 +139,7 @@ class HouseContent extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             }
         })
             .then(this.checkStatus)
@@ -105,14 +165,26 @@ class HouseContent extends React.Component {
 
     }
 
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response;
+        } else {
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+
+
     isPayed(){
-        let url = 'http://localhost:8080/users?username=behnamhomayoon&houseID=' + this.ID;
+        let url = 'http://localhost:8080/users&houseID=' + this.ID;
         console.log(url);
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             }
         })
             .then(this.checkStatus)
@@ -124,18 +196,8 @@ class HouseContent extends React.Component {
                 this.setState({balance: data.individual.balance});
             })
             .catch(function(error) {
-                console.log('request failed', error);
+                console.log('request for ispayed failed', error);
             })
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        } else {
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
     }
 
     handleBalance() {
@@ -146,6 +208,7 @@ class HouseContent extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             }
         })
             .then(this.checkStatus)
@@ -159,7 +222,9 @@ class HouseContent extends React.Component {
                 }
             })
             .catch(function(error) {
-                console.log('request failed', error);
+                // window.sessionStorage.reloadID = this.ID;
+                // this.setState({isLoggedIn: 'false'});
+                console.log('request for handle balance failed', error);
             });
 
     }
@@ -194,6 +259,7 @@ class HouseContent extends React.Component {
                                                handleBalance={this.handleBalance} clicked={this.state.clicked}
                                                handleNoDecrease={this.handleNoDecrease}/>
                     </div>
+                    {(this.state.isLoggedIn === 'false')? (<Redirect to="/login"></Redirect>) : (<div></div>) }
                 </div>
             </div>
         );

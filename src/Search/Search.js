@@ -152,13 +152,57 @@ function SearchAgainText() {
     );
 }
 
-function NavBar() {
-    return (
-        <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
-            <NavBarLogoLink/>
-            <NavBarDropdown/>
-        </nav>
-    );
+class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: 'false'
+        }
+        this.checkStatus = this.checkStatus.bind(this);
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            this.setState({isLoggedIn : 'true'});
+        } else {
+            if(response.status === 403){
+                this.setState({isLoggedIn : 'false'});
+            }
+            let error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
+    componentDidMount(){
+        let url = 'http://localhost:8080/users';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+            }
+        })
+            .then(this.checkStatus)
+            .catch(function(error) {
+                console.log('request in Navbar failed', error);
+            })
+    }
+    render () {
+        return (
+            <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
+                <NavBarLogoLink/>
+                {(this.state.isLoggedIn === "false") ? (
+                    <Link to="/login">
+                        <button type="button"
+                                className="btn btn-sm text-center text-light khane-blue-background shabnam ">ورود
+                        </button>
+                    </Link> ) : (
+                    <NavBarDropdown color={"purple"}/>
+                )}
+            </nav>
+        );
+    }
 }
 
 function Footer() {

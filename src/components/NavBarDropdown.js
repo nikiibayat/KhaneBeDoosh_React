@@ -25,6 +25,9 @@ class NavBarDropdown extends React.Component {
         if (response.status >= 200 && response.status < 300) {
             return response
         } else {
+            if( response.status === 403){
+                console.log("Error 403 in recieving navbar info");
+            }
             let error = new Error(response.statusText)
             error.response = response
             throw error
@@ -32,12 +35,13 @@ class NavBarDropdown extends React.Component {
     }
 
     componentDidMount() {
-        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        let url = 'http://localhost:8080/users';
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Autheorization' : 'Bearer ' + localStorage.getItem("access_token")
             }
         })
             .then(this.checkStatus)
