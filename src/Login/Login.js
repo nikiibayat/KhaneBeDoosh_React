@@ -53,20 +53,21 @@ class NavBar extends React.Component {
         }
     }
     componentDidMount(){
-        let url = 'http://localhost:8080/users';
+        let url = 'http://localhost:8080/users?name=niki';
         console.log("local storage access token is : " + localStorage.getItem("access_token"));
         fetch(url, {
             method: 'GET',
             headers: {
+                'authorization' : 'Bearer ' + localStorage.getItem("access_token"),
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                Authorization : 'Bearer ' + localStorage.getItem("access_token"),
+                'Accept' : 'application/json',
+                'credentials' : 'include'
             }
-        })
-            .then(this.checkStatus)
-            .catch(function(error) {
-                console.log('request failed', error);
-            })
+        }).then(response => response.json()).then(response => {
+            console.log('response recieved: ' + response);
+        }).catch(function(error) {
+            console.log('request failed', error);
+        });
     }
     render () {
         return (
