@@ -38,7 +38,6 @@ class NavBar extends React.Component {
             isLoggedIn: 'false'
         }
         this.checkStatus = this.checkStatus.bind(this);
-        console.log("get local storage : " + localStorage.getItem("access_token"));
     }
 
     checkStatus(response) {
@@ -55,12 +54,13 @@ class NavBar extends React.Component {
     }
     componentDidMount(){
         let url = 'http://localhost:8080/users';
+        console.log("local storage access token is : " + localStorage.getItem("access_token"));
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
+                Authorization : 'Bearer ' + localStorage.getItem("access_token"),
             }
         })
             .then(this.checkStatus)
