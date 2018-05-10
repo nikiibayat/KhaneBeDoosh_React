@@ -36,23 +36,8 @@ class NavBar extends React.Component {
         this.state = {
             isLoggedIn: 'false'
         }
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            console.log("status received is 200");
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                console.log("status received is 403");
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
 
@@ -71,8 +56,11 @@ class NavBar extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(this.checkStatus)
-            .catch(function(error) {
+            .then(function () {
+                this.setState({isLoggedIn : 'true'});
+            })
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -119,7 +107,6 @@ class AddMelkForm extends React.Component {
         this.handleMaxMeter = this.handleMaxMeter.bind(this);
         this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
     handleBuildingType(input) {
@@ -154,21 +141,6 @@ class AddMelkForm extends React.Component {
         this.setState({PhoneNumber: input});
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            this.setState({isLoggedIn: 'true'});
-            return response;
-        } else {
-            if(response.status === 403){
-                console.log("Error 403");
-                this.setState({isLoggedIn: 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response;
-            throw error
-        }
-    }
-
     handleSubmit(event) {
         const searchParams = new URLSearchParams();
         searchParams.set('buildingType', this.state.BuildingType);
@@ -195,12 +167,15 @@ class AddMelkForm extends React.Component {
             },
             body: searchParams
         })
-            .then(this.checkStatus)
+            .then(function () {
+                this.setState({isLoggedIn: 'true'});
+            })
             .then(function (response) {
                 console.log(response.status);
                 console.log(response.statusText);
             })
-            .catch(function (error) {
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             });
 

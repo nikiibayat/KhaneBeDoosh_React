@@ -37,24 +37,8 @@ class NavBar extends React.Component {
         this.state = {
             isLoggedIn: 'false'
         }
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    checkStatus(response) {
-        console.log("here in check status");
-        if (response.status >= 200 && response.status < 300) {
-            console.log("status received is 200");
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                console.log("status received is 403");
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
 
@@ -79,9 +63,9 @@ class NavBar extends React.Component {
                 console.log("status received is 200");
                 this.setState({isLoggedIn : 'true'});
             })
-            .catch(function(error) {
+            .catch(error => {
                 console.log("status received is 403");
-                // this.setState({isLoggedIn : 'false'});
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -133,23 +117,10 @@ class LoginFrom extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.checkStatus = this.checkStatus.bind(this);
         this.showPassword = this.showPassword.bind(this);
         this.handleExit = this.handleExit.bind(this);
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        } else {
-            if(response.status === 403){
-                this.setState({errMessage : 'نام کاربری یا رمز‌عبور اشتباه است'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response;
-            throw error
-        }
-    }
 
     handleClick(){
         this.setState({errMessage : ''});
@@ -163,19 +134,24 @@ class LoginFrom extends React.Component {
             },
             body: searchParams
         })
-            .then(this.checkStatus)
             .then(response => {
                 console.log(response.status);
                 console.log(response.statusText);
-                return response.json();
+                if(response.status !== 200)
+                    throw response;
+                else
+                    return response.json();
             })
-            .then(responseData => {return responseData;})
+            .then(responseData => {
+                return responseData;
+            })
             .then(data => {
                 console.log("server respone :  " + data.access_token);
                 localStorage.setItem('access_token', data.access_token);
                 this.props.history.push("/House");
             })
-            .catch(function (error) {
+            .catch(error => {
+                this.setState({errMessage : 'نام کاربری یا رمز‌عبور اشتباه است'});
                 console.log('request failed', error);
             });
         this.setState({username : ''});

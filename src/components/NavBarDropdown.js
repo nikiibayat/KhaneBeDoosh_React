@@ -16,22 +16,8 @@ class NavBarDropdown extends React.Component {
         };
 
 
-        this.checkStatus = this.checkStatus.bind(this);
         this.handleClick = this.handleClick.bind(this);
 
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response
-        } else {
-            if( response.status === 403){
-                console.log("Error 403 in recieving navbar info");
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
     }
 
     componentDidMount(){
@@ -51,7 +37,6 @@ class NavBarDropdown extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(this.checkStatus)
             .then(response => {
                 return response.json();
             })
@@ -60,7 +45,7 @@ class NavBarDropdown extends React.Component {
                 this.setState({balance: data.individual.balance});
             })
             .catch(function(error) {
-                console.log('request failed', error);
+                console.log('request failed in Navbar DropDown', error);
             })
     }
 

@@ -22,7 +22,7 @@ class Search extends React.Component {
                 <NavBar/>
                 <PageTitleHeader text={"نتایج جست‌وجو"}/>
                 <MoreInfoText/>
-                <SearchResultsList houses={this.props.houses} handleID={this.props.handleID}/>
+                <SearchResultsList houses={this.props.houses}/>
                 <SearchAgainText/>
                 <SearchBox numOfColumns={9} handleHouses={this.props.handleHouses}/>
                 <br/><br/>
@@ -39,7 +39,6 @@ class SearchResultsList extends React.Component {
     }
 
     render() {
-        const handler = this.props.handleID;
         // console.log(this.data.imageURL);
         return (
             <div className="container-fluid">
@@ -52,7 +51,7 @@ class SearchResultsList extends React.Component {
                                                   imageURL={data.imageURL} area={data.area}
                                                   address={data.address} basePrice={data.basePrice}
                                                   sellPrice={data.sellPrice}
-                                                  rentPrice={data.rentPrice} ID={data.id} handleID={handler}/>;
+                                                  rentPrice={data.rentPrice} ID={data.id}/>;
                             })) : (null)
                     }
 
@@ -70,7 +69,7 @@ class ResultBox extends React.Component {
     }
 
     handleBoxClick() {
-        this.props.handleID(this.props.ID);
+        localStorage.setItem("houseID",this.props.ID);
     }
 
     render() {
@@ -158,23 +157,8 @@ class NavBar extends React.Component {
         this.state = {
             isLoggedIn: 'false'
         }
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            console.log("status received is 200");
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                console.log("status received is 403");
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
 
@@ -193,8 +177,11 @@ class NavBar extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(this.checkStatus)
-            .catch(function(error) {
+            .then(function () {
+                this.setState({isLoggedIn : 'true'});
+            })
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }

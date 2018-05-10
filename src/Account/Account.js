@@ -39,21 +39,8 @@ class NavBar extends React.Component {
         this.state = {
             isLoggedIn: 'false'
         }
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
     componentDidMount(){
         let url = 'http://localhost:8080/users?username=behnamhomayoon';
         fetch(url, {
@@ -64,8 +51,11 @@ class NavBar extends React.Component {
                 'Authentication' : 'Bearer ' + window.sessionStorage.accessToken
             }
         })
-            .then(this.checkStatus)
-            .catch(function(error) {
+            .then(function () {
+                this.setState({isLoggedIn : 'true'});
+            })
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -93,10 +83,10 @@ class IncreaseBalance extends React.Component {
             balance : '۰',
             success: 'true',
             isLoggedIn: '',
+            errMessage: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
 
@@ -121,32 +111,20 @@ class IncreaseBalance extends React.Component {
             },
             body : searchParams
         })
-            .then(this.checkStatus)
-            .then(response => {return response.json();})
+            .then(response => {
+                this.setState({errMessage : ''});
+                return response.json();
+            })
             .then(data => {
                 let newBalance = Number(this.state.balance) + Number(input);
                 this.setState({balance : newBalance});
             })
-            .catch(function(error) {
-                console.log('request failed', error);
+            .catch(error => {
+                this.setState({errMessage : 'برای افزایش اعتبار حتما باید وارد شوید!'});
+                console.log('request failed to increase balance', error);
             })
     }
 
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            console.log("status received is 200");
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                console.log("status received is 403");
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
 
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
@@ -166,8 +144,11 @@ class IncreaseBalance extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(this.checkStatus)
-            .catch(function(error) {
+            .then(function () {
+                this.setState({isLoggedIn : 'true'});
+            })
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -180,7 +161,7 @@ class IncreaseBalance extends React.Component {
                         <CurrentBalance balance={this.state.balance}/>
                     </div>
                     <div className="col-12 col-md-6 input inputInc py-5">
-                        <Increase handleClick={this.handleSubmit} success={this.state.success} isLoggedIn={this.state.isLoggedIn}/>
+                        <Increase handleClick={this.handleSubmit} success={this.state.success} isLoggedIn={this.state.isLoggedIn} errMessage={this.state.errMessage}/>
                     </div>
                 </div>
             </div>
@@ -238,7 +219,7 @@ class Increase extends React.Component {
                 <button type="button" className="btn btn-click-me text-center text-light khane-blue-background buttonMargin" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br/>
-                {(this.props.isLoggedIn === 'false') ? (<p className="red small">برای افزایش اعتبار باید وارد شده باشید</p>) : (<p></p>)}
+                {(this.props.isLoggedIn === 'false') ? (<p className="red small text-center">{this.props.errMessage}</p>) : (<p></p>)}
             </div>
 
         );

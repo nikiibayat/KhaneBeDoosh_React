@@ -51,21 +51,8 @@ class NavBar extends React.Component {
         this.state = {
             isLoggedIn: 'false'
         }
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
 
     componentDidMount(){
         let url = 'http://localhost:8080/users';
@@ -77,8 +64,11 @@ class NavBar extends React.Component {
                 'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
             }
         })
-            .then(this.checkStatus)
-            .catch(function(error) {
+            .then(function () {
+                this.setState({isLoggedIn : 'true'});
+            })
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -114,24 +104,8 @@ class DropDown extends React.Component {
             name: '',
             balance: ''
         }
-        this.checkStatus = this.checkStatus.bind(this);
         this.handleClick = this.handleClick.bind(this);
 
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            console.log("status received is 200");
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                console.log("status received is 403");
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
     }
 
     componentDidMount() {
@@ -144,15 +118,16 @@ class DropDown extends React.Component {
                 'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
             }
         })
-            .then(this.checkStatus)
             .then(response => {
+                this.setState({isLoggedIn : 'true'});
                 return response.json();
             })
             .then(data => {
                 this.setState({name: data.individual.name});
                 this.setState({balance: data.individual.balance});
             })
-            .catch(function (error) {
+            .catch( error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
 

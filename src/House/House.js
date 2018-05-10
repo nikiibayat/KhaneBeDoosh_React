@@ -22,12 +22,7 @@ class House extends React.Component {
     constructor(props) {
         super(props);
 
-        if(this.props.id !== null){
-            this.ID = this.props.id;
-        }
-        else {
-            this.ID = localStorage.getItem("houseID");
-        }
+        this.ID = localStorage.getItem("houseID");
     }
 
     render(){
@@ -48,21 +43,8 @@ class NavBar extends React.Component {
         this.state = {
             isLoggedIn: 'false'
         }
-        this.checkStatus = this.checkStatus.bind(this);
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            this.setState({isLoggedIn : 'true'});
-        } else {
-            if(response.status === 403){
-                this.setState({isLoggedIn : 'false'});
-            }
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
 
@@ -81,8 +63,11 @@ class NavBar extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(this.checkStatus)
-            .catch(function(error) {
+            .then(function () {
+                this.setState({isLoggedIn : 'true'});
+            })
+            .catch(error => {
+                this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -127,7 +112,6 @@ class HouseContent extends React.Component {
         this.handleBalance = this.handleBalance.bind(this);
         this.InitializeHouse = this.InitializeHouse.bind(this);
         this.isPayed = this.isPayed.bind(this);
-        this.checkStatus = this.checkStatus.bind(this);
 
     }
 
@@ -155,7 +139,6 @@ class HouseContent extends React.Component {
                 'Authorization' : authorizationHeader
             }
         })
-            .then(this.checkStatus)
             .then(response => {
                 return response.json();
             })
@@ -178,16 +161,6 @@ class HouseContent extends React.Component {
 
     }
 
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        } else {
-            let error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }
-
     isPayed(){
         let url = 'http://localhost:8080/users/?houseID=' + this.ID;
 
@@ -208,7 +181,6 @@ class HouseContent extends React.Component {
                 'Authorization' : authorizationHeader
             }
         })
-            .then(this.checkStatus)
             .then(response => {
                 return response.json();
             })
@@ -254,7 +226,6 @@ class HouseContent extends React.Component {
             })
             .catch(error => {
                 console.log('request for handle balance failed', error);
-                // throw error;
                 localStorage.setItem("houseID",this.ID);
                 this.props.history.push("/login");
             });
