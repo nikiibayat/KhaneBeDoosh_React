@@ -42,10 +42,12 @@ class NavBar extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
+            console.log("status received is 200");
             this.setState({isLoggedIn : 'true'});
         } else {
             if(response.status === 403){
-                this.setState({isLoggedIn : 'false'});
+                console.log("status received is 403");
+                // this.setState({isLoggedIn : 'false'});
             }
             let error = new Error(response.statusText)
             error.response = response
@@ -53,14 +55,14 @@ class NavBar extends React.Component {
         }
     }
     componentDidMount(){
-        let url = 'http://localhost:8080/users';
+        let url = 'http://localhost:8080/users/';
         console.log("local storage access token is : " + localStorage.getItem("access_token"));
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                Authorization : 'Bearer ' + localStorage.getItem("access_token"),
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
             }
         })
             .then(this.checkStatus)

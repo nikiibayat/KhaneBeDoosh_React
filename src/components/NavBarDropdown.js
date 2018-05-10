@@ -34,14 +34,15 @@ class NavBarDropdown extends React.Component {
         }
     }
 
-    componentDidMount() {
-        let url = 'http://localhost:8080/users';
+    componentDidMount(){
+        let url = 'http://localhost:8080/users/';
+        console.log("local storage access token is : " + localStorage.getItem("access_token"));
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Autheorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
             }
         })
             .then(this.checkStatus)
@@ -53,9 +54,8 @@ class NavBarDropdown extends React.Component {
                 this.setState({balance: data.individual.balance});
             })
             .catch(function(error) {
-            console.log('request failed', error);
-        })
-
+                console.log('request failed', error);
+            })
     }
 
 
