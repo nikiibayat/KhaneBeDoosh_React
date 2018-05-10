@@ -14,7 +14,7 @@ import PageTitleHeader from "../components/PageTitleHeader";
 import {Link} from 'react-router-dom';
 import DocumentTitle from 'react-document-title'
 import URLSearchParams from 'url-search-params';
-
+import { withRouter } from 'react-router-dom';
 
 class Login extends React.Component {
     render() {
@@ -23,7 +23,7 @@ class Login extends React.Component {
                 <div>
                     <NavBar/>
                     <PageTitleHeader text={"ورود به حساب کاربری"}/>
-                    <LoginWebsite/>
+                    <LoginWebsite history={this.props.history}/>
                     <Footer/>
                 </div>
             </DocumentTitle>
@@ -41,13 +41,14 @@ class NavBar extends React.Component {
     }
 
     checkStatus(response) {
+        console.log("here in check status");
         if (response.status >= 200 && response.status < 300) {
             console.log("status received is 200");
             this.setState({isLoggedIn : 'true'});
         } else {
             if(response.status === 403){
                 console.log("status received is 403");
-                // this.setState({isLoggedIn : 'false'});
+                this.setState({isLoggedIn : 'false'});
             }
             let error = new Error(response.statusText)
             error.response = response
@@ -56,17 +57,31 @@ class NavBar extends React.Component {
     }
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
-        console.log("local storage access token is : " + localStorage.getItem("access_token"));
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+        console.log("sent JWT content is : " + authorizationHeader);
+
         fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
+                'content_type' : 'application/json',
+                'Accept' : 'application/json',
+                'Authorization' : authorizationHeader,
             }
         })
-            .then(this.checkStatus)
+            .then(function () {
+                console.log("status received is 200");
+                this.setState({isLoggedIn : 'true'});
+            })
             .catch(function(error) {
+                console.log("status received is 403");
+                // this.setState({isLoggedIn : 'false'});
                 console.log('request failed', error);
             })
     }
@@ -95,7 +110,7 @@ class LoginWebsite extends React.Component {
                 <div className="row rtl shabnam">
                     <div className="col-12 col-md-4" />
                     <div className="col-12 col-md-4 input loginForm">
-                        <LoginFrom />
+                        <LoginFrom history={this.props.history}/>
                     </div>
                     <div className="col-12 col-md-4" />
                 </div>
@@ -158,7 +173,7 @@ class LoginFrom extends React.Component {
             .then(data => {
                 console.log("server respone :  " + data.access_token);
                 localStorage.setItem('access_token', data.access_token);
-                // this.props.history.goBack;
+                this.props.history.push("/House");
             })
             .catch(function (error) {
                 console.log('request failed', error);
@@ -231,4 +246,4 @@ function Footer() {
 }
 
 
-export default Login;
+export default withRouter(Login);

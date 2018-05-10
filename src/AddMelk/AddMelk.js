@@ -41,9 +41,11 @@ class NavBar extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
+            console.log("status received is 200");
             this.setState({isLoggedIn : 'true'});
         } else {
             if(response.status === 403){
+                console.log("status received is 403");
                 this.setState({isLoggedIn : 'false'});
             }
             let error = new Error(response.statusText)
@@ -52,13 +54,21 @@ class NavBar extends React.Component {
         }
     }
     componentDidMount(){
-        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+        console.log("sent JWT content is : " + authorizationHeader);
+
         fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authentication' : window.sessionStorage.accessToken
+                'Authorization' : authorizationHeader,
             }
         })
             .then(this.checkStatus)
@@ -66,6 +76,7 @@ class NavBar extends React.Component {
                 console.log('request failed', error);
             })
     }
+
     render () {
         return (
             <nav className="navbar fixed-top navbar-light bg-white rtl shadow">
@@ -168,11 +179,19 @@ class AddMelkForm extends React.Component {
         searchParams.set('address', this.state.Address);
         searchParams.set('price', this.state.BasePrice);
 
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch('http://localhost:8080/houses', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization' : authorizationHeader
             },
             body: searchParams
         })

@@ -121,13 +121,15 @@ class DropDown extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
-            return response
+            console.log("status received is 200");
+            this.setState({isLoggedIn : 'true'});
         } else {
             if(response.status === 403){
-                console.log("Error 403");
+                console.log("status received is 403");
+                this.setState({isLoggedIn : 'false'});
             }
-            let error = new Error(response.statusText);
-            error.response = response;
+            let error = new Error(response.statusText)
+            error.response = response
             throw error
         }
     }

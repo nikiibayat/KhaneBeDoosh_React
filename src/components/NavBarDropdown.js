@@ -36,13 +36,19 @@ class NavBarDropdown extends React.Component {
 
     componentDidMount(){
         let url = 'http://localhost:8080/users/';
-        console.log("local storage access token is : " + localStorage.getItem("access_token"));
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = "Bearer " + localStorage.getItem("access_token");
+        }
+
         fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
+                'Authorization' : authorizationHeader,
             }
         })
             .then(this.checkStatus)

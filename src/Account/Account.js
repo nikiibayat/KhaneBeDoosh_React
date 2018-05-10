@@ -105,11 +105,19 @@ class IncreaseBalance extends React.Component {
         const searchParams = new URLSearchParams();
         searchParams.set('balance', Number(input));
 
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch('http://localhost:8080/balance', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization' : authorizationHeader
             },
             body : searchParams
         })
@@ -127,43 +135,41 @@ class IncreaseBalance extends React.Component {
 
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
-            this.setState({success: "true"});
-            this.setState({isLoggedIn: "true"});
-            return response;
+            console.log("status received is 200");
+            this.setState({isLoggedIn : 'true'});
         } else {
-            if (response.status === 403){
-                this.setState({success: "false"});
-                this.setState({isLoggedIn: "false"});
-                console.log("Error 403");
+            if(response.status === 403){
+                console.log("status received is 403");
+                this.setState({isLoggedIn : 'false'});
             }
-            this.setState({success: "false"});
             let error = new Error(response.statusText)
-            error.response = response;
+            error.response = response
             throw error
         }
     }
 
     componentDidMount(){
-        let url = 'http://localhost:8080/users';
-        fetch( url , {
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+        console.log("sent JWT content is : " + authorizationHeader);
+
+        fetch(url, {
             method: 'GET',
-            headers:{
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization' : 'Bearer ' +  localStorage.getItem("access_token")
+            headers: {
+                'Authorization' : authorizationHeader,
             }
         })
             .then(this.checkStatus)
-            .then(response => {return response.json();})
-            .then(responseData => {return responseData;})
-            .then(data => {
-                this.setState({balance: data.individual.balance});
-            })
             .catch(function(error) {
                 console.log('request failed', error);
             })
-
-
     }
 
     render() {

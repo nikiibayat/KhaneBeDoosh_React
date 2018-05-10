@@ -11,10 +11,10 @@ import '../reset.css';
 import NavBarDropdown from '../components/NavBarDropdown';
 import NavBarLogoLink from "../components/NavBarLogoLink";
 import {Link} from 'react-router-dom';
-import { Redirect } from 'react-router';
 import PageTitleHeader from "../components/PageTitleHeader";
 import PersianNumber from "../components/PersianNumber";
-import nopic from "../assets/no-pic.jpg"
+import nopic from "../assets/no-pic.jpg";
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -23,12 +23,10 @@ class House extends React.Component {
         super(props);
 
         if(this.props.id !== null){
-            console.log("props.id");
             this.ID = this.props.id;
         }
         else {
-            console.log("window");
-            this.ID = window.sessionStorage.reloadID;
+            this.ID = localStorage.getItem("houseID");
         }
     }
 
@@ -37,7 +35,7 @@ class House extends React.Component {
             <div>
                 <NavBar />
                 <PageTitleHeader text={"مشخصات کامل ملک"}/>
-                <HouseContent id={this.ID}/>
+                <HouseContent id={this.ID} history={this.props.history}/>
                 <Footer />
             </div>
         );
@@ -66,13 +64,21 @@ class NavBar extends React.Component {
         }
     }
     componentDidMount(){
-        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+        console.log("sent JWT content is : " + authorizationHeader);
+
         fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authentication' : 'Bearer ' + window.sessionStorage.accessToken
+                'Authorization' : authorizationHeader,
             }
         })
             .then(this.checkStatus)
@@ -115,7 +121,6 @@ class HouseContent extends React.Component {
             balance : '',
             clicked : 'false',
             dealType : '',
-            isLoggedIn: '',
         }
 
         this.ID = this.props.id;
@@ -132,14 +137,22 @@ class HouseContent extends React.Component {
     }
 
     InitializeHouse(){
-
         let url = 'http://localhost:8080/houses/' + this.ID;
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization' : authorizationHeader
             }
         })
             .then(this.checkStatus)
@@ -175,16 +188,24 @@ class HouseContent extends React.Component {
         }
     }
 
-
     isPayed(){
-        let url = 'http://localhost:8080/users&houseID=' + this.ID;
+        let url = 'http://localhost:8080/users/?houseID=' + this.ID;
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         console.log(url);
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization' : authorizationHeader
             }
         })
             .then(this.checkStatus)
@@ -201,30 +222,41 @@ class HouseContent extends React.Component {
     }
 
     handleBalance() {
-        this.setState({clicked : 'true'});
         let url = 'http://localhost:8080/houses/' + this.ID + '/phone';
+
+        let authorizationHeader;
+        if (localStorage.getItem("access_token") === "null") {
+            authorizationHeader = "Bearer ";
+        }
+        else {
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization': authorizationHeader
             }
         })
-            .then(this.checkStatus)
-            .then(response => {return response.json();})
+            .then(response => {
+                this.setState({clicked: 'true'});
+                return response.json();
+            })
             .then(data => {
-                if(data.purchaseSuccessStatus === "true"){
-                    this.setState({hasPayed : true});
+                if (data.purchaseSuccessStatus === "true") {
+                    this.setState({hasPayed: true});
                 }
-                else if(data.purchaseSuccessStatus === "false"){
-                    this.setState({hasPayed : false});
+                else if (data.purchaseSuccessStatus === "false") {
+                    this.setState({hasPayed: false});
                 }
             })
-            .catch(function(error) {
-                // window.sessionStorage.reloadID = this.ID;
-                // this.setState({isLoggedIn: 'false'});
+            .catch(error => {
                 console.log('request for handle balance failed', error);
+                // throw error;
+                localStorage.setItem("houseID",this.ID);
+                this.props.history.push("/login");
             });
 
     }
@@ -259,7 +291,6 @@ class HouseContent extends React.Component {
                                                handleBalance={this.handleBalance} clicked={this.state.clicked}
                                                handleNoDecrease={this.handleNoDecrease}/>
                     </div>
-                    {(this.state.isLoggedIn === 'false')? (<Redirect to="/login"></Redirect>) : (<div></div>) }
                 </div>
             </div>
         );
@@ -445,4 +476,4 @@ function Footer() {
     );
 }
 
-export default House;
+export default withRouter (House);
