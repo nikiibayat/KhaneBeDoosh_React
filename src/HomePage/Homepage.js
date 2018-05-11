@@ -115,8 +115,14 @@ class DropDown extends React.Component {
             balance: ''
         }
         this.handleClick = this.handleClick.bind(this);
+        this.handleExit = this.handleExit.bind(this);
 
     }
+
+    handleExit = () => {
+        localStorage.setItem('access_token',null);
+        this.props.history.push("/login");
+    };
 
     componentDidMount() {
         let url = 'http://localhost:8080/users/';
@@ -169,10 +175,16 @@ class DropDown extends React.Component {
                         <div className="col-5 px-0 text-right">اعتبار</div>
                         <div className="col-7 px-0 text-left"><PersianNumber number={this.state.balance}/> تومان</div>
                     </div>
-                    <div className="row py-4 justify-content-center">
+                    <div className="row justify-content-center">
                         <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
                                 khane-blue-background" onClick={this.handleClick}>
                             افزایش اعتبار
+                        </button>
+                    </div>
+                    <div className="row py-4 justify-content-center">
+                        <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
+                                text-dark btn-border" onClick={this.handleExit}>
+                            خروج
                         </button>
                     </div>
                 </div>
