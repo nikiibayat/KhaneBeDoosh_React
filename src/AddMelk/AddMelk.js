@@ -48,7 +48,6 @@ class NavBar extends React.Component {
         else{
             authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
         }
-        console.log("sent JWT content is : " + authorizationHeader);
 
         fetch(url, {
             method: 'GET',
@@ -164,17 +163,15 @@ class AddMelkForm extends React.Component {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
+                'content_type' : 'application/json',
                 'Authorization' : authorizationHeader
             },
             body: searchParams
         })
             .then(response => {
-                if(response.status === 200)
+                if(response.status === 200) {
                     this.setState({isLoggedIn: 'true'});
-            })
-            .then(function (response) {
-                console.log(response.status);
-                console.log(response.statusText);
+                }
             })
             .catch(error => {
                 this.setState({isLoggedIn : 'false'});
