@@ -57,6 +57,7 @@ class NavBarDropdown extends React.Component {
     };
 
     handleExit = () => {
+        localStorage.setItem('access_token',null);
         this.props.history.push("/login");
     };
 
