@@ -42,17 +42,27 @@ class NavBar extends React.Component {
     }
 
     componentDidMount(){
-        let url = 'http://localhost:8080/users?username=behnamhomayoon';
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authentication' : 'Bearer ' + window.sessionStorage.accessToken
+                'Authorization' : authorizationHeader,
             }
         })
-            .then(function () {
-                this.setState({isLoggedIn : 'true'});
+            .then(response => {
+                if(response.status === 200)
+                    this.setState({isLoggedIn : 'true'});
             })
             .catch(error => {
                 this.setState({isLoggedIn : 'false'});
@@ -80,7 +90,7 @@ class IncreaseBalance extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            balance : '۰',
+            balance : '0',
             success: 'true',
             isLoggedIn: '',
             errMessage: '',
@@ -112,44 +122,12 @@ class IncreaseBalance extends React.Component {
             body : searchParams
         })
             .then(response => {
-                this.setState({errMessage : ''});
-                return response.json();
-            })
-            .then(data => {
-                let newBalance = Number(this.state.balance) + Number(input);
-                this.setState({balance : newBalance});
+                if(response.status === 200)
+                    this.setState({errMessage : ''});
             })
             .catch(error => {
                 this.setState({errMessage : 'برای افزایش اعتبار حتما باید وارد شوید!'});
                 console.log('request failed to increase balance', error);
-            })
-    }
-
-
-    componentDidMount(){
-        let url = 'http://localhost:8080/users/';
-
-        let authorizationHeader ;
-        if(localStorage.getItem("access_token") === "null"){
-            authorizationHeader = "Bearer ";
-        }
-        else{
-            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
-        }
-        console.log("sent JWT content is : " + authorizationHeader);
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization' : authorizationHeader,
-            }
-        })
-            .then(function () {
-                this.setState({isLoggedIn : 'true'});
-            })
-            .catch(error => {
-                this.setState({isLoggedIn : 'false'});
-                console.log('request failed', error);
             })
     }
 
@@ -158,10 +136,10 @@ class IncreaseBalance extends React.Component {
             <div className="container">
                 <div className="row rtl shabnam">
                     <div className="col-12 col-md-6 text-right balance grey-color font-weight-light ">
-                        <CurrentBalance balance={this.state.balance}/>
+                        <CurrentBalance />
                     </div>
                     <div className="col-12 col-md-6 input inputInc py-5">
-                        <Increase handleClick={this.handleSubmit} success={this.state.success} isLoggedIn={this.state.isLoggedIn} errMessage={this.state.errMessage}/>
+                        <Increase handleClick={this.handleSubmit} success={this.state.success} errMessage={this.state.errMessage}/>
                     </div>
                 </div>
             </div>
@@ -169,13 +147,53 @@ class IncreaseBalance extends React.Component {
     }
 }
 
-function CurrentBalance(props) {
-    return (
-        <div>اعتبار کنونی
-            <span className="text-dark font-weight-bold shabnam"> <PersianNumber number={props.balance}/> </span>
-            تومان
-        </div>
-    );
+class CurrentBalance extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            balance : '',
+        }
+    }
+
+    componentDidMount() {
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = "Bearer " + localStorage.getItem("access_token");
+        }
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization' : authorizationHeader,
+                'content_type' : 'application/json',
+                'Accept' : 'application/json',
+            }
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                this.setState({balance: data.individual.balance});
+            })
+            .catch(function(error) {
+                console.log('request failed in getting current balance', error);
+            })
+    }
+
+
+    render() {
+        return (
+            <div>اعتبار کنونی
+                <span className="text-dark font-weight-bold shabnam"> <PersianNumber number={this.state.balance}/> </span>
+                تومان
+            </div>
+        );
+    }
 }
 
 class Increase extends React.Component {
@@ -219,7 +237,7 @@ class Increase extends React.Component {
                 <button type="button" className="btn btn-click-me text-center text-light khane-blue-background buttonMargin" onClick={this.handleClick}>افزایش اعتبار</button>
                 </div>
                 <br/>
-                {(this.props.isLoggedIn === 'false') ? (<p className="red small text-center">{this.props.errMessage}</p>) : (<p></p>)}
+                <p className="red small text-center">{this.props.errMessage}</p>
             </div>
 
         );

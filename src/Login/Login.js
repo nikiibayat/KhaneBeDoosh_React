@@ -49,7 +49,6 @@ class NavBar extends React.Component {
         else{
             authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
         }
-        console.log("sent JWT content is : " + authorizationHeader);
 
         fetch(url, {
             method: 'GET',
@@ -59,14 +58,13 @@ class NavBar extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(function () {
-                console.log("status received is 200");
-                this.setState({isLoggedIn : 'true'});
+            .then(response => {
+                if(response.status === 200)
+                    this.setState({isLoggedIn : 'true'});
             })
             .catch(error => {
-                console.log("status received is 403");
+                console.log('request failed in login JWT', error);
                 this.setState({isLoggedIn : 'false'});
-                console.log('request failed', error);
             })
     }
     render () {
@@ -148,7 +146,8 @@ class LoginFrom extends React.Component {
             .then(data => {
                 console.log("server respone :  " + data.access_token);
                 localStorage.setItem('access_token', data.access_token);
-                this.props.history.push("/House");
+                if(localStorage.getItem("houseID") !== "")
+                    this.props.history.push("/House");
             })
             .catch(error => {
                 this.setState({errMessage : 'نام کاربری یا رمز‌عبور اشتباه است'});

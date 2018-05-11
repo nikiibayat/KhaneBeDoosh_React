@@ -177,8 +177,9 @@ class NavBar extends React.Component {
                 'Authorization' : authorizationHeader,
             }
         })
-            .then(function () {
-                this.setState({isLoggedIn : 'true'});
+            .then(response => {
+                if(response.status === 200)
+                    this.setState({isLoggedIn : 'true'});
             })
             .catch(error => {
                 this.setState({isLoggedIn : 'false'});

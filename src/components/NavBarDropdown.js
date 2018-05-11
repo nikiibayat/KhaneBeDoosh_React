@@ -35,6 +35,8 @@ class NavBarDropdown extends React.Component {
             method: 'GET',
             headers: {
                 'Authorization' : authorizationHeader,
+                'content_type' : 'application/json',
+                'Accept' : 'application/json',
             }
         })
             .then(response => {
@@ -54,6 +56,10 @@ class NavBarDropdown extends React.Component {
         this.props.history.push("/balance");
     };
 
+    handleExit = () => {
+        this.props.history.push("/login");
+    };
+
     render() {
         return (
             <div className="navbar-nav dropdown">
@@ -69,10 +75,16 @@ class NavBarDropdown extends React.Component {
                                 <div className="col-5 px-0 text-right">اعتبار</div>
                                 <div className="col-7 px-0 text-left"><PersianNumber number={this.state.balance}/> تومان</div>
                             </div>
-                            <div className="row py-4 justify-content-center">
+                            <div className="row justify-content-center">
                                 <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
                                 khane-blue-background" onClick={this.handleClick}>
                                     افزایش اعتبار
+                                </button>
+                            </div>
+                            <div className="row py-4 justify-content-center">
+                                <button type="button" className="col-10 btn btn-click-me px-1 text-center text-light
+                                text-dark btn-border" onClick={this.handleExit}>
+                                    خروج
                                 </button>
                             </div>
                         </div>

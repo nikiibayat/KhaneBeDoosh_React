@@ -55,17 +55,27 @@ class NavBar extends React.Component {
 
 
     componentDidMount(){
-        let url = 'http://localhost:8080/users';
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token"),
+                'Authorization' : authorizationHeader,
             }
         })
-            .then(function () {
-                this.setState({isLoggedIn : 'true'});
+            .then(response => {
+                if(response.status === 200)
+                    this.setState({isLoggedIn : 'true'});
             })
             .catch(error => {
                 this.setState({isLoggedIn : 'false'});
@@ -109,17 +119,27 @@ class DropDown extends React.Component {
     }
 
     componentDidMount() {
-        let url = 'http://localhost:8080/users';
+        let url = 'http://localhost:8080/users/';
+
+        let authorizationHeader ;
+        if(localStorage.getItem("access_token") === "null"){
+            authorizationHeader = "Bearer ";
+        }
+        else{
+            authorizationHeader = 'Bearer ' + localStorage.getItem("access_token");
+        }
+
         fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("access_token")
+                'Authorization' : authorizationHeader,
             }
         })
             .then(response => {
-                this.setState({isLoggedIn : 'true'});
+                if(response.status === 200)
+                    this.setState({isLoggedIn : 'true'});
                 return response.json();
             })
             .then(data => {
